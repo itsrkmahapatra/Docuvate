@@ -1750,6 +1750,8 @@
     PDF,
     Image: ImageEngine
   };
+  window.DocuvatePrivacy = PrivacyMonitor;
+  window.DocuvateTheme = Theme;
 
   // Run on DOM ready
   if (document.readyState === 'loading') {

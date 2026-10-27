@@ -1,10 +1,13 @@
 /**
- * Docuvate Service Worker - 100% Offline-First Self-Contained Engine
- * Pre-caches app shell, local styles, assets, and all local vendor packages
- * Zero third-party dependencies.
+ * ============================================================================
+ * DOCUVATE SERVICE WORKER (v3.1.0 OFFLINE AIRPLANE-MODE ENGINE)
+ * 100% Client-Side Sandboxed Processing • Zero Cloud Uploads
+ * Engineered by Raj Kishor Mahapatra
+ * ============================================================================
  */
 
-const CACHE_NAME = 'docuvate-v3.0.0-offline';
+const CACHE_NAME = 'docuvate-v3.1.0-offline';
+
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -31,7 +34,6 @@ const STATIC_ASSETS = [
   './js/app.js',
   './js/inkscribe.js',
   './js/upi-widget.js',
-  './js/compressor.worker.js',
   './vendor/lucide.min.js',
   './vendor/pdf-lib.min.js',
   './vendor/pdf.min.js',
@@ -51,9 +53,10 @@ const STATIC_ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
-    }).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then(() => self.skipWaiting())
+      .catch((err) => console.warn('[Docuvate PWA] Pre-cache partial warning:', err))
   );
 });
 
@@ -78,6 +81,12 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(req).then((cachedResponse) => {
       if (cachedResponse) {
+        // Return cached copy immediately; fetch update in background for assets
+        fetch(req).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            caches.open(CACHE_NAME).then((cache) => cache.put(req, networkResponse));
+          }
+        }).catch(() => {/* Offline */});
         return cachedResponse;
       }
       return fetch(req).then((networkResponse) => {
