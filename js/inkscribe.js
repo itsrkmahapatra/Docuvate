@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Docuvate - InkScribe Digital Handwriting Engine
  * 100% Client-Side Text to Realistic Handwriting Workstation
  */
@@ -358,7 +358,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 Task: ${prompt}. 
                 Instructions: Provide the content requested accurately and concisely. Use basic markdown (**bold**, *italic*) for formatting. Respond ONLY with the requested content.`;
                 
-                if (!window.puter) throw new Error("Puter.js library not loaded.");
+                if (!window.puter) {
+                    await new Promise((resolve, reject) => {
+                        const s = document.createElement('script');
+                        s.src = 'vendor/puter.js';
+                        s.onload = resolve;
+                        s.onerror = () => reject(new Error('Puter AI engine could not be loaded'));
+                        document.head.appendChild(s);
+                    });
+                }
                 const puterResponse = await puter.ai.chat(systemContext);
                 let text = "";
                 if (puterResponse) {
