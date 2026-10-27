@@ -375,27 +375,70 @@ const PdfTools = {
     };
   },
 
-  async signPdf(file, signatureDataUrl, onProgress = () => {}) {
-    onProgress(20, "Embedding signature stamp...");
+  generateStampImage(text = 'APPROVED', color = '#e11d48') {
+    const canvas = document.createElement('canvas');
+    canvas.width = 340;
+    canvas.height = 130;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate(-0.08);
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 4;
+    ctx.strokeRect(-150, -48, 300, 96);
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(-144, -42, 288, 84);
+
+    ctx.fillStyle = color;
+    ctx.font = '900 24px Outfit, Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text.toUpperCase(), 0, -8);
+
+    ctx.font = '700 11px Inter, sans-serif';
+    ctx.fillText(`OFFICIALLY VERIFIED • ${new Date().toLocaleDateString()}`, 0, 18);
+    ctx.restore();
+
+    return canvas.toDataURL('image/png');
+  },
+
+  async signPdf(file, signatureDataUrl, position = 'bottom-right', applyAll = false, onProgress = () => {}) {
+    onProgress(20, "Embedding signature / official stamp...");
     const fileBytes = await file.arrayBuffer();
     const pdf = await PDFLib.PDFDocument.load(fileBytes);
     const signatureImage = await pdf.embedPng(signatureDataUrl);
     const pages = pdf.getPages();
-    const lastPage = pages[pages.length - 1];
-    
-    const { width } = lastPage.getSize();
-    const sigWidth = 150;
-    const sigHeight = (sigWidth / signatureImage.width) * signatureImage.height;
 
-    lastPage.drawImage(signatureImage, {
-      x: width - sigWidth - 40,
-      y: 40,
-      width: sigWidth,
-      height: sigHeight,
+    const targetPages = applyAll ? pages : [pages[pages.length - 1]];
+
+    targetPages.forEach(page => {
+      const { width, height } = page.getSize();
+      const sigWidth = 150;
+      const sigHeight = (sigWidth / signatureImage.width) * signatureImage.height;
+
+      let x = width - sigWidth - 40;
+      let y = 40;
+      if (position === 'bottom-left') {
+        x = 40;
+        y = 40;
+      } else if (position === 'center') {
+        x = (width - sigWidth) / 2;
+        y = (height - sigHeight) / 2;
+      }
+
+      page.drawImage(signatureImage, {
+        x,
+        y,
+        width: sigWidth,
+        height: sigHeight,
+      });
     });
 
     onProgress(90, "Saving signed PDF...");
-    const pdfBytes = await pdf.save();
+    const pdfBytes = await pdf.save({ useObjectStreams: true });
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     return {
       blob,
@@ -859,6 +902,11 @@ class DocuvateApp {
     this.cropBox = { left: 10, top: 10, width: 80, height: 80 }; // percentages
     this.cropApplyAll = true;
 
+    // Cryptographic integrity & biometric guides
+    this.currentChecksum = null;
+    this.currentShortHash = null;
+    this.showBiometrics = false;
+
     this.initElements();
     this.initEvents();
     if (window.lucide) window.lucide.createIcons();
@@ -914,6 +962,8 @@ class DocuvateApp {
     this.isProcessing = false;
     this.activeCropPageIndex = 0;
     this.cropBox = { left: 10, top: 10, width: 80, height: 80 };
+    this.currentChecksum = null;
+    this.currentShortHash = null;
 
     this.workspaceTitle.textContent = "Master PDF Studio (All-in-One)";
     if (this.workspaceStatusIndicator) this.workspaceStatusIndicator.style.background = "#e11d48";
@@ -929,6 +979,8 @@ class DocuvateApp {
     this.pages = [];
     this.resultData = null;
     this.isProcessing = false;
+    this.currentChecksum = null;
+    this.currentShortHash = null;
 
     this.workspaceTitle.textContent = "Master Image Studio (All-in-One)";
     if (this.workspaceStatusIndicator) this.workspaceStatusIndicator.style.background = "#0284c7";
@@ -945,6 +997,9 @@ class DocuvateApp {
     this.selectedFiles = [];
     this.pages = [];
     this.resultData = null;
+    this.currentChecksum = null;
+    this.currentShortHash = null;
+    this.showBiometrics = false;
   }
 
   async handleFilesAdded(newFiles) {
@@ -988,6 +1043,17 @@ class DocuvateApp {
           rotation: 0,
           selected: true
         });
+      });
+    }
+
+    if (processedFiles.length > 0 && window.DocuvateCrypto) {
+      DocuvateCrypto.calculateSha256(processedFiles[0]).then(res => {
+        if (res) {
+          this.currentChecksum = res.sha256;
+          this.currentShortHash = res.shortHash;
+          const hashEl = document.getElementById('currentFileHashDisplay');
+          if (hashEl) hashEl.textContent = this.currentShortHash;
+        }
       });
     }
 
@@ -1068,7 +1134,7 @@ class DocuvateApp {
             <i data-lucide="layers" style="width:12px; height:12px;"></i> Organize
           </button>
           <button class="universal-module-tab ${this.activeModule === 'sign' ? 'active' : ''}" data-mod="sign">
-            <i data-lucide="file-signature" style="width:12px; height:12px;"></i> Sign
+            <i data-lucide="file-signature" style="width:12px; height:12px;"></i> Sign / Stamp
           </button>
           <button class="universal-module-tab ${this.activeModule === 'watermark' ? 'active' : ''}" data-mod="watermark">
             <i data-lucide="droplet" style="width:12px; height:12px;"></i> Watermark
@@ -1108,12 +1174,23 @@ class DocuvateApp {
       </div>
 
       <div class="sidebar-scroll-content">
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:0.65rem 0.875rem; display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <span style="font-size:0.65rem; font-weight:800; color:#64748b; text-transform:uppercase;">Active Document</span>
-            <p style="font-size:0.9rem; font-weight:900; color:#0f172a;">${selCount} of ${this.pages.length} ${isPdf ? 'Pages' : 'Images'} Selected</p>
+        <div style="background:var(--bg-card); border:1px solid var(--border-light); border-radius:10px; padding:0.65rem 0.875rem; display:flex; flex-direction:column; gap:0.4rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span style="font-size:0.65rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Active Document</span>
+              <p style="font-size:0.9rem; font-weight:900; color:var(--text-main); margin:0;">${selCount} of ${this.pages.length} ${isPdf ? 'Pages' : 'Images'} Selected</p>
+            </div>
+            <button id="clearAllPagesBtn" style="font-size:0.7rem; font-weight:700; color:#ef4444; cursor:pointer;">Clear Workspace</button>
           </div>
-          <button id="clearAllPagesBtn" style="font-size:0.7rem; font-weight:700; color:#ef4444; hover:underline;">Clear Workspace</button>
+          ${this.currentShortHash ? `
+            <div style="display:flex; align-items:center; justify-content:space-between; padding-top:0.35rem; border-top:1px dashed var(--border-light);">
+              <span style="font-size:0.65rem; font-weight:700; color:var(--text-muted);">SHA-256 Checksum</span>
+              <button class="crypto-hash-badge" id="btnCopyChecksum" title="Click to copy full SHA-256 hash">
+                <i data-lucide="shield-check" style="width:11px; height:11px; color:#10b981;"></i>
+                <span id="currentFileHashDisplay">${this.currentShortHash}</span>
+              </button>
+            </div>
+          ` : ''}
         </div>
 
         ${this.renderActiveModuleControls()}
@@ -1252,6 +1329,11 @@ class DocuvateApp {
           <button id="btnDeleteSelected" style="font-size:0.75rem; font-weight:700; background:#fee2e2; color:#b91c1c; padding:0.35rem 0.75rem; border-radius:6px; display:flex; align-items:center; gap:0.25rem;">
             <i data-lucide="trash-2" style="width:12px; height:12px;"></i> Delete Selected
           </button>
+          ${!isPdf ? `
+            <button id="btnToggleBiometrics" style="font-size:0.75rem; font-weight:700; background:${this.showBiometrics ? 'rgba(2,132,199,0.15)' : '#f1f5f9'}; color:${this.showBiometrics ? '#0284c7' : '#334155'}; border:1px solid ${this.showBiometrics ? '#0284c7' : '#cbd5e1'}; padding:0.35rem 0.75rem; border-radius:6px; display:flex; align-items:center; gap:0.25rem;" title="Biometric Alignment Guidelines for Passport & Visa">
+              <i data-lucide="scan-face" style="width:12px; height:12px;"></i> Biometric Guides
+            </button>
+          ` : ''}
         </div>
 
         <div style="display:flex; align-items:center; gap:0.25rem;">
@@ -1270,12 +1352,20 @@ class DocuvateApp {
           <div class="page-card ${item.selected ? 'selected' : 'excluded'}" draggable="true" data-id="${item.id}" data-idx="${idx}">
             <div class="page-card-order-badge">${idx + 1}</div>
 
-            <div class="page-img-wrapper">
+            <div class="page-img-wrapper" style="position:relative;">
               ${item.preview ? `
                 <img src="${item.preview}" alt="${isPdf ? 'Page ' + item.pageNumber : item.fileName}" style="transform: rotate(${item.rotation}deg);" />
               ` : `
                 <i data-lucide="file-text" style="width:36px; height:36px; color:#cbd5e1;"></i>
               `}
+
+              ${!isPdf && this.showBiometrics ? `
+                <div class="biometric-overlay-guide">
+                  <div class="biometric-crown-line"><span class="biometric-tag" style="background:#ef4444;">Crown Line</span></div>
+                  <div class="biometric-eye-line"><span class="biometric-tag" style="background:#10b981;">Eye Line (50-69%)</span></div>
+                  <div class="biometric-chin-line"><span class="biometric-tag" style="background:#3b82f6;">Chin Line</span></div>
+                </div>
+              ` : ''}
 
               ${item.selected ? `
                 <div class="page-selected-check" style="background: ${isPdf ? '#e11d48' : '#0284c7'};">
@@ -1410,11 +1500,53 @@ class DocuvateApp {
       `;
     } else if (mod === 'sign' && isPdf) {
       html = `
-        <label style="font-size:0.75rem; font-weight:700; color:#475569;">Draw Signature on Pad</label>
-        <div style="border:2px dashed #cbd5e1; border-radius:8px; background:#f8fafc; overflow:hidden;">
-          <canvas id="sigCanvas" width="300" height="130" style="width:100%; height:130px; display:block; cursor:crosshair;"></canvas>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+          <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--text-muted);">Attestation Mode</span>
+          <div class="preset-grid" style="grid-template-columns: repeat(2, 1fr); margin:0;">
+            <button class="preset-btn active" data-sign-tab="stamp">Official Stamp</button>
+            <button class="preset-btn" data-sign-tab="draw">Draw Signature</button>
+          </div>
         </div>
-        <button id="clearSigBtn" style="font-size:0.7rem; color:#ef4444; font-weight:700; text-align:right;">Clear Signature Pad</button>
+
+        <div id="signTabStamp">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:0.35rem;">Choose Official Status Stamp</label>
+          <div class="preset-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <button class="preset-btn active" data-stamp-text="APPROVED">✓ APPROVED</button>
+            <button class="preset-btn" data-stamp-text="CONFIDENTIAL">🔒 CONFIDENTIAL</button>
+            <button class="preset-btn" data-stamp-text="VERIFIED">★ VERIFIED</button>
+            <button class="preset-btn" data-stamp-text="OFFICIAL COPY">📋 OFFICIAL COPY</button>
+            <button class="preset-btn" data-stamp-text="DRAFT">📝 DRAFT</button>
+            <button class="preset-btn" data-stamp-text="ATTESTED">🏛️ ATTESTED</button>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.75rem;">
+            <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">Stamp Ink Color</label>
+            <input type="color" id="stampColorInput" value="#e11d48" style="width:36px; height:28px; border:none; border-radius:4px; cursor:pointer;" />
+          </div>
+        </div>
+
+        <div id="signTabDraw" style="display:none;">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted);">Draw Signature on Pad</label>
+          <div style="border:2px dashed var(--border-light); border-radius:8px; background:var(--bg-main); overflow:hidden;">
+            <canvas id="sigCanvas" width="300" height="130" style="width:100%; height:130px; display:block; cursor:crosshair;"></canvas>
+          </div>
+          <button id="clearSigBtn" style="font-size:0.7rem; color:#ef4444; font-weight:700; text-align:right; margin-top:0.25rem;">Clear Signature Pad</button>
+        </div>
+
+        <div style="margin-top:0.5rem;">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); display:block; margin-bottom:0.35rem;">Placement Position</label>
+          <div class="preset-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <button class="preset-btn active" data-stamp-pos="bottom-right">Bottom Right</button>
+            <button class="preset-btn" data-stamp-pos="bottom-left">Bottom Left</button>
+            <button class="preset-btn" data-stamp-pos="center">Center</button>
+          </div>
+        </div>
+
+        <div style="margin-top:0.5rem;">
+          <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.75rem; font-weight:700; color:var(--text-main); cursor:pointer;">
+            <input type="checkbox" id="stampApplyAllCheck" style="accent-color:#e11d48;" />
+            <span>Apply to all pages in document</span>
+          </label>
+        </div>
       `;
     } else if (mod === 'watermark') {
       html = `
@@ -1695,6 +1827,47 @@ class DocuvateApp {
       });
     });
 
+    // Biometric guides toggle in Image Studio
+    canvasArea.querySelector('#btnToggleBiometrics')?.addEventListener('click', () => {
+      this.showBiometrics = !this.showBiometrics;
+      this.renderWorkspace();
+    });
+
+    // Copy SHA-256 Checksum
+    sidebarArea.querySelector('#btnCopyChecksum')?.addEventListener('click', () => {
+      if (this.currentChecksum) {
+        navigator.clipboard.writeText(this.currentChecksum);
+        this.showToast("SHA-256 Checksum copied to clipboard!");
+      }
+    });
+
+    // Attestation Stamp / Signature Pad Tab Switching
+    sidebarArea.querySelectorAll('.preset-btn[data-sign-tab]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sidebarArea.querySelectorAll('.preset-btn[data-sign-tab]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const isStamp = btn.dataset.signTab === 'stamp';
+        const tabStamp = sidebarArea.querySelector('#signTabStamp');
+        const tabDraw = sidebarArea.querySelector('#signTabDraw');
+        if (tabStamp) tabStamp.style.display = isStamp ? 'block' : 'none';
+        if (tabDraw) tabDraw.style.display = isStamp ? 'none' : 'block';
+      });
+    });
+
+    sidebarArea.querySelectorAll('.preset-btn[data-stamp-text]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sidebarArea.querySelectorAll('.preset-btn[data-stamp-text]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    sidebarArea.querySelectorAll('.preset-btn[data-stamp-pos]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        sidebarArea.querySelectorAll('.preset-btn[data-stamp-pos]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
     // Toolbar
     canvasArea.querySelector('#btnSelectAll')?.addEventListener('click', () => {
       this.pages.forEach(p => p.selected = true);
@@ -1885,9 +2058,19 @@ class DocuvateApp {
         } else if (mod === 'crop') {
           result = await PdfTools.cropPdf(compiledFile, this.cropBox, this.cropApplyAll ? null : this.activeCropPageIndex, onProgress);
         } else if (mod === 'sign') {
-          const sigCanvas = sidebarArea.querySelector('#sigCanvas');
-          const sigData = sigCanvas ? sigCanvas.toDataURL('image/png') : '';
-          result = await PdfTools.signPdf(compiledFile, sigData, onProgress);
+          const isStamp = sidebarArea.querySelector('.preset-btn[data-sign-tab="stamp"]')?.classList.contains('active') ?? true;
+          let sigData;
+          if (isStamp) {
+            const stampText = sidebarArea.querySelector('.preset-btn[data-stamp-text].active')?.dataset?.stampText || 'APPROVED';
+            const stampColor = sidebarArea.querySelector('#stampColorInput')?.value || '#e11d48';
+            sigData = PdfTools.generateStampImage(stampText, stampColor);
+          } else {
+            const sigCanvas = sidebarArea.querySelector('#sigCanvas');
+            sigData = sigCanvas ? sigCanvas.toDataURL('image/png') : '';
+          }
+          const stampPos = sidebarArea.querySelector('.preset-btn[data-stamp-pos].active')?.dataset?.stampPos || 'bottom-right';
+          const stampAll = sidebarArea.querySelector('#stampApplyAllCheck')?.checked || false;
+          result = await PdfTools.signPdf(compiledFile, sigData, stampPos, stampAll, onProgress);
         } else if (mod === 'watermark') {
           const text = sidebarArea.querySelector('#watermarkTextInput')?.value || 'CONFIDENTIAL';
           const opacity = (sidebarArea.querySelector('#watermarkOpacity')?.value || 30) / 100;

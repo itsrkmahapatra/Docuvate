@@ -43,6 +43,10 @@
 
   <!-- Privacy Sandbox Live Network Auditor & PWA Manager -->
   <script src="js/privacy-monitor.js"></script>
+  <!-- Apple/Linear Obsidian Dark Theme & WebCrypto SHA-256 Engine -->
+  <script src="js/theme-crypto.js"></script>
+  <!-- Raycast/Spotlight Universal Command Palette (Ctrl+K) -->
+  <script src="js/command-palette.js" defer></script>
 
   <!-- Lucide Icons & HEIC library -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -65,12 +69,26 @@
     <a href="index.html" class="brand-logo">
       <span class="brand-badge" style="background:var(--image-accent);">Doc</span>uvate
     </a>
+
+    <!-- Spotlight Command Search Trigger -->
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)" title="Press Ctrl+K or ⌘K">
+      <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+      <span>Search tools...</span>
+      <span class="cmd-kbd-shortcut">⌘K</span>
+    </button>
+
     <div class="nav-links">
       <a href="index.html" class="nav-link">Home</a>
       <a href="index.html#pdf-studio" class="nav-link">Master PDF Studio</a>
       <a href="index.html#image-studio" class="nav-link" style="color:var(--image-accent); font-weight:800;">Master Image Studio</a>
       <a href="inkscribe.html" class="nav-link">InkScribe Studio</a>
       <a href="certificate-downloader.html" class="nav-link">Certificate Downloader</a>
+      
+      <!-- Theme Switcher -->
+      <button class="btn-theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Theme (T)">
+        <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+      </button>
+
       <button class="btn-install-pwa" aria-label="Install Docuvate App">
         <i data-lucide="download" style="width: 13px; height: 13px;"></i>
         <span>Install App</span>

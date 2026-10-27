@@ -30,6 +30,10 @@
 
   <!-- Privacy Sandbox Live Network Auditor & PWA Manager -->
   <script src="js/privacy-monitor.js"></script>
+  <!-- Apple/Linear Obsidian Dark Theme & WebCrypto SHA-256 Engine -->
+  <script src="js/theme-crypto.js"></script>
+  <!-- Raycast/Spotlight Universal Command Palette (Ctrl+K) -->
+  <script src="js/command-palette.js" defer></script>
 
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -51,6 +55,14 @@
     <a href="index.html" class="brand-logo">
       <span class="brand-badge" style="background:var(--inkscribe-accent);">Ink</span>Scribe
     </a>
+
+    <!-- Spotlight Command Search Trigger -->
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)" title="Press Ctrl+K or ⌘K">
+      <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+      <span>Search tools...</span>
+      <span class="cmd-kbd-shortcut">⌘K</span>
+    </button>
+
     <div class="nav-links">
       <a href="index.html" class="nav-link">Home</a>
       <a href="index.html#pdf-studio" class="nav-link">Master PDF Studio</a>
@@ -58,18 +70,16 @@
       <a href="certificate-downloader.html" class="nav-link">Certificate Downloader</a>
       <a href="terms.html" class="nav-link">Terms</a>
       <a href="disclaimer.html" class="nav-link">Disclaimer</a>
+
+      <!-- Theme Switcher -->
+      <button class="btn-theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Theme (T)">
+        <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+      </button>
+
       <button class="btn-install-pwa" aria-label="Install Docuvate App">
         <i data-lucide="download" style="width: 13px; height: 13px;"></i>
         <span>Install App</span>
       </button>
-    </div>
-  </nav>
-      <a href="index.html#pdf-studio" class="nav-link">Master PDF Studio</a>
-      <a href="index.html#image-studio" class="nav-link">Master Image Studio</a>
-      <a href="inkscribe.html" class="nav-link" style="color: var(--accent); font-weight: 800;">InkScribe Studio</a>
-      <a href="certificate-downloader.html" class="nav-link">Certificate Downloader</a>
-      <a href="terms.html" class="nav-link">Terms</a>
-      <a href="disclaimer.html" class="nav-link">Disclaimer</a>
     </div>
   </nav>
 
@@ -122,6 +132,8 @@
               <option value="ruled">Ruled</option>
               <option value="plain">Plain</option>
               <option value="graph">Graph</option>
+              <option value="parchment">Vintage Parchment</option>
+              <option value="legal">Legal Yellow Pad</option>
             </select>
           </div>
           <div class="control-group">
@@ -221,6 +233,23 @@
           <div class="control-group">
             <label>Word Spacing (px)</label>
             <input type="number" id="word-spacing" value="2" min="-2" max="15">
+          </div>
+        </div>
+
+        <!-- Human Simulation Engine -->
+        <div class="section-title">Human Handwriting Simulation</div>
+        <div class="tool-grid">
+          <div class="control-group full">
+            <label style="display:flex; align-items:center; justify-content:space-between; cursor:pointer;">
+              <span style="display:flex; align-items:center; gap:0.4rem; font-weight:700;">
+                <i data-lucide="sparkles" style="width:13px; height:13px; color:var(--accent);"></i>
+                Organic Drift & Tilt
+              </span>
+              <input type="checkbox" id="human-jitter" checked style="accent-color:var(--accent);">
+            </label>
+            <p style="font-size:0.7rem; color:var(--text-muted); margin-top:0.35rem; line-height:1.4;">
+              Applies natural micro-tilt and organic baseline drift so handwriting never looks machine-generated.
+            </p>
           </div>
         </div>
       </div>

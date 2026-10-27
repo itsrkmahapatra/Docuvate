@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.getElementById(id);
             if(el) s[id] = el.value;
         });
+        const jitterEl = document.getElementById('human-jitter');
+        s['human-jitter'] = jitterEl ? jitterEl.checked : false;
         return s;
     }
 
@@ -58,6 +60,16 @@ document.addEventListener('DOMContentLoaded', () => {
             contentDiv.style.textAlign = s.align;
             contentDiv.style.lineHeight = s['line-height'];
             contentDiv.style.wordSpacing = s['word-spacing'] + 'px';
+
+            // Realistic Human Simulation: micro-tilt and organic baseline drift
+            if (s['human-jitter']) {
+                contentDiv.style.transform = 'rotate(-0.35deg)';
+                contentDiv.style.letterSpacing = '0.015em';
+                contentDiv.style.textRendering = 'optimizeLegibility';
+            } else {
+                contentDiv.style.transform = 'none';
+                contentDiv.style.letterSpacing = 'normal';
+            }
         }
         
         if (s.texture === 'ruled') {
@@ -70,6 +82,19 @@ document.addEventListener('DOMContentLoaded', () => {
             p.style.backgroundSize = `100% ${s['margin-top']}mm, ${s.spacing}mm ${s.spacing}mm, ${s.spacing}mm ${s.spacing}mm`;
             p.style.backgroundPosition = `0 0, 0 ${s['margin-top']}mm, 0 0`;
             p.style.backgroundRepeat = `no-repeat, repeat, repeat`;
+        } else if (s.texture === 'parchment') {
+            p.style.setProperty('--paper-bg', '#fcf6e8');
+            p.style.backgroundImage = `linear-gradient(rgba(252, 246, 232, 0.94), rgba(245, 233, 209, 0.94)), radial-gradient(circle at 50% 50%, rgba(139, 90, 43, 0.08) 0%, transparent 80%), linear-gradient(${s['line-color']} 1px, transparent 1px)`;
+            p.style.backgroundSize = `100% 100%, 100% 100%, 100% ${s.spacing}mm`;
+            p.style.backgroundPosition = `0 0, 0 0, 0 ${s['margin-top']}mm`;
+            p.style.backgroundRepeat = `no-repeat, no-repeat, repeat`;
+        } else if (s.texture === 'legal') {
+            p.style.setProperty('--paper-bg', '#fef9c3');
+            p.style.backgroundImage = `linear-gradient(#fef9c3, #fef9c3), linear-gradient(#93c5fd 1px, transparent 1px)`;
+            p.style.backgroundSize = `100% ${s['margin-top']}mm, 100% ${s.spacing}mm`;
+            p.style.backgroundPosition = `0 0, 0 ${s['margin-top']}mm`;
+            p.style.backgroundRepeat = `no-repeat, repeat`;
+            p.style.setProperty('--margin-color', '#f87171');
         } else {
             p.style.backgroundImage = 'none';
         }
@@ -253,6 +278,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById(id);
         if(el) el.addEventListener('input', updateAllPages);
     });
+
+    const humanJitterEl = document.getElementById('human-jitter');
+    if (humanJitterEl) {
+        humanJitterEl.addEventListener('change', updateAllPages);
+    }
     
     const clearBtn = document.getElementById('clear-btn');
     if (clearBtn) {
