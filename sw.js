@@ -6,7 +6,7 @@
  * ============================================================================
  */
 
-const CACHE_NAME = 'docuvate-v3.1.0-offline';
+const CACHE_NAME = 'docuvate-v3.2.0-ranking';
 
 const STATIC_ASSETS = [
   './',
@@ -48,7 +48,9 @@ const STATIC_ASSETS = [
   './vendor/puter.js',
   './logo.png',
   './assets/developer.png',
-  './manifest.json'
+  './manifest.json',
+  './opensearch.xml',
+  './sitemap.xml'
 ];
 
 self.addEventListener('install', (event) => {

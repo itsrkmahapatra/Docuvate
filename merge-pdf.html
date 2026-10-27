@@ -25,33 +25,116 @@
   <meta name="twitter:description" content="Merge multiple PDF documents client-side with 100% privacy in local browser memory.">
   <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
 
-  <!-- JSON-LD Structured Data Schema -->
+  <!-- JSON-LD Multi-Schema: WebApplication, FAQPage, HowTo, BreadcrumbList -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Merge PDF Studio - Docuvate",
-    "url": "https://itsrkmahapatra.github.io/Docuvate/merge-pdf.html",
-    "description": "Merge multiple PDF documents into a single file directly in your browser. 100% private client-side processing.",
-    "applicationCategory": "ProductivityApplication, PDFApplication",
-    "operatingSystem": "All modern web browsers",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Raj Kishor Mahapatra",
-      "url": "https://github.com/itsrkmahapatra"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.98",
-      "ratingCount": "9140",
-      "bestRating": "5",
-      "worstRating": "1"
-    }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Merge PDF Studio - Docuvate (100% Private Client-Side)",
+        "url": "https://itsrkmahapatra.github.io/Docuvate/merge-pdf.html",
+        "description": "Merge multiple PDF documents into a single file directly in your browser. 100% private client-side processing.",
+        "applicationCategory": "ProductivityApplication, PDFApplication",
+        "operatingSystem": "All modern web browsers",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Raj Kishor Mahapatra",
+          "url": "https://github.com/itsrkmahapatra"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.98",
+          "ratingCount": "9140",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Merge PDF Studio",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/merge-pdf.html"
+          }
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Merge Multiple PDF Files in Browser Without Uploading",
+        "description": "Step-by-step instructions to combine PDF documents client-side using WebAssembly with zero data leakage.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Select or Drop PDF Files",
+            "text": "Drag and drop your PDF documents into the workstation workbench. You can add as many files as you need."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Verify Document Order",
+            "text": "Review your loaded PDFs in the Documents to Combine queue and remove or arrange them as desired."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Combine & Download Instantly",
+            "text": "Click Merge & Download PDF to assemble your combined document in browser RAM with instant export."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is my PDF confidential and safe when merging on Docuvate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, 100%. Traditional sites like iLovePDF and Smallpdf transmit your PDF across the internet to their servers. Docuvate processes your entire PDF file using local WebAssembly in browser RAM. Zero bytes are ever sent to any remote server."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a file size limit or page count cap?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No artificial limits! Because processing occurs inside your device's memory, you are only limited by your device's available RAM. You can merge hundreds of pages without subscriptions or paywalls."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Docuvate add watermarks to merged PDFs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Never. All output files are clean, unwatermarked, and preserve your original font glyphs, vector lines, and embedded metadata."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I merge PDF files completely offline in Airplane Mode?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Docuvate is an installable PWA. All required PDF engines (PDF-Lib and PDF.js) are bundled locally. You can disconnect your internet and merge files anywhere."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
 
@@ -192,6 +275,168 @@
       </div>
     </section>
   </main>
+
+  <!-- World #1 Programmatic SEO & Educational Content Section -->
+  <section class="seo-content-section">
+    <div class="seo-header-block">
+      <span class="seo-kicker-badge">
+        <i data-lucide="shield-check" style="width:13px; height:13px;"></i>
+        100% Client-Side Private Document Assembly
+      </span>
+      <h2 class="seo-main-title">How to Merge Multiple PDF Files in Your Browser</h2>
+      <p class="seo-lead-text">
+        The most secure, high-performance way to combine confidential contracts, financial spreadsheets, research papers, and forms into a single unified PDF.
+      </p>
+    </div>
+
+    <!-- 3-Step Visual Guide -->
+    <div class="seo-steps-grid">
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">01</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="file-plus" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Select Multiple PDF Files</h3>
+        <p class="seo-step-desc">Drop your PDF files into the workstation. Add as many files as you need without uploading a single byte to the cloud.</p>
+      </div>
+
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">02</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="list-ordered" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Verify & Organize File Queue</h3>
+        <p class="seo-step-desc">Inspect document sizes, cryptographic SHA-256 hashes, and remove any unwanted files before assembling.</p>
+      </div>
+
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">03</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="download" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Merge & Instant Download</h3>
+        <p class="seo-step-desc">Click Merge to combine files instantaneously inside browser memory. Output PDF downloads directly to your device.</p>
+      </div>
+    </div>
+
+    <!-- Competitor Comparison Table: Docuvate vs iLovePDF vs SmallPDF -->
+    <div class="seo-comparison-wrap">
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <h3 style="font-size:1.35rem; font-weight:800; color:var(--text-main);">Why Docuvate Ranks #1 Over iLovePDF & Smallpdf</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">See how our in-browser WebAssembly engine outperforms legacy cloud upload tools</p>
+      </div>
+      <table class="seo-comparison-table">
+        <thead>
+          <tr>
+            <th>Security & Architecture Metric</th>
+            <th class="seo-highlight-col">Docuvate (Private Sandbox)</th>
+            <th>iLovePDF</th>
+            <th>Smallpdf</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Cloud Server Uploads</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> 0.00 KB Leaked (Local RAM)</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> Uploads to Cloud Server</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> Uploads to Remote Cloud</span></td>
+          </tr>
+          <tr>
+            <td><strong>Free Tier Daily Usage Limit</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> 100% Unlimited Free</span></td>
+            <td>Throttled with countdowns</td>
+            <td>Paywalled after 2 tasks/day</td>
+          </tr>
+          <tr>
+            <td><strong>Offline / Airplane Mode</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> Full PWA (Zero Internet)</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> No (Fails without internet)</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> No (Fails without internet)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Watermarks & Branding</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> Zero Watermarks Ever</span></td>
+            <td>Watermarks on some tools</td>
+            <td>Requires Pro subscription</td>
+          </tr>
+          <tr>
+            <td><strong>Data Retention Risk</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> Zero Retention (Purged on Close)</span></td>
+            <td>Saved for 2 hours on servers</td>
+            <td>Saved on cloud infrastructure</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div class="seo-features-grid">
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="layers" style="width:18px; height:18px; color:var(--pdf-accent);"></i> Lossless Stream Merging</h4>
+        <p class="seo-feature-desc">Copies raw PDF object streams directly without rasterization, preserving vector crispness and tiny file size.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="shield-check" style="width:18px; height:18px; color:var(--pdf-accent);"></i> WebCrypto Attestation</h4>
+        <p class="seo-feature-desc">Computes SHA-256 integrity checksums locally in browser memory so you know your documents remain untouched.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="zap" style="width:18px; height:18px; color:var(--pdf-accent);"></i> Instant In-Memory Assembly</h4>
+        <p class="seo-feature-desc">No network latency or slow upload queues. Merges large documents in fractions of a second inside RAM.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="eye-off" style="width:18px; height:18px; color:var(--pdf-accent);"></i> Zero Server Footprint</h4>
+        <p class="seo-feature-desc">Ideal for corporate compliance, HIPAA-sensitive medical files, and confidential financial contracts.</p>
+      </div>
+    </div>
+
+    <!-- Interactive FAQ Accordion -->
+    <div class="seo-faq-wrap">
+      <div style="text-align:center; margin-bottom:2rem;">
+        <h3 style="font-size:1.5rem; font-weight:800; color:var(--text-main);">Frequently Asked Questions</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">Common questions about private client-side PDF merging</p>
+      </div>
+
+      <div class="seo-faq-item active">
+        <button class="seo-faq-trigger">
+          <span>Are my PDF documents safe when merging on Docuvate?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Yes, 100%. Traditional sites upload your documents to remote cloud storage. Docuvate uses a sandboxed WebAssembly engine that runs strictly inside your local web browser. Your files never cross the network or touch a remote server.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Is there any limit on the number of PDFs or page count?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          No arbitrary limits. Because processing runs on your own device hardware, you can merge dozens of files and thousands of pages without encountering arbitrary paywalls or daily caps.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Does Docuvate add watermarks to combined PDFs?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Never. Docuvate is 100% free and open-source under the MIT license. We will never add watermarks, header stamps, or alter your document formatting.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Can I merge PDF files offline without Wi-Fi?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Yes! Install Docuvate as an offline PWA on Windows, macOS, Android, or iOS. All engines are bundled locally in the vendor folder, giving you full offline capability in Airplane Mode.
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Site Footer -->
   <footer class="site-footer">

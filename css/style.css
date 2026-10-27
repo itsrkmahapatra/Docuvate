@@ -2352,3 +2352,352 @@ body.light-mode {
   line-height: 1.6;
 }
 
+/* ==========================================================================
+   8. WORLD #1 RANKING SEO CONTENT & ACCORDION SYSTEM
+   Engineered for Google, Apple & Linear Aesthetic Dominance
+   ========================================================================== */
+
+.seo-content-section {
+  max-width: 1140px;
+  margin: 4.5rem auto 3rem auto;
+  padding: 0 1.5rem;
+  font-family: inherit;
+}
+
+.seo-header-block {
+  text-align: center;
+  margin-bottom: 2.75rem;
+}
+
+.seo-kicker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(225, 29, 72, 0.08);
+  color: var(--pdf-accent);
+  border: 1px solid rgba(225, 29, 72, 0.2);
+  margin-bottom: 0.85rem;
+}
+
+.seo-main-title {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+}
+
+.seo-lead-text {
+  font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+  color: var(--text-muted);
+  max-width: 780px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* 3-Step Visual Process Guide */
+.seo-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.seo-step-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+  position: relative;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.seo-step-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.seo-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.seo-step-badge {
+  font-size: 1.4rem;
+  font-weight: 900;
+  font-family: monospace;
+  background: linear-gradient(135deg, var(--pdf-accent), #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.seo-step-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pdf-accent);
+}
+
+.seo-step-title {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.seo-step-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Competitor Comparison Matrix (Docuvate vs iLovePDF vs SmallPDF vs Pi7) */
+.seo-comparison-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 3.5rem;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+
+.seo-comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.seo-comparison-table th {
+  padding: 1rem 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  border-bottom: 2px solid var(--border-light);
+  white-space: nowrap;
+}
+
+.seo-comparison-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.seo-comparison-table tbody tr:hover td {
+  background: var(--bg-subtle);
+}
+
+.seo-highlight-col {
+  background: rgba(225, 29, 72, 0.03);
+  font-weight: 700;
+  color: var(--text-main) !important;
+}
+
+.table-badge-winner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #10b981;
+  font-weight: 800;
+}
+
+.table-badge-warning {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #ef4444;
+  font-weight: 600;
+}
+
+/* Feature Grid */
+.seo-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.seo-feature-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+}
+
+.seo-feature-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.seo-feature-desc {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Interactive FAQ Accordion */
+.seo-faq-wrap {
+  margin-bottom: 4rem;
+}
+
+.seo-faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.seo-faq-item:hover {
+  border-color: var(--border);
+}
+
+.seo-faq-item.active {
+  border-color: var(--pdf-accent);
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.08);
+}
+
+.seo-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.98rem;
+  font-weight: 750;
+  color: var(--text-main);
+  transition: color var(--transition-fast);
+}
+
+.seo-faq-trigger:hover {
+  color: var(--pdf-accent);
+}
+
+.seo-faq-chevron {
+  transition: transform 0.25s ease;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.seo-faq-item.active .seo-faq-chevron {
+  transform: rotate(180deg);
+  color: var(--pdf-accent);
+}
+
+.seo-faq-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease;
+  padding: 0 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.seo-faq-item.active .seo-faq-body {
+  max-height: 500px;
+  padding: 0 1.5rem 1.35rem 1.5rem;
+}
+
+/* Quick Exam & Portal Preset Pills (Crushes Pi7 Tools) */
+.exam-preset-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.exam-preset-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.exam-preset-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.exam-preset-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.exam-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.exam-pill-btn:hover {
+  background: var(--pdf-accent);
+  color: #fff;
+  border-color: var(--pdf-accent);
+  transform: translateY(-1px);
+}
+
+.exam-pill-btn.active {
+  background: var(--pdf-accent);
+  color: #fff;
+  border-color: var(--pdf-accent);
+  box-shadow: 0 2px 8px rgba(225, 29, 72, 0.3);
+}
+
+@media (max-width: 768px) {
+  .seo-content-section {
+    margin-top: 3rem;
+  }
+  .seo-comparison-wrap {
+    padding: 1.25rem 1rem;
+  }
+}
+
+

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -25,33 +25,116 @@
   <meta name="twitter:description" content="Compress PDF to under 100KB or exact target size using client-side binary search. Engineered for exam, job, and government portals.">
   <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
 
-  <!-- JSON-LD Structured Data Schema -->
+  <!-- JSON-LD Multi-Schema: WebApplication, FAQPage, HowTo, BreadcrumbList -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Compress PDF to Exactly 100KB - Docuvate (100% Private)",
-    "url": "https://itsrkmahapatra.github.io/Docuvate/compress-pdf-to-100kb.html",
-    "description": "Compress PDF to under 100KB or exact target size using client-side binary search. Engineered for exam, job, and government portals.",
-    "applicationCategory": "UtilitiesApplication, PDFApplication",
-    "operatingSystem": "All modern web browsers",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Raj Kishor Mahapatra",
-      "url": "https://github.com/itsrkmahapatra"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.99",
-      "ratingCount": "15640",
-      "bestRating": "5",
-      "worstRating": "1"
-    }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Compress PDF to Exactly 100KB - Docuvate (100% Private)",
+        "url": "https://itsrkmahapatra.github.io/Docuvate/compress-pdf-to-100kb.html",
+        "description": "Compress PDF to under 100KB or exact target size using client-side binary search. Engineered for exam, job, and government portals.",
+        "applicationCategory": "UtilitiesApplication, PDFApplication",
+        "operatingSystem": "All modern web browsers",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Raj Kishor Mahapatra",
+          "url": "https://github.com/itsrkmahapatra"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.99",
+          "ratingCount": "15640",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Compress PDF to 100KB",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/compress-pdf-to-100kb.html"
+          }
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Compress a PDF Strictly Under 100 KB in Your Browser",
+        "description": "Step-by-step instructions to downsample and reduce PDF file size below 100 KB for government exam portals with zero cloud uploads.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Upload PDF File",
+            "text": "Drop or select your PDF document in the workstation. Processing begins locally in browser RAM."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Select Target Ceiling (100KB, 50KB, or 200KB)",
+            "text": "Choose 100 KB Strict or click an exam portal preset for UPSC, SSC, or IBPS."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Download Validated PDF",
+            "text": "Click Compress to &lt;100KB to export a crisp, submission-compliant PDF file."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why is 100 KB the standard limit for Indian government job portals?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Portals like UPSC, SSC, OPSC, and state PSCs have strict legacy server constraints requiring uploaded certificates, caste proofs, and marksheets to be strictly under 100.00 KB. Any file of 100.1 KB is automatically rejected."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does compressing a PDF to 100 KB make the text unreadable?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No! Docuvate uses vector preservation and selective raster quantization. Text glyphs and font definitions remain razor sharp, while high-resolution background scan noise is intelligently downsampled."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are my confidential marksheet and certificates stored on Docuvate?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Never. Docuvate has zero backend upload servers. Your documents are processed entirely in your device's browser memory and purged when the tab is closed."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I compress multiple pages under 100 KB?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! The binary search compressor adaptively calculates the optimal compression ratio across all pages to meet the overall 100 KB ceiling."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
   <meta name="keywords" content="compress pdf to 100kb, reduce pdf size to 100kb, pdf compressor under 100kb, docuvate">
@@ -151,10 +234,17 @@
           <input type="number" id="targetKbInput" value="100" readonly style="opacity:0.85;">
         </div>
 
-        <div class="preset-pills-grid">
-          <button class="preset-pill active" data-kb="100">100 KB Strict</button>
-          <button class="preset-pill" data-kb="50">50 KB (High)</button>
-          <button class="preset-pill" data-kb="200">200 KB</button>
+        <div class="exam-preset-container" style="margin-top:0.75rem; padding:0.85rem;">
+          <div class="exam-preset-title" style="margin-bottom:0.5rem;">
+            <i data-lucide="award" style="width:13px; height:13px; color:var(--pdf-accent);"></i>
+            <span>Portal Target Ceiling</span>
+          </div>
+          <div class="exam-preset-pills">
+            <button class="exam-pill-btn active" data-kb="100">100 KB (Govt Portals)</button>
+            <button class="exam-pill-btn" data-kb="50">50 KB (Strict)</button>
+            <button class="exam-pill-btn" data-kb="200">200 KB (UPSC Admit)</button>
+            <button class="exam-pill-btn" data-kb="300">300 KB (Passport)</button>
+          </div>
         </div>
       </div>
 
@@ -213,6 +303,168 @@
       </div>
     </section>
   </main>
+
+  <!-- World #1 Programmatic SEO & Educational Content Section -->
+  <section class="seo-content-section">
+    <div class="seo-header-block">
+      <span class="seo-kicker-badge">
+        <i data-lucide="shield-check" style="width:13px; height:13px;"></i>
+        Strict &lt;100 KB Compliance Engine
+      </span>
+      <h2 class="seo-main-title">How to Compress PDF Strictly Under 100 KB for Govt Portals</h2>
+      <p class="seo-lead-text">
+        Engineered specifically for UPSC, SSC, IBPS, OPSC, and state exam portals that reject any file exceeding 100.00 KB. 100% client-side privacy with crystal-clear document text.
+      </p>
+    </div>
+
+    <!-- 3-Step Visual Guide -->
+    <div class="seo-steps-grid">
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">01</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="file-up" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Select Any PDF Certificate</h3>
+        <p class="seo-step-desc">Drop your caste certificate, marksheet, income proof, or legal affidavit. Your document stays in local device RAM.</p>
+      </div>
+
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">02</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="target" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Choose 100 KB Target Preset</h3>
+        <p class="seo-step-desc">Our binary search algorithm targets 95-98 KB so your file is safely under the portal's ceiling without being rejected.</p>
+      </div>
+
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">03</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="download" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Download Submission-Ready PDF</h3>
+        <p class="seo-step-desc">Instant export with full cryptographic verification. Zero watermarks and zero blur on stamp seals or signatures.</p>
+      </div>
+    </div>
+
+    <!-- Competitor Comparison Table: Docuvate vs iLovePDF vs Pi7 -->
+    <div class="seo-comparison-wrap">
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <h3 style="font-size:1.35rem; font-weight:800; color:var(--text-main);">Why Candidates Choose Docuvate Over iLovePDF & Pi7</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">Compare precision, security, and portal compliance</p>
+      </div>
+      <table class="seo-comparison-table">
+        <thead>
+          <tr>
+            <th>Portal Compliance Metric</th>
+            <th class="seo-highlight-col">Docuvate (100% Private)</th>
+            <th>iLovePDF</th>
+            <th>Pi7 PDF Tool</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Strict 100 KB Ceiling Guarantee</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> 100% Guaranteed Under 100 KB</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> Percentage-only (Can exceed 100KB)</span></td>
+            <td>Approximation</td>
+          </tr>
+          <tr>
+            <td><strong>Confidential Document Security</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> 0.00 KB Leaked (Local Browser RAM)</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> Uploads Marksheet to Cloud</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> Uploads to Server</span></td>
+          </tr>
+          <tr>
+            <td><strong>Offline Airplane-Mode Capability</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> Full PWA (Zero Internet)</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> No</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> No</span></td>
+          </tr>
+          <tr>
+            <td><strong>Stamp Seal & Signature Crispness</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> High Edge Contrast Preservation</span></td>
+            <td>Often blurs official stamps</td>
+            <td>Varies</td>
+          </tr>
+          <tr>
+            <td><strong>Annoying Ads & Countdowns</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> Zero Ads / Zero Wait</span></td>
+            <td>Display banners & countdowns</td>
+            <td>Heavy ads & popups</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div class="seo-features-grid">
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="shield-check" style="width:18px; height:18px; color:var(--pdf-accent);"></i> Guaranteed Portal Acceptance</h4>
+        <p class="seo-feature-desc">Calibrated for UPSC, SSC, IBPS, OPSC, and state exam portals that reject files larger than 100.00 KB.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="file-text" style="width:18px; height:18px; color:var(--pdf-accent);"></i> Text Sharpness Retention</h4>
+        <p class="seo-feature-desc">Keeps certificate roll numbers, signatures, and gazetted officer stamps completely legible.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="lock" style="width:18px; height:18px; color:var(--pdf-accent);"></i> 100% In-Memory Privacy</h4>
+        <p class="seo-feature-desc">Mark sheets, caste certificates, and income proofs are never uploaded or indexed by search engines.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="zap" style="width:18px; height:18px; color:var(--pdf-accent);"></i> Fast Binary Search Engine</h4>
+        <p class="seo-feature-desc">Iteratively converges on optimal downsampling within seconds on any mobile phone or computer.</p>
+      </div>
+    </div>
+
+    <!-- Interactive FAQ Accordion -->
+    <div class="seo-faq-wrap">
+      <div style="text-align:center; margin-bottom:2rem;">
+        <h3 style="font-size:1.5rem; font-weight:800; color:var(--text-main);">Frequently Asked Questions</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">Answers about compressing PDFs to strictly under 100 KB</p>
+      </div>
+
+      <div class="seo-faq-item active">
+        <button class="seo-faq-trigger">
+          <span>Will my PDF be strictly under 100 KB?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Yes! Docuvate uses a strict ceiling algorithm that targets 90-98 KB so that the final exported PDF never exceeds the 100.00 KB limit enforced by government application portals.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Are my educational certificates safe from being uploaded?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Yes, 100%. Docuvate operates entirely inside your local device's browser memory (RAM). There are no cloud servers and no databases. You can verify zero data transmission via the Live Audit badge in the top header.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Will the official stamp seal or signature be blurred?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          No. Docuvate preserves vector elements and maintains high-contrast edges for scanned signatures, stamps, and seals so they pass scrutiny by exam scrutiny boards.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Can I use this on my mobile phone?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Yes! The workstation is fully responsive and supports touch drag-and-drop on Android Chrome, iOS Safari, tablets, and desktop browsers.
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Site Footer -->
   <footer class="site-footer">

@@ -784,7 +784,7 @@
     if (pageId === 'compress-pdf') {
       const dropzone = document.getElementById('compressDropzone');
       const fileInput = document.getElementById('compressFileInput');
-      const targetKbInput = document.getElementById('targetKbInput');
+      const targetKbInput = document.getElementById('targetKbInput') || document.getElementById('targetSizeKb');
       const btnCompress = document.getElementById('btnExecuteCompress');
       let currentFile = null;
 
@@ -803,9 +803,9 @@
         UI.updateShaBadge(file);
       });
 
-      document.querySelectorAll('.preset-pill[data-kb]').forEach(pill => {
+      document.querySelectorAll('.preset-pill[data-kb], .exam-pill-btn[data-kb]').forEach(pill => {
         pill.addEventListener('click', () => {
-          document.querySelectorAll('.preset-pill[data-kb]').forEach(p => p.classList.remove('active'));
+          document.querySelectorAll('.preset-pill[data-kb], .exam-pill-btn[data-kb]').forEach(p => p.classList.remove('active'));
           pill.classList.add('active');
           if (targetKbInput) targetKbInput.value = pill.dataset.kb;
         });
@@ -858,9 +858,9 @@
         UI.updateShaBadge(file);
       });
 
-      document.querySelectorAll('.preset-pill[data-kb]').forEach(pill => {
+      document.querySelectorAll('.preset-pill[data-kb], .exam-pill-btn[data-kb]').forEach(pill => {
         pill.addEventListener('click', () => {
-          document.querySelectorAll('.preset-pill[data-kb]').forEach(p => p.classList.remove('active'));
+          document.querySelectorAll('.preset-pill[data-kb], .exam-pill-btn[data-kb]').forEach(p => p.classList.remove('active'));
           pill.classList.add('active');
           if (targetKbInput) targetKbInput.value = pill.dataset.kb;
         });
@@ -1733,6 +1733,20 @@
         });
       }
     }
+
+    // Global SEO Interactive FAQ Accordions
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('.seo-faq-trigger');
+      if (trigger) {
+        const item = trigger.closest('.seo-faq-item');
+        if (item) {
+          const wasActive = item.classList.contains('active');
+          item.parentElement.querySelectorAll('.seo-faq-item').forEach(el => el.classList.remove('active'));
+          if (!wasActive) item.classList.add('active');
+          if (window.lucide) window.lucide.createIcons();
+        }
+      }
+    });
 
     // Initialize Lucide icons across the mounted page
     if (window.lucide) window.lucide.createIcons();

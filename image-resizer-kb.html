@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -25,33 +25,124 @@
   <meta name="twitter:description" content="Resize and compress photos to exact target KB (20KB, 50KB, 100KB, 200KB) with instant live preview and zero cloud uploads.">
   <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
 
-  <!-- JSON-LD Structured Data Schema -->
+  <!-- JSON-LD Multi-Schema: WebApplication, FAQPage, HowTo, BreadcrumbList -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Image Resizer to Exact KB Studio - Docuvate (100% Private)",
-    "url": "https://itsrkmahapatra.github.io/Docuvate/image-resizer-kb.html",
-    "description": "Resize and compress photos to exact target KB (20KB, 50KB, 100KB, 200KB) with instant live preview and zero cloud uploads.",
-    "applicationCategory": "MultimediaApplication, GraphicsApplication",
-    "operatingSystem": "All modern web browsers",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Raj Kishor Mahapatra",
-      "url": "https://github.com/itsrkmahapatra"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.99",
-      "ratingCount": "18450",
-      "bestRating": "5",
-      "worstRating": "1"
-    }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Image Resizer to Exact KB Studio - Docuvate (100% Private)",
+        "url": "https://itsrkmahapatra.github.io/Docuvate/image-resizer-kb.html",
+        "description": "Resize and compress photos to exact target KB (20KB, 50KB, 100KB, 200KB) with instant live preview and zero cloud uploads.",
+        "applicationCategory": "MultimediaApplication, GraphicsApplication",
+        "operatingSystem": "All modern web browsers",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Raj Kishor Mahapatra",
+          "url": "https://github.com/itsrkmahapatra"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.99",
+          "ratingCount": "18450",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Image Resizer in KB",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/image-resizer-kb.html"
+          }
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Resize an Image to an Exact KB Target in Your Browser",
+        "description": "Step-by-step guide to compress and resize any photo or signature strictly under 20KB, 50KB, or 100KB with zero cloud uploads.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Select Your Image",
+            "text": "Drag and drop or select your JPG, PNG, WebP, or Apple HEIC photo or signature."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Choose Target KB or Exam Preset",
+            "text": "Enter your desired target size (e.g. 20, 50, 100) or click an official preset like UPSC, SSC, IBPS, or NEET."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Download Compressed Image",
+            "text": "Click Resize & Download to receive your perfectly compressed image guaranteed to be under the target size."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does Docuvate compress images to exact KB without losing quality?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Docuvate uses a client-side binary search algorithm inside browser RAM. It iteratively adjusts JPEG quantization matrices and pixel dimensions until the file size matches your exact target ceiling while preserving maximum facial and signature clarity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my sensitive exam photo or signature uploaded to any server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Unlike Pi7 Image Tool or online converters, Docuvate operates 100% locally in your browser memory. Zero bytes are ever transmitted over the network."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which government exams and application portals are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Docuvate supports all official Indian and international portals including UPSC Civil Services, SSC CGL/CHSL/MTS, IBPS/SBI Bank PO, NEET, JEE Main, GATE, State PSCs, Police Recruitment, Passport Seva, and PAN Card."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I resize Apple iPhone HEIC photos directly?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Docuvate bundles a local client-side HEIC/HEIF decoder that converts iPhone photos into standard JPEG/PNG in your browser without requiring external software."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Docuvate work offline without internet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! As an installable Progressive Web App (PWA) with full service worker caching, you can open and use Docuvate in complete Airplane Mode with zero internet connectivity."
+            }
+          }
+        ]
+      }
+    ]
   }
   </script>
   <meta name="keywords" content="image resizer kb, compress image to 50kb, resize photo 20kb, upsc photo resizer, ssc signature resizer, docuvate">
@@ -150,12 +241,22 @@
           <input type="number" id="targetKbInput" value="50" min="5" max="2000" step="5">
         </div>
 
-        <div class="preset-pills-grid">
-          <button class="preset-pill" data-kb="20">20 KB (SSC)</button>
-          <button class="preset-pill active" data-kb="50">50 KB (UPSC)</button>
-          <button class="preset-pill" data-kb="100">100 KB</button>
-          <button class="preset-pill" data-kb="200">200 KB</button>
-          <button class="preset-pill" data-kb="500">500 KB</button>
+        <div class="exam-preset-container" style="margin-top:0.75rem; padding:0.85rem;">
+          <div class="exam-preset-title" style="margin-bottom:0.5rem;">
+            <i data-lucide="award" style="width:13px; height:13px; color:var(--image-accent);"></i>
+            <span>Govt Exam & Portal Presets</span>
+          </div>
+          <div class="exam-preset-pills">
+            <button class="exam-pill-btn active" data-kb="50">UPSC Photo (50KB)</button>
+            <button class="exam-pill-btn" data-kb="20">UPSC Sign (20KB)</button>
+            <button class="exam-pill-btn" data-kb="50">SSC Photo (50KB)</button>
+            <button class="exam-pill-btn" data-kb="20">SSC Sign (20KB)</button>
+            <button class="exam-pill-btn" data-kb="50">IBPS PO (50KB)</button>
+            <button class="exam-pill-btn" data-kb="20">IBPS Thumb (20KB)</button>
+            <button class="exam-pill-btn" data-kb="100">NEET / JEE (100KB)</button>
+            <button class="exam-pill-btn" data-kb="200">200 KB</button>
+            <button class="exam-pill-btn" data-kb="500">500 KB</button>
+          </div>
         </div>
       </div>
 
@@ -211,6 +312,184 @@
       </div>
     </section>
   </main>
+
+  <!-- World #1 Programmatic SEO & Educational Content Section -->
+  <section class="seo-content-section">
+    <div class="seo-header-block">
+      <span class="seo-kicker-badge">
+        <i data-lucide="shield-check" style="width:13px; height:13px;"></i>
+        100% Private Client-Side Compression
+      </span>
+      <h2 class="seo-main-title">How to Resize Photos & Signatures to Exact KB in Browser</h2>
+      <p class="seo-lead-text">
+        Engineered specifically for competitive exam candidates (UPSC, SSC, IBPS, NEET, State PSCs) and official portal submissions. Zero cloud uploads, zero wait times, and maximum clarity retention.
+      </p>
+    </div>
+
+    <!-- 3-Step Visual Guide -->
+    <div class="seo-steps-grid">
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">01</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="upload" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Select Any Photo or Signature</h3>
+        <p class="seo-step-desc">Drop your JPG, PNG, WebP, or Apple HEIC iPhone picture into the workstation. Your file stays strictly within local device RAM.</p>
+      </div>
+
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">02</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="sliders" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Choose Exact Target KB or Exam</h3>
+        <p class="seo-step-desc">Enter your exact KB ceiling (e.g. 20KB, 50KB, 100KB) or click an official 1-click preset for UPSC, SSC CGL, IBPS, or NEET.</p>
+      </div>
+
+      <div class="seo-step-card">
+        <div class="seo-step-header">
+          <span class="seo-step-badge">03</span>
+          <div class="seo-step-icon-wrap"><i data-lucide="download" style="width:20px; height:20px;"></i></div>
+        </div>
+        <h3 class="seo-step-title">Download Strictly Compressed Image</h3>
+        <p class="seo-step-desc">Our binary search engine compresses the file strictly under the target ceiling without blur. Instant download ready for upload.</p>
+      </div>
+    </div>
+
+    <!-- Competitor Comparison Table: Docuvate vs Pi7 vs iLoveIMG -->
+    <div class="seo-comparison-wrap">
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <h3 style="font-size:1.35rem; font-weight:800; color:var(--text-main);">Why Docuvate Ranks #1 Over Online Compressors</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">A transparent comparison between Docuvate, Pi7 Image Tool, and iLoveIMG</p>
+      </div>
+      <table class="seo-comparison-table">
+        <thead>
+          <tr>
+            <th>Security & Feature Metric</th>
+            <th class="seo-highlight-col">Docuvate (Private Sandbox)</th>
+            <th>Pi7 Image Tool</th>
+            <th>iLoveIMG</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>File Upload to Remote Cloud</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> 0.00 KB (Zero Leaked)</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> Uploads to Server</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> Uploads to Cloud</span></td>
+          </tr>
+          <tr>
+            <td><strong>Strict KB Ceiling Guarantee</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> 100% Guaranteed</span></td>
+            <td>Approximation</td>
+            <td>Fixed Percentages Only</td>
+          </tr>
+          <tr>
+            <td><strong>Full Offline / Airplane Mode</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> Certified PWA (Offline)</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> No (Internet Required)</span></td>
+            <td><span class="table-badge-warning"><i data-lucide="x" style="width:14px; height:14px;"></i> No (Internet Required)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Apple iPhone HEIC Support</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> Native Local Decoder</span></td>
+            <td>Requires External Convert</td>
+            <td>Paid Premium Tier</td>
+          </tr>
+          <tr>
+            <td><strong>Advertisements & Trackers</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> Zero Ads / Zero Trackers</span></td>
+            <td>Aggressive Display Ads</td>
+            <td>Banner Ads & Cookies</td>
+          </tr>
+          <tr>
+            <td><strong>Daily Usage Limit</strong></td>
+            <td class="seo-highlight-col"><span class="table-badge-winner"><i data-lucide="check" style="width:14px; height:14px;"></i> 100% Free & Unlimited</span></td>
+            <td>Throttled with Captchas</td>
+            <td>Paywalled after 2 uses</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div class="seo-features-grid">
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="cpu" style="width:18px; height:18px; color:var(--image-accent);"></i> Binary Search Quantization</h4>
+        <p class="seo-feature-desc">Adjusts DCT coefficients dynamically in browser RAM until the exact byte ceiling is achieved without pixelation.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="user-check" style="width:18px; height:18px; color:var(--image-accent);"></i> Facial Clarity Retention</h4>
+        <p class="seo-feature-desc">Preserves high edge contrast on faces, signatures, and stamps to pass automated government portal validation.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="lock" style="width:18px; height:18px; color:var(--image-accent);"></i> 100% Private Memory Sandbox</h4>
+        <p class="seo-feature-desc">Your ID photos and legal signatures never leave your device. Active Live Auditor provides real-time proof of zero leakage.</p>
+      </div>
+      <div class="seo-feature-box">
+        <h4 class="seo-feature-title"><i data-lucide="smartphone" style="width:18px; height:18px; color:var(--image-accent);"></i> Mobile & Tablet Optimized</h4>
+        <p class="seo-feature-desc">Works seamlessly across Android, iPhone, iPad, and desktop browsers with touch drag-and-drop support.</p>
+      </div>
+    </div>
+
+    <!-- Interactive FAQ Accordion -->
+    <div class="seo-faq-wrap">
+      <div style="text-align:center; margin-bottom:2rem;">
+        <h3 style="font-size:1.5rem; font-weight:800; color:var(--text-main);">Frequently Asked Questions</h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">Everything you need to know about resizing photos and signatures for exam portals</p>
+      </div>
+
+      <div class="seo-faq-item active">
+        <button class="seo-faq-trigger">
+          <span>How does Docuvate compress images to exact KB without losing quality?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Docuvate implements an in-browser binary search compression algorithm. Instead of arbitrarily degrading your photo, it analyzes pixel dimensions and quantization matrices to converge on the highest-possible visual resolution that fits strictly under your target KB threshold (e.g. 19.8 KB for a 20 KB limit).
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Is it safe to resize my signature and ID photo on Docuvate?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Yes, 100%. Docuvate runs entirely within your device's browser memory (RAM). Unlike other websites that save copies of your uploaded signatures on remote servers, Docuvate does not possess a backend upload API. You can verify this anytime via our Live Network Auditor badge in the header.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Which exams and job portals can I use this tool for?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Docuvate is calibrated for all competitive recruitment and entrance portals including UPSC Civil Services (20-50KB photo, 10-20KB sign), SSC CGL/CHSL/MTS, IBPS/SBI Bank PO/Clerk, NEET, JEE Main, GATE, State PSCs, Police Recruitment, Passport Seva, and PAN Card portals.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Can I resize Apple iPhone HEIC photos directly?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Yes! Docuvate includes a bundled client-side HEIC/HEIF decoder. You can drop photos directly from your iPhone, and Docuvate will decode them in browser RAM and export them as standard, portal-compliant JPEG files.
+        </div>
+      </div>
+
+      <div class="seo-faq-item">
+        <button class="seo-faq-trigger">
+          <span>Can I use this tool without an internet connection?</span>
+          <i data-lucide="chevron-down" class="seo-faq-chevron" style="width:18px; height:18px;"></i>
+        </button>
+        <div class="seo-faq-body">
+          Yes! Docuvate is an installable Progressive Web App (PWA). All scripts and styles are cached locally on your device by our Service Worker, allowing you to resize images and sign documents while completely offline in Airplane Mode.
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Site Footer -->
   <footer class="site-footer">
