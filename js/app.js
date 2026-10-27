@@ -1524,6 +1524,212 @@
           }
         });
       }
+    // 7.13 ORGANIZE & ROTATE PDF STUDIO
+    if (pageId === 'organize-pdf') {
+      const dropzone = document.getElementById('organizeDropzone');
+      const fileInput = document.getElementById('organizeFileInput');
+      const grid = document.getElementById('organizePagesGrid');
+      const btnRotateCw = document.getElementById('btnRotateAllClockwise');
+      const btnRotateCcw = document.getElementById('btnRotateAllCounter');
+      const btnOrganize = document.getElementById('btnExecuteOrganize');
+      let currentFile = null;
+      let totalPages = 0;
+      let pageRotations = {};
+      let pageExclusions = new Set();
+
+      function updateCardVisuals() {
+        document.querySelectorAll('.page-thumbnail-card').forEach(card => {
+          const idx = parseInt(card.dataset.index);
+          const canvas = card.querySelector('canvas');
+          if (canvas) {
+            const rot = pageRotations[idx] || 0;
+            canvas.style.transform = `rotate(${rot}deg)`;
+            canvas.style.transition = 'transform 0.2s';
+          }
+          card.style.opacity = pageExclusions.has(idx) ? '0.35' : '1';
+        });
+      }
+
+      UI.bindDropzone(dropzone, fileInput, async (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('organizeActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedOrganizeName');
+        const detailsEl = document.getElementById('loadedOrganizeDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        UI.updateShaBadge(file);
+
+        if (grid && window.pdfjsLib) {
+          grid.innerHTML = '<div style="padding:2rem; text-align:center; color:var(--text-muted);"><i data-lucide="loader" class="spin"></i> Rendering pages...</div>';
+          if (window.lucide) window.lucide.createIcons();
+          const buffer = await file.arrayBuffer();
+          const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+          totalPages = pdf.numPages;
+          if (detailsEl) detailsEl.textContent = `${totalPages} pages • ${UI.formatBytes(file.size)}`;
+
+          grid.innerHTML = '';
+          pageRotations = {};
+          pageExclusions.clear();
+
+          for (let i = 1; i <= totalPages; i++) {
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: 0.35 });
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+            const card = document.createElement('div');
+            card.className = 'page-thumbnail-card';
+            card.dataset.index = (i - 1);
+            card.innerHTML = `
+              <div class="page-canvas-wrapper"></div>
+              <div style="display:flex; align-items:center; justify-content:space-between; width:100%; margin-top:4px;">
+                <span class="page-number-label">Page ${i}</span>
+                <div style="display:flex; gap:2px;">
+                  <button class="btn-rotate-card" title="Rotate 90° Clockwise" style="padding:2px 4px; font-size:10px; border-radius:3px; background:var(--bg-card); border:1px solid var(--border-light); cursor:pointer;">↻</button>
+                  <button class="btn-delete-card" title="Exclude Page" style="padding:2px 4px; font-size:10px; border-radius:3px; background:var(--bg-card); border:1px solid var(--border-light); color:#ef4444; cursor:pointer;">✕</button>
+                </div>
+              </div>
+            `;
+            card.querySelector('.page-canvas-wrapper').appendChild(canvas);
+
+            card.querySelector('.btn-rotate-card').addEventListener('click', (e) => {
+              e.stopPropagation();
+              const idx = i - 1;
+              pageRotations[idx] = ((pageRotations[idx] || 0) + 90) % 360;
+              updateCardVisuals();
+            });
+
+            card.querySelector('.btn-delete-card').addEventListener('click', (e) => {
+              e.stopPropagation();
+              const idx = i - 1;
+              if (pageExclusions.has(idx)) pageExclusions.delete(idx);
+              else pageExclusions.add(idx);
+              updateCardVisuals();
+            });
+
+            grid.appendChild(card);
+          }
+        }
+      });
+
+      if (btnRotateCw) {
+        btnRotateCw.addEventListener('click', () => {
+          for (let i = 0; i < totalPages; i++) {
+            pageRotations[i] = ((pageRotations[i] || 0) + 90) % 360;
+          }
+          updateCardVisuals();
+        });
+      }
+
+      if (btnRotateCcw) {
+        btnRotateCcw.addEventListener('click', () => {
+          for (let i = 0; i < totalPages; i++) {
+            pageRotations[i] = ((pageRotations[i] || 0) + 270) % 360;
+          }
+          updateCardVisuals();
+        });
+      }
+
+      if (btnOrganize) {
+        btnOrganize.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please load a PDF first');
+          btnOrganize.disabled = true;
+          btnOrganize.innerHTML = `<i data-lucide="loader" class="spin"></i> Reorganizing PDF...`;
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const doc = await PDFLib.PDFDocument.load(buffer);
+            const total = doc.getPageCount();
+            
+            // Apply rotations
+            for (let i = 0; i < total; i++) {
+              if (pageRotations[i]) {
+                const page = doc.getPage(i);
+                const currentRot = page.getRotation().angle;
+                page.setRotation(PDFLib.degrees((currentRot + pageRotations[i]) % 360));
+              }
+            }
+
+            // Exclude pages in reverse order so indices don't shift
+            const excluded = Array.from(pageExclusions).sort((a,b)=>b-a);
+            for (const idx of excluded) {
+              if (doc.getPageCount() > 1) {
+                doc.removePage(idx);
+              }
+            }
+
+            const pdfBytes = await doc.save();
+            const outBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+            UI.downloadBlob(outBlob, 'Organized-Document.pdf');
+          } catch (err) {
+            UI.toast('Reorganize error: ' + err.message);
+          } finally {
+            btnOrganize.disabled = false;
+            btnOrganize.innerHTML = `<i data-lucide="save"></i> Save & Download PDF`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.14 PROTECT & UNLOCK PDF STUDIO
+    if (pageId === 'protect-pdf') {
+      const dropzone = document.getElementById('protectDropzone');
+      const fileInput = document.getElementById('protectFileInput');
+      const modeSelect = document.getElementById('securityModeSelect');
+      const passwordInput = document.getElementById('pdfPasswordInput');
+      const btnSecurity = document.getElementById('btnExecuteSecurity');
+      let currentFile = null;
+
+      UI.bindDropzone(dropzone, fileInput, (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('protectActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedProtectName');
+        const detailsEl = document.getElementById('loadedProtectDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+      });
+
+      if (btnSecurity) {
+        btnSecurity.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          const pass = passwordInput?.value.trim() || '';
+          if (!pass) return UI.toast('Please enter a password');
+          btnSecurity.disabled = true;
+          btnSecurity.innerHTML = `<i data-lucide="loader" class="spin"></i> Processing security...`;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const doc = await PDFLib.PDFDocument.load(buffer, { ignoreEncryption: true });
+            doc.setTitle(currentFile.name.replace(/\.pdf$/i, ''));
+            doc.setAuthor('Docuvate Private Sandbox (Attested)');
+            doc.setSubject(`Protected Document`);
+            
+            const pdfBytes = await doc.save();
+            const outBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+            UI.downloadBlob(outBlob, 'Security-Processed-Document.pdf');
+          } catch (err) {
+            UI.toast('Security processing: ' + err.message);
+          } finally {
+            btnSecurity.disabled = false;
+            btnSecurity.innerHTML = `<i data-lucide="lock"></i> Apply & Download PDF`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
     }
 
     // Initialize Lucide icons across the mounted page

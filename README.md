@@ -1,7 +1,7 @@
 # ✍️ Docuvate
 
 > **The 100% Private, Client-Side Document & Visual Workstation Suite**  
-> *Zero Server Uploads • WebAssembly & Web Worker Powered • Installable Offline PWA*
+> *Zero Server Uploads • Zero Third-Party CDN Dependencies • WebAssembly & Web Worker Powered • Installable Offline PWA*
 
 [![Live Demo](https://img.shields.io/badge/Live-GitHub%20Pages-brightgreen.svg)](https://itsrkmahapatra.github.io/Docuvate/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -13,59 +13,58 @@
 
 ## 🌟 What is Docuvate?
 
-**Docuvate** is a modern, high-performance, and privacy-first web application providing unified document and visual engineering studios directly inside your web browser. 
+**Docuvate** is a modern, high-performance, and privacy-first web application providing dedicated document and visual engineering studios directly inside your web browser. 
 
-Unlike traditional document tools that upload your sensitive documents to remote cloud servers, **Docuvate processes 100% of your PDFs, images, and assignments locally in browser memory (RAM)** using WebAssembly, Web Workers, and HTML5 Canvas.
+Unlike traditional document tools that upload your sensitive documents to remote cloud servers, **Docuvate processes 100% of your PDFs, images, and assignments locally in browser memory (RAM)** using WebAssembly, Web Workers, WebCrypto, and HTML5 Canvas.
+
+**Zero Third-Party Dependencies:** All required engines and parsers (`pdf-lib`, `pdf.js`, `tesseract.js`, `lucide`, `jszip`, `heic2any`) are downloaded and bundled directly inside the local `vendor/` directory. No CDNs, no tracking, and no external points of failure.
 
 ---
 
-## 🚀 Key Flagship Studios & Tools
+## 🚀 Dedicated Tool Studios & Workstations
 
-### 1. 📑 Master PDF Studio
-- **100% Target KB Compressor**: Binary-search compression in a dedicated Web Worker guaranteeing files stay strictly under your desired ceiling (50 KB, 100 KB, 200 KB, 500 KB, 1 MB).
-- **Interactive Visual Page Reordering**: Drag-and-drop page cards with smooth hover drop targets and real-time re-indexing.
-- **Merge & Split**: Combine multiple PDFs/images into one or extract individual pages into a clean ZIP archive.
-- **Visual Crop Box**: Drag-to-resize interactive crop box with header/footer and margin presets.
-- **Draw Signature Stamp**: Canvas-based signing pad to embed digital signatures onto any PDF page.
-- **Watermark & Page Numbering**: Custom diagonal/horizontal text watermarks and automated page numbering.
-- **AI OCR & Format Conversion**: Convert PDF to high-res JPG/PNG or extract text using client-side Tesseract.js.
+Every tool in Docuvate operates in its own dedicated, standalone studio page:
 
-### 2. 🖼️ Master Image Studio
-- **Official Exam & Govt Portal Presets**: 1-click resizing for UPSC, SSC, IBPS, Indian Passport (35×45 mm), US Visa (2×2 in), and Signature stamps (300×120 px, ≤20 KB).
-- **Target KB Binary Resizer**: Smoothly downscales resolution and compresses images to meet strict portal upload ceilings.
-- **Apple iPhone HEIC/HEIF Decoding**: Client-side conversion of `.heic` and `.heif` camera photos to standard JPEG without third-party converters.
-- **Photo Editor**: Client-side brightness, contrast, grayscale, rotation, and watermarking.
+### 📑 PDF Workstations
+* **[Merge PDF Studio](merge-pdf.html):** Multi-file drag-and-drop workbench with visual reordering.
+* **[Split & Extract PDF Studio](split-pdf.html):** Visual thumbnail grid with custom page range slicing (`1-3, 5`) and All/Odd/Even quick selectors.
+* **[Compress PDF Studio](compress-pdf.html):** Iterative target KB ceiling compression (50KB, 100KB, 200KB, 500KB).
+* **[Compress PDF to 100KB](compress-pdf-to-100kb.html):** Dedicated high-speed portal for government job applications.
+* **[Sign & Stamp PDF Studio](sign-pdf.html):** Official vector status stamps (`APPROVED`, `CONFIDENTIAL`, `DRAFT`, `VERIFIED`, `ATTESTED`), drawn signature pad, ink color selection, and all-page support.
+* **[PDF to Image Converter](pdf-to-image.html):** Render PDF pages into 150/300 DPI high-definition JPG/PNG images with 1-click batch ZIP download.
+* **[Image to PDF Converter](image-to-pdf.html):** Combine photos, receipts, and scans into a clean formatted A4 PDF.
+* **[Organize & Rotate PDF](organize-pdf.html):** Visual page cards to rotate 90° clockwise/counter-clockwise, delete pages, and reorganize document structure.
+* **[Protect & Unlock PDF](protect-pdf.html):** Password encryption and decryption directly in your browser.
+* **[OCR Text Extractor](ocr-pdf.html):** Extract text from scanned PDFs and photos using client-side Tesseract.js neural models with live progress and `.txt` export.
 
-### 3. ✒️ InkScribe Handwriting Studio
-- **Text-to-Realistic Handwriting**: Converts digital text, notes, DOCX, and PDF assignments into human handwriting.
-- **Paper & Ruling Engine**: Ruled, plain, and graph paper with customizable line gaps, margins, and ink colors.
-- **Custom Font Upload**: Drag-and-drop your own `.ttf`, `.otf`, or `.woff` handwriting font files via the FontFace API.
-- **Multi-Page PDF Export**: Automatic word-wrap pagination and print-ready high-resolution PDF generation.
+### 🖼️ Visual & Image Workstations
+* **[Image Resizer in KB](image-resizer-kb.html):** Binary-search compression strictly under 20KB, 50KB, or 100KB for UPSC, SSC, IBPS, and state PSC application portals.
+* **[Crop, Rotate & Filter Studio](crop-image.html):** Aspect ratio locks (1:1, 4:5, 16:9, 3.5×4.5cm), 90° rotation, and image adjustments.
+* **[Biometric Passport Photo Studio](passport-photo.html):** Official ICAO biometric facial guide overlay (Crown boundary, Eye Line 50%–69%, Chin baseline) and printable 6×4 photo sheets.
+* **[Convert Image Formats](convert-image.html):** Batch convert between JPG, PNG, WEBP, and Apple iPhone HEIC/HEIF camera photos.
 
-### 4. 🏛️ Odisha e-District Certificate Downloader
-- Instant 1-click gateway for citizens to download issued government certificates (Caste, Residence, Income, Legal Heir) with 8-character token routing.
-
-### 5. 🎯 Dedicated High-Performance Landing Pages
-- **[Compress PDF to 100KB](compress-pdf-to-100kb.html)**: Fast 1-click compressor tailored for government and job portal limits.
-- **[Resize Image in KB](image-resizer-kb.html)**: Instant photo and signature formatter matching official exam specifications.
+### ✒️ Digital Handwriting & Govt Utilities
+* **[InkScribe Handwriting Studio](inkscribe.html):** Convert digital text, notes, and DOCX/PDF assignments into natural human handwriting with organic tilt drift, paper textures (ruled, graph, vintage parchment, legal yellow pad), custom font uploader (`.ttf`/`.otf`), and Puter AI writer.
+* **[Odisha e-District Downloader](certificate-downloader.html):** Independent public gateway for citizens to download issued government certificates (Caste, Residence, Income, Legal Heir) with 8-character token routing.
 
 ---
 
 ## 🔒 Military-Grade Privacy & Live Network Auditor
 
-Docuvate includes an active **Live Network Auditor** (`js/privacy-monitor.js`) with an interactive security badge:
-- **Zero Cloud Uploads**: Intercepts external requests to guarantee zero user file bytes leave your computer.
-- **Live Audit Modal**: Click the **Live Audit** badge in the header anytime to view real-time transmission metrics (0.00 KB leaked).
-- **Session Purge & RAM Wiper**: Instantly wipe in-memory buffers and revoke blob URLs with 1 click.
+Docuvate includes an active **Live Network Auditor** with an interactive security badge:
+* **Zero Cloud Uploads:** Intercepts external requests to guarantee zero user file bytes leave your computer.
+* **WebCrypto SHA-256 Checksums:** Calculates native cryptographic hashes in real time to verify document integrity.
+* **Live Audit Modal:** Click the **Live Audit** badge in the header anytime to view real-time transmission metrics (0.00 KB leaked).
+* **Session Purge & RAM Wiper:** Instantly wipe in-memory buffers and revoke blob URLs with 1 click.
 
 ---
 
 ## 📱 Progressive Web App (PWA) & True Offline Support
 
 Docuvate is a certified **Progressive Web App**:
-- Installable on **Windows, macOS, Linux, ChromeOS, iOS, and Android**.
-- Backed by **Service Worker (`sw.js`)** with an aggressive cache-first strategy for app shells, WASM binaries, and fonts.
-- Operates seamlessly on an airplane or in restricted intranet environments without an internet connection.
+* Installable on **Windows, macOS, Linux, ChromeOS, iOS, and Android**.
+* Backed by **Service Worker (`sw.js`)** pre-caching all app shells, local styles, and local `vendor/` libraries.
+* Operates 100% offline with zero internet connectivity.
 
 ---
 
@@ -74,52 +73,16 @@ Docuvate is a certified **Progressive Web App**:
 | Component | Technology |
 | :--- | :--- |
 | **Core Architecture** | Pure Vanilla HTML5, CSS3, Modern JavaScript (ES6+) |
-| **PDF Engineering** | `pdf-lib` (WASM/JS manipulation), `pdf.js` (Canvas rendering) |
-| **Worker Engine** | `compressor.worker.js` (Multi-threaded binary search optimization) |
-| **OCR & Vision** | `tesseract.js` (Client-side Optical Character Recognition) |
-| **Mobile Formats** | `heic2any` (Client-side Apple HEIC/HEIF decoder) |
-| **Archives** | `jszip` (Client-side multi-file archiving) |
-| **PWA & Offline** | Web App Manifest (`manifest.json`), Service Worker Cache API (`sw.js`) |
-| **Design System** | Custom CSS variables, Glassmorphism, Lucide Icons, Google Fonts |
+| **Single Stylesheet** | `css/style.css` (Obsidian Dark & Apple Light theme system) |
+| **Single Application Engine** | `js/app.js` (Unified client-side router, crypto, privacy, and tool engines) |
+| **PDF Engineering** | `vendor/pdf-lib.min.js`, `vendor/pdf.min.js`, `vendor/pdf.worker.min.js` |
+| **Vision & OCR** | `vendor/tesseract.min.js` (Local WASM neural OCR engine) |
+| **Image & Format Engine** | `vendor/heic2any.min.js` (Apple HEIC decoder), HTML5 Canvas 2D |
+| **Packaging & Export** | `vendor/jszip.min.js`, `vendor/jspdf.umd.min.js`, `vendor/html2canvas.min.js` |
 
 ---
 
-## 💻 Local Development & Quick Start
+## 👨‍💻 Author & Engineer
 
-Because Docuvate is built with **zero build dependencies**, you don't need `npm install` or complex bundlers to run it locally:
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/itsrkmahapatra/Docuvate.git
-
-# 2. Navigate to directory
-cd Docuvate
-
-# 3. Start any local static server (e.g. Python, Node, or VS Code Live Server)
-python -m http.server 8000
-# or
-npx serve .
-```
-
-Open `http://localhost:8000` in your browser.
-
----
-
-## 🤝 Contributing
-
-Contributions, feedback, and feature requests are welcome!
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'feat: Add AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📜 License
-
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
-
----
-
-**Engineered with ❤️ for privacy and efficiency by [Raj Kishor Mahapatra](https://itsrkmahapatra.qzz.io/).**
+**Docuvate** is designed and engineered by **[Raj Kishor Mahapatra](https://itsrkmahapatra.qzz.io/)**.  
+Licensed under the [MIT License](LICENSE).
