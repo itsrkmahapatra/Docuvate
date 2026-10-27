@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Resize Image in KB for Online Application & Exam Forms - 100% Private | Docuvate</title>
+  <meta name="description" content="Resize image to 20KB, 50KB, or 100KB for UPSC, SSC, IBPS, Passport, and Visa forms online for free. 100% client-side privacy. Zero server uploads.">
+  <meta name="keywords" content="resize image in kb, image compressor to 50kb, resize photo to 20kb, passport photo resizer, ssc exam photo resizer, client side image tool, docuvate">
+  <meta name="author" content="Raj Kishor Mahapatra">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/image-resizer-kb.html">
+  <meta property="og:title" content="Resize Image in KB for Online Application Forms | Docuvate">
+  <meta property="og:description" content="Resize photos and signatures to exact KB specifications for exam and government portals directly in your browser.">
+  <meta property="og:image" content="assets/developer.png">
+
+  <!-- Favicon & PWA Manifest -->
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0284c7">
+
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Docuvate Exam & Passport Image Resizer",
+    "operatingSystem": "All",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "Resize photos and signatures to exact KB limits for government applications with 100% privacy.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Privacy Sandbox Live Network Auditor & PWA Manager -->
+  <script src="js/privacy-monitor.js"></script>
+
+  <!-- Lucide Icons & HEIC library -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Security Banner -->
+  <header class="privacy-banner">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
+    <span>100% Client-Side Sandboxed Processing • Your files never leave your computer</span>
+    <button class="privacy-live-badge" onclick="window.DocuvatePrivacy.showAuditModal()" title="View Sandbox Security Audit">
+      <span class="privacy-pulse-dot"></span>
+      <span>Live Audit: 0 KB Leaked</span>
+    </button>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="site-navbar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-badge" style="background:var(--image-accent);">Doc</span>uvate
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="index.html#pdf-studio" class="nav-link">Master PDF Studio</a>
+      <a href="index.html#image-studio" class="nav-link" style="color:var(--image-accent); font-weight:800;">Master Image Studio</a>
+      <a href="inkscribe.html" class="nav-link">InkScribe Studio</a>
+      <a href="certificate-downloader.html" class="nav-link">Certificate Downloader</a>
+      <button class="btn-install-pwa" aria-label="Install Docuvate App">
+        <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+        <span>Install App</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Dedicated Tool Hero Section -->
+  <main style="max-width: 960px; margin: 2rem auto; padding: 0 1.5rem; flex: 1;">
+    <section style="text-align: center; margin-bottom: 2rem;">
+      <div class="hero-pill" style="margin-bottom: 1rem; border-color: #bae6fd; background: #f0f9ff; color: #0369a1;">
+        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
+        <span>Official Govt & Recruitment Exam Specifications</span>
+      </div>
+      <h1 style="font-size: 2.25rem; font-weight: 900; margin-bottom: 0.75rem; color: #0f172a;">
+        Resize Image in KB for Online Application Forms
+      </h1>
+      <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 680px; margin: 0 auto;">
+        Resize and compress your passport photo, signature, or certificate to strictly under 20KB, 50KB, or 100KB with 1-click official exam standards.
+      </p>
+    </section>
+
+    <!-- Fast Dedicated Tool Card -->
+    <div class="studio-flagship-card" style="margin-bottom: 3rem; border: 2px solid #bae6fd; box-shadow: var(--shadow-lg);">
+      <div style="margin-bottom: 1.5rem;">
+        <span style="font-size: 0.75rem; font-weight: 800; color: #0284c7; text-transform: uppercase;">Official Exam Standards Preset</span>
+        <h2 style="font-size: 1.35rem; margin-top: 0.15rem; margin-bottom: 0.75rem;">Select Requirement Preset</h2>
+        
+        <div class="preset-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <button class="preset-btn active" data-w="350" data-h="450" data-kb="50" onclick="setExamPreset(this, 350, 450, 50, 'Passport Photo')">
+            Passport Photo (350×450, 50KB)
+          </button>
+          <button class="preset-btn" data-w="300" data-h="120" data-kb="20" onclick="setExamPreset(this, 300, 120, 20, 'Signature')">
+            Official Signature (300×120, 20KB)
+          </button>
+          <button class="preset-btn" data-w="200" data-h="230" data-kb="50" onclick="setExamPreset(this, 200, 230, 50, 'SSC/UPSC Photo')">
+            SSC / UPSC Photo (200×230, 50KB)
+          </button>
+          <button class="preset-btn" data-w="413" data-h="531" data-kb="100" onclick="setExamPreset(this, 413, 531, 100, 'Indian Passport')">
+            Indian Passport (35×45 mm, 100KB)
+          </button>
+          <button class="preset-btn" data-w="600" data-h="600" data-kb="240" onclick="setExamPreset(this, 600, 600, 240, 'US Visa')">
+            US Visa / Green Card (2×2 in, 240KB)
+          </button>
+          <button class="preset-btn" data-w="240" data-h="240" data-kb="20" onclick="setExamPreset(this, 240, 240, 20, 'Thumb Impression')">
+            Left Thumb Impression (240×240, 20KB)
+          </button>
+        </div>
+      </div>
+
+      <!-- Dropzone Area -->
+      <div class="dropzone-visual-box" id="imgDropzone" style="cursor: pointer; padding: 2.5rem 1.5rem;">
+        <i data-lucide="image-plus" style="width: 48px; height: 48px; color: #0284c7; margin-bottom: 0.75rem;"></i>
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">Drop JPG, PNG, or iPhone HEIC Photo</h3>
+        <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 1.25rem;">
+          Active Requirement: <strong id="imgSelectedPresetLabel" style="color: #0284c7;">Passport Photo (350×450 px, ≤ 50 KB)</strong>
+        </p>
+        <button class="btn-primary" style="background: var(--image-gradient); max-width: 240px; margin: 0 auto;">
+          <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
+          <span>Select Image File</span>
+        </button>
+        <input type="file" id="imgFileInput" accept="image/*,.heic,.heif" style="display: none;" />
+      </div>
+
+      <!-- Compression Progress -->
+      <div id="imgProgress" style="display: none; margin-top: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; color: #0284c7; margin-bottom: 0.5rem;">
+          <span id="imgProgressMsg">Optimizing image canvas...</span>
+          <span id="imgProgressPct">0%</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="imgProgressFill" style="width: 0%; background: var(--image-gradient);"></div>
+        </div>
+      </div>
+
+      <!-- Result Card -->
+      <div id="imgResult" style="display: none; margin-top: 1.5rem;"></div>
+    </div>
+
+    <!-- SEO FAQ Section -->
+    <section style="background: white; border: 1px solid var(--border-light); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem;">
+      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.25rem;">Frequently Asked Questions</h2>
+      
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <div>
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 0.35rem;">
+            Why do government portals reject photos and signatures?
+          </h3>
+          <p style="font-size: 0.9rem; color: #64748b; line-height: 1.6;">
+            Most portal uploaders (UPSC, SSC, State PSC, NTA, Banking) have automated server checks that strictly reject files larger than 50 KB or 20 KB, or files with incorrect aspect ratios. Docuvate precisely rescales the pixel dimensions and performs binary search quality optimization to ensure your image passes the upload validation on the first try.
+          </p>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 0.35rem;">
+            Can I upload iPhone photos (.HEIC)?
+          </h3>
+          <p style="font-size: 0.9rem; color: #64748b; line-height: 1.6;">
+            Yes! Docuvate includes client-side HEIC decoding. When you drop an iPhone photo, it is automatically converted into standard JPEG format directly inside your browser without uploading to any server.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <img src="assets/developer.png" alt="Raj Kishor Mahapatra" class="dev-avatar" />
+    <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
+    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem;">Free, Private, and Open Source Client-Side Workstations</p>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Home</a>
+      <a href="compress-pdf-to-100kb.html" class="footer-link">Compress PDF to 100KB</a>
+      <a href="inkscribe.html" class="footer-link">InkScribe Studio</a>
+      <a href="certificate-downloader.html" class="footer-link">Certificate Downloader</a>
+    </div>
+  </footer>
+
+  <script>
+    let activeW = 350;
+    let activeH = 450;
+    let activeKB = 50;
+
+    function setExamPreset(btn, w, h, kb, name) {
+      activeW = w;
+      activeH = h;
+      activeKB = kb;
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('imgSelectedPresetLabel').textContent = `${name} (${w}×${h} px, ≤ ${kb} KB)`;
+    }
+
+    const dropzone = document.getElementById('imgDropzone');
+    const input = document.getElementById('imgFileInput');
+    const progressArea = document.getElementById('imgProgress');
+    const progressMsg = document.getElementById('imgProgressMsg');
+    const progressPct = document.getElementById('imgProgressPct');
+    const progressFill = document.getElementById('imgProgressFill');
+    const resultArea = document.getElementById('imgResult');
+
+    dropzone.addEventListener('click', () => input.click());
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files?.length > 0) processExamImage(e.dataTransfer.files[0]);
+    });
+    input.addEventListener('change', (e) => {
+      if (e.target.files?.length > 0) processExamImage(e.target.files[0]);
+    });
+
+    async function processExamImage(file) {
+      if (!file) return;
+
+      progressArea.style.display = 'block';
+      resultArea.style.display = 'none';
+      progressFill.style.width = '15%';
+      progressPct.textContent = '15%';
+      progressMsg.textContent = 'Decoding Image...';
+
+      let processFile = file;
+      if (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')) {
+        if (window.heic2any) {
+          progressMsg.textContent = 'Converting iPhone HEIC to JPEG...';
+          try {
+            const converted = await window.heic2any({ blob: file, toType: 'image/jpeg', quality: 0.9 });
+            const single = Array.isArray(converted) ? converted[0] : converted;
+            processFile = new File([single], file.name.replace(/\.(heic|heif)$/i, '.jpg'), { type: 'image/jpeg' });
+          } catch (e) {
+            console.warn(e);
+          }
+        }
+      }
+
+      progressFill.style.width = '45%';
+      progressPct.textContent = '45%';
+      progressMsg.textContent = `Rescaling to ${activeW}×${activeH} px & compressing under ${activeKB} KB...`;
+
+      const img = new Image();
+      const url = URL.createObjectURL(processFile);
+      img.src = url;
+
+      img.onload = async () => {
+        URL.revokeObjectURL(url);
+        const canvas = document.createElement('canvas');
+        canvas.width = activeW;
+        canvas.height = activeH;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, activeW, activeH);
+
+        // Aspect fit / center crop
+        const sAspect = img.width / img.height;
+        const tAspect = activeW / activeH;
+        let sx, sy, sw, sh;
+        if (sAspect > tAspect) {
+          sh = img.height;
+          sw = img.height * tAspect;
+          sx = (img.width - sw) / 2;
+          sy = 0;
+        } else {
+          sw = img.width;
+          sh = img.width / tAspect;
+          sx = 0;
+          sy = (img.height - sh) / 2;
+        }
+
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, activeW, activeH);
+
+        // Binary search for exact target KB
+        let low = 0.05, high = 1.0, bestBlob = null;
+        for (let iter = 0; iter < 7; iter++) {
+          const mid = (low + high) / 2;
+          const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', mid));
+          const kb = blob.size / 1024;
+          if (kb <= activeKB) {
+            bestBlob = blob;
+            low = mid;
+          } else {
+            high = mid;
+          }
+        }
+
+        if (!bestBlob) {
+          bestBlob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.1));
+        }
+
+        progressFill.style.width = '100%';
+        progressPct.textContent = '100%';
+        progressArea.style.display = 'none';
+
+        const finalKB = Math.round(bestBlob.size / 1024);
+        const outUrl = URL.createObjectURL(bestBlob);
+        const outName = `exam-ready-${activeKB}kb-${processFile.name.replace(/\.[^/.]+$/, "")}.jpg`;
+
+        resultArea.innerHTML = `
+          <div class="result-card" style="margin: 0;">
+            <div style="display:flex; align-items:center; justify-content:center; gap:0.5rem; color:#059669; font-weight:900; font-size:1.35rem;">
+              <i data-lucide="check-circle-2" style="width: 32px; height: 32px;"></i>
+              <span>Ready for Submission!</span>
+            </div>
+            <div style="text-align:center; margin: 1rem 0;">
+              <img src="${outUrl}" style="max-height: 180px; border-radius: 8px; border: 1px solid #cbd5e1; box-shadow: var(--shadow-sm);" />
+            </div>
+            <div class="result-metrics">
+              <div>
+                <span style="font-size:0.65rem; font-weight:800; color:#94a3b8; text-transform:uppercase;">Resolution</span>
+                <p style="font-size:0.95rem; font-weight:800; color:#334155;">${activeW} × ${activeH} px</p>
+              </div>
+              <div>
+                <span style="font-size:0.65rem; font-weight:800; color:#059669; text-transform:uppercase;">Ceiling</span>
+                <p style="font-size:0.95rem; font-weight:800; color:#059669;">≤ ${activeKB} KB</p>
+              </div>
+              <div>
+                <span style="font-size:0.65rem; font-weight:800; color:#059669; text-transform:uppercase;">Final File Size</span>
+                <p style="font-size:1.15rem; font-weight:900; color:#059669;">${finalKB} KB</p>
+              </div>
+            </div>
+            
+            <a href="${outUrl}" download="${outName}" class="btn-primary btn-success" style="width:100%; justify-content:center;">
+              <i data-lucide="download" style="width: 18px; height: 18px;"></i>
+              <span>Download Form-Ready Photo (${finalKB} KB)</span>
+            </a>
+          </div>
+        `;
+        resultArea.style.display = 'block';
+        if (window.lucide) window.lucide.createIcons();
+
+        // Auto-download
+        const a = document.createElement('a');
+        a.href = outUrl;
+        a.download = outName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+    }
+
+    if (window.lucide) window.lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -220,6 +220,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const customFontInput = document.getElementById('custom-font-file');
+    if (customFontInput) {
+        customFontInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            try {
+                const fontName = 'CustomFont_' + Date.now();
+                const arrayBuffer = await file.arrayBuffer();
+                const fontFace = new FontFace(fontName, arrayBuffer);
+                await fontFace.load();
+                document.fonts.add(fontFace);
+
+                const fontSelect = document.getElementById('font');
+                if (fontSelect) {
+                    const opt = document.createElement('option');
+                    opt.value = `'${fontName}'`;
+                    opt.textContent = `Custom: ${file.name.replace(/\.[^/.]+$/, "")}`;
+                    opt.selected = true;
+                    fontSelect.prepend(opt);
+                }
+
+                updateAllPages();
+            } catch (err) {
+                console.error(err);
+                alert(`Failed to load custom font: ${err.message}`);
+            }
+        });
+    }
+
     controls.forEach(id => {
         const el = document.getElementById(id);
         if(el) el.addEventListener('input', updateAllPages);

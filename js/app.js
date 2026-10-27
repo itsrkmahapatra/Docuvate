@@ -948,23 +948,43 @@ class DocuvateApp {
   }
 
   async handleFilesAdded(newFiles) {
-    this.selectedFiles.push(...newFiles);
+    const processedFiles = [];
+    for (const f of newFiles) {
+      const isHeic = f.name.toLowerCase().endsWith('.heic') || f.name.toLowerCase().endsWith('.heif') || f.type.includes('heic');
+      if (isHeic && window.heic2any) {
+        try {
+          this.showToast(`Converting iPhone HEIC image: ${f.name}...`);
+          const convertedBlob = await window.heic2any({ blob: f, toType: 'image/jpeg', quality: 0.92 });
+          const singleBlob = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
+          const newName = f.name.replace(/\.(heic|heif)$/i, '.jpg');
+          const convertedFile = new File([singleBlob], newName, { type: 'image/jpeg' });
+          processedFiles.push(convertedFile);
+        } catch (heicErr) {
+          console.warn("HEIC conversion failed:", heicErr);
+          processedFiles.push(f);
+        }
+      } else {
+        processedFiles.push(f);
+      }
+    }
+
+    this.selectedFiles.push(...processedFiles);
 
     if (this.activeStudio === 'pdf') {
       try {
-        const extracted = await PdfTools.extractAllPagesAsThumbnails(newFiles);
+        const extracted = await PdfTools.extractAllPagesAsThumbnails(processedFiles);
         this.pages.push(...extracted);
       } catch (e) {
         console.warn("Could not unpack PDF pages:", e);
       }
     } else {
-      newFiles.forEach((file, idx) => {
+      processedFiles.forEach((file, idx) => {
         this.pages.push({
-          id: `img_${Date.now()}_${idx}`,
+          id: `img_${Date.now()}_${idx}_${Math.random().toString(36).substring(2, 6)}`,
           file,
           fileName: file.name,
           preview: URL.createObjectURL(file),
-          pageNumber: idx + 1,
+          pageNumber: this.pages.length + idx + 1,
           rotation: 0,
           selected: true
         });
@@ -1454,11 +1474,14 @@ class DocuvateApp {
       `;
     } else if (mod === 'exam' && !isPdf) {
       html = `
-        <label style="font-size:0.75rem; font-weight:700; color:#475569;">Exam Standards</label>
+        <label style="font-size:0.75rem; font-weight:700; color:#475569;">Official Exam & Passport Presets</label>
         <div class="preset-grid" style="grid-template-columns: 1fr;">
-          <button class="preset-btn active" data-exam="passport" data-w="350" data-h="450" data-kb="50">Passport Photo (350x450, 50KB)</button>
-          <button class="preset-btn" data-exam="signature" data-w="300" data-h="120" data-kb="20">Signature Stamp (300x120, 20KB)</button>
-          <button class="preset-btn" data-exam="ssc" data-w="200" data-h="230" data-kb="50">SSC / UPSC Photo (200x230, 50KB)</button>
+          <button class="preset-btn active" data-exam="passport" data-w="350" data-h="450" data-kb="50">Passport Photo (350×450, 50KB)</button>
+          <button class="preset-btn" data-exam="signature" data-w="300" data-h="120" data-kb="20">Official Signature Stamp (300×120, 20KB)</button>
+          <button class="preset-btn" data-exam="ssc" data-w="200" data-h="230" data-kb="50">SSC / UPSC Exam Spec (200×230, 50KB)</button>
+          <button class="preset-btn" data-exam="ind-passport" data-w="413" data-h="531" data-kb="100">Indian Passport (35×45 mm, 100KB)</button>
+          <button class="preset-btn" data-exam="us-visa" data-w="600" data-h="600" data-kb="240">US Visa / Green Card (2×2 in, 240KB)</button>
+          <button class="preset-btn" data-exam="ibps-thumb" data-w="240" data-h="240" data-kb="20">Left Thumb Impression (240×240, 20KB)</button>
         </div>
       `;
     } else {
@@ -1730,9 +1753,14 @@ class DocuvateApp {
       card.addEventListener('dragover', (e) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
+        card.classList.add('drag-over');
+      });
+      card.addEventListener('dragleave', () => {
+        card.classList.remove('drag-over');
       });
       card.addEventListener('drop', (e) => {
         e.preventDefault();
+        card.classList.remove('drag-over');
         if (!this.draggedPageId || this.draggedPageId === pageId) return;
         const fromIdx = this.pages.findIndex(p => p.id === this.draggedPageId);
         const toIdx = this.pages.findIndex(p => p.id === pageId);

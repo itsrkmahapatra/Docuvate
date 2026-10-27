@@ -16,8 +16,13 @@
   <meta property="og:description" content="Complete all-in-one private client-side PDF and Image workstations. Zero server uploads.">
   <meta property="og:image" content="assets/developer.png">
 
-  <!-- Favicon -->
+  <!-- Favicon & PWA Manifest -->
   <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e11d48">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Docuvate">
 
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
@@ -45,17 +50,8 @@
   }
   </script>
 
-  <!-- Anti-DevTools Protection -->
-  <script>
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    document.addEventListener('keydown', event => {
-      if (event.keyCode === 123 || 
-         (event.ctrlKey && event.shiftKey && (event.keyCode === 73 || event.keyCode === 74 || event.keyCode === 67)) ||
-         (event.ctrlKey && (event.keyCode === 85 || event.keyCode === 83))) {
-        event.preventDefault();
-      }
-    });
-  </script>
+  <!-- Privacy Sandbox Live Network Auditor & PWA Manager -->
+  <script src="js/privacy-monitor.js"></script>
 
   <!-- External Client-Side Libraries -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -63,6 +59,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
   <script>
     if (window.pdfjsLib) {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -73,8 +70,12 @@
 
   <!-- Top Security Banner -->
   <header class="privacy-banner">
-    <i data-lucide="lock" style="width: 14px; height: 14px;"></i>
-    <span>100% Client-Side Sandboxed Processing. Your files never leave your computer.</span>
+    <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
+    <span>100% Client-Side Sandboxed Processing • Your files never leave your computer</span>
+    <button class="privacy-live-badge" onclick="window.DocuvatePrivacy.showAuditModal()" title="View Sandbox Security Audit">
+      <span class="privacy-pulse-dot"></span>
+      <span>Live Audit: 0 KB Leaked</span>
+    </button>
   </header>
 
   <!-- Navigation Bar -->
@@ -89,6 +90,10 @@
       <a href="certificate-downloader.html" class="nav-link" id="navCertDownloader">Certificate Downloader</a>
       <a href="terms.html" class="nav-link">Terms</a>
       <a href="disclaimer.html" class="nav-link">Disclaimer</a>
+      <button class="btn-install-pwa" aria-label="Install Docuvate App">
+        <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+        <span>Install App</span>
+      </button>
     </div>
   </nav>
 

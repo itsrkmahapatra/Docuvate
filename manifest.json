@@ -1,0 +1,54 @@
+{
+  "name": "Docuvate - Master PDF & Image Studios",
+  "short_name": "Docuvate",
+  "description": "100% Client-Side Private PDF & Image Studios, InkScribe Handwriting Studio, and Certificate Downloader. Zero Cloud Uploads.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#e11d48",
+  "orientation": "any",
+  "categories": [
+    "productivity",
+    "utilities",
+    "business"
+  ],
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Master PDF Studio",
+      "short_name": "PDF Studio",
+      "description": "Compress, merge, split, sign, and organize PDFs",
+      "url": "./index.html#pdf-studio",
+      "icons": [{ "src": "logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Master Image Studio",
+      "short_name": "Image Studio",
+      "description": "Compress to target KB, crop, and convert images",
+      "url": "./index.html#image-studio",
+      "icons": [{ "src": "logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "InkScribe Studio",
+      "short_name": "InkScribe",
+      "description": "Convert digital text to realistic handwriting",
+      "url": "./inkscribe.html",
+      "icons": [{ "src": "logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Certificate Downloader",
+      "short_name": "Certificates",
+      "description": "Direct Odisha e-District certificate downloader",
+      "url": "./certificate-downloader.html",
+      "icons": [{ "src": "logo.png", "sizes": "96x96" }]
+    }
+  ]
+}
