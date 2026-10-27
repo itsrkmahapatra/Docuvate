@@ -1524,6 +1524,8 @@
           }
         });
       }
+    }
+
     // 7.13 ORGANIZE & ROTATE PDF STUDIO
     if (pageId === 'organize-pdf') {
       const dropzone = document.getElementById('organizeDropzone');
