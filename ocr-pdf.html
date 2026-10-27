@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCR Text Extractor Studio - Docuvate (100% Private Client-Side)</title>
+  <meta name="description" content="Extract selectable text from scanned PDF documents and photos locally using Tesseract.js. 100% private client-side processing, zero cloud uploads.">
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e11d48">
+
+  <!-- Single Master Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- External Vendor Libraries -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <!-- Single Master JS Engine -->
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="ocr-pdf">
+
+  <!-- Top Security Banner -->
+  <header class="privacy-banner">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px; color:#10b981;"></i>
+    <span>100% Client-Side Sandboxed Processing • Zero Cloud Uploads</span>
+    <button class="privacy-live-badge" onclick="window.Docuvate.Privacy.showAuditModal()">
+      <span class="privacy-pulse-dot"></span>
+      <span>Live Audit: 0 KB Leaked</span>
+    </button>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="site-navbar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-badge">Doc</span>uvate
+    </a>
+
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)">
+      <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+      <span>Search tools...</span>
+      <span class="cmd-kbd-shortcut">⌘K</span>
+    </button>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">All Studios</a>
+      <a href="merge-pdf.html" class="nav-link">Merge PDF</a>
+      <a href="split-pdf.html" class="nav-link">Split PDF</a>
+      <a href="ocr-pdf.html" class="nav-link active" style="color:var(--pdf-accent);">OCR Studio</a>
+      
+      <button class="btn-theme-toggle" aria-label="Toggle Theme">
+        <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+      </button>
+
+      <button class="btn-install-pwa">
+        <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+        <span>Install App</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Studio Header Subbar -->
+  <div class="studio-navbar-sub">
+    <div class="studio-breadcrumb">
+      <a href="index.html"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> All Studios</a>
+      <span>/</span>
+      <span>OCR Text Extractor Studio</span>
+    </div>
+
+    <div class="studio-title-badge">
+      <div class="tool-icon-wrapper tool-icon-pdf" style="width:32px; height:32px;">
+        <i data-lucide="scan-text" style="width: 18px; height: 18px;"></i>
+      </div>
+      <h1>OCR Text Extractor Studio</h1>
+    </div>
+
+    <div class="studio-status-pills">
+      <div class="sha256-attest-badge" style="display:none;" title="Click to copy SHA-256 Hash">
+        <i data-lucide="shield-check" style="width:12px; height:12px;"></i> SHA-256 Ready
+      </div>
+    </div>
+  </div>
+
+  <!-- Studio Workbench -->
+  <main class="studio-workbench">
+    <!-- Left Options Panel -->
+    <aside class="studio-sidebar">
+      <div>
+        <div class="studio-section-title">
+          <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+          <span>Recognition Settings</span>
+        </div>
+
+        <div class="control-item">
+          <label>OCR Language</label>
+          <select id="ocrLangSelect">
+            <option value="eng" selected>English (Default)</option>
+            <option value="hin">Hindi (हिन्दी)</option>
+            <option value="spa">Spanish</option>
+            <option value="fra">French</option>
+            <option value="deu">German</option>
+          </select>
+        </div>
+
+        <div id="ocrProgressWrapper" style="display:none; margin-top:1rem;">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-main); display:block; margin-bottom:4px;">Recognition Progress</label>
+          <div style="background:var(--border-light); height:8px; border-radius:4px; overflow:hidden;">
+            <div id="ocrProgressBar" style="width:0%; height:100%; background:var(--pdf-accent); transition:width 0.2s;"></div>
+          </div>
+          <span id="ocrStatusText" style="font-size:0.7rem; color:var(--text-muted); margin-top:4px; display:block;">Initializing neural model...</span>
+        </div>
+      </div>
+
+      <div style="background:var(--bg-subtle); padding:1rem; border-radius:var(--radius-md); font-size:0.8rem; line-height:1.6; color:var(--text-muted);">
+        <strong style="color:var(--text-main); display:block; margin-bottom:0.25rem;">🧠 100% Client-Side Wasm</strong>
+        The optical character recognition model executes locally inside your browser via WebAssembly without sending your text to any third-party server.
+      </div>
+
+      <button id="btnExecuteOcr" class="btn-primary-action" style="width:100%; justify-content:center; background:var(--pdf-gradient);">
+        <i data-lucide="scan-text" style="width: 18px; height: 18px;"></i>
+        <span>Start Text Extraction</span>
+      </button>
+    </aside>
+
+    <!-- Right Workbench Stage -->
+    <section class="studio-stage">
+      <!-- Dropzone -->
+      <div class="dropzone-unified" id="ocrDropzone">
+        <div class="dropzone-icon" style="color:var(--pdf-accent);">
+          <i data-lucide="scan-text" style="width: 32px; height: 32px;"></i>
+        </div>
+        <h2 class="dropzone-title">Drop Scanned Document or Image</h2>
+        <p class="dropzone-subtitle">Click to select or drop a scanned PDF, receipt, invoice, or image to extract its full text content.</p>
+        <div class="dropzone-formats">
+          <span class="format-pill">JPG</span>
+          <span class="format-pill">PNG</span>
+          <span class="format-pill">PDF</span>
+          <span class="format-pill">Local OCR</span>
+        </div>
+        <input type="file" id="ocrFileInput" accept=".pdf,image/*" style="display:none;">
+      </div>
+
+      <!-- Active Stage -->
+      <div id="ocrActiveStage" class="stage-active-container">
+        <div class="stage-top-meta">
+          <div class="file-meta-info">
+            <div class="file-meta-icon" style="background:var(--pdf-gradient);">
+              <i data-lucide="file-text" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div>
+              <div id="loadedOcrName" class="file-meta-name">document.jpg</div>
+              <div id="loadedOcrDetails" class="file-meta-details">0 KB</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <button id="btnCopyOcrText" class="btn-secondary-action" style="padding:0.4rem 0.8rem; font-size:0.75rem;">
+              <i data-lucide="copy" style="width: 12px; height: 12px;"></i> Copy Text
+            </button>
+            <button id="btnDownloadOcrTxt" class="btn-secondary-action" style="padding:0.4rem 0.8rem; font-size:0.75rem;">
+              <i data-lucide="download" style="width: 12px; height: 12px;"></i> Export .txt
+            </button>
+          </div>
+        </div>
+
+        <div style="flex:1; display:flex; flex-direction:column;">
+          <textarea id="ocrOutputTerminal" class="ocr-terminal" placeholder="Extracted text will appear here in real time..."></textarea>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">100% Client-Side Private Document Studio</p>
+  </footer>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 {
-  "name": "Docuvate - Master PDF & Image Studios",
+  "name": "Docuvate - Private Document & Image Studios",
   "short_name": "Docuvate",
-  "description": "100% Client-Side Private PDF & Image Studios, InkScribe Handwriting Studio, and Certificate Downloader. Zero Cloud Uploads.",
+  "description": "100% Client-Side Private Document & Image Studios, InkScribe Handwriting Studio, and Certificate Downloader. Zero Cloud Uploads.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -23,17 +23,17 @@
   ],
   "shortcuts": [
     {
-      "name": "Master PDF Studio",
-      "short_name": "PDF Studio",
-      "description": "Compress, merge, split, sign, and organize PDFs",
-      "url": "./index.html#pdf-studio",
+      "name": "Merge PDF Studio",
+      "short_name": "Merge PDF",
+      "description": "Combine multiple PDF files into one",
+      "url": "./merge-pdf.html",
       "icons": [{ "src": "logo.png", "sizes": "96x96" }]
     },
     {
-      "name": "Master Image Studio",
-      "short_name": "Image Studio",
-      "description": "Compress to target KB, crop, and convert images",
-      "url": "./index.html#image-studio",
+      "name": "Image Resizer in KB",
+      "short_name": "Image Resizer",
+      "description": "Compress images strictly under target KB",
+      "url": "./image-resizer-kb.html",
       "icons": [{ "src": "logo.png", "sizes": "96x96" }]
     },
     {

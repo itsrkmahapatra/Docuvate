@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Docuvate - Master PDF & Image Studios (100% Private Client-Side)</title>
-  <meta name="description" content="All-in-one Master PDF Studio and Master Image Studio. Resize to desired KB sizes effortlessly, merge, split, sign, edit, and convert with 100% client-side military privacy.">
-  <meta name="keywords" content="master pdf studio, master image studio, resize pdf target kb, image compressor, pdf organizer, private document workstation, docuvate">
+  <title>Docuvate - Private Document & Image Studios (100% Client-Side)</title>
+  <meta name="description" content="Dedicated private client-side workstations for PDF, image, and handwriting workflows. Merge, split, compress to target KB, sign, stamp, and convert with 0 bytes uploaded to any cloud.">
+  <meta name="keywords" content="docuvate, pdf tools, image resizer kb, compress pdf 100kb, sign pdf, merge pdf, split pdf, inkscribe, private document workstation">
   <meta name="author" content="Raj Kishor Mahapatra">
 
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph / Social Meta -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/">
-  <meta property="og:title" content="Docuvate - Master PDF & Image Studios">
-  <meta property="og:description" content="Complete all-in-one private client-side PDF and Image workstations. Zero server uploads.">
+  <meta property="og:title" content="Docuvate - Private Document & Image Studios">
+  <meta property="og:description" content="100% Client-Side Private Document & Image Workstations. Zero Cloud Uploads.">
   <meta property="og:image" content="assets/developer.png">
 
   <!-- Favicon & PWA Manifest -->
@@ -21,62 +21,26 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#e11d48">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Docuvate">
 
-  <!-- CSS Stylesheet -->
+  <!-- All CSS in One Unified Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Structured Data JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Docuvate Master Studios",
-    "operatingSystem": "All (Windows, macOS, Linux, iOS, Android)",
-    "applicationCategory": "BusinessApplication",
-    "browserRequirements": "Requires modern browser with WebAssembly and JavaScript enabled. Runs 100% client-side offline.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Raj Kishor Mahapatra",
-      "url": "https://itsrkmahapatra.qzz.io/"
-    },
-    "description": "Two unified all-in-one workstations for PDF and Image processing with 100% offline client-side security."
-  }
-  </script>
-
-  <!-- Privacy Sandbox Live Network Auditor & PWA Manager -->
-  <script src="js/privacy-monitor.js"></script>
-  <!-- Apple/Linear Obsidian Dark Theme & WebCrypto SHA-256 Engine -->
-  <script src="js/theme-crypto.js"></script>
-  <!-- Raycast/Spotlight Universal Command Palette (Ctrl+K) -->
-  <script src="js/command-palette.js" defer></script>
-
-  <!-- External Client-Side Libraries -->
+  <!-- External Client-Side Vendor Libraries -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
-  <script>
-    if (window.pdfjsLib) {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    }
-  </script>
-</head>
-<body>
 
-  <!-- Top Security Banner -->
+  <!-- All JS in One Master Application Engine -->
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="catalog">
+
+  <!-- Top Security & Sandbox Banner -->
   <header class="privacy-banner">
-    <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
-    <span>100% Client-Side Sandboxed Processing • Your files never leave your computer</span>
-    <button class="privacy-live-badge" onclick="window.DocuvatePrivacy.showAuditModal()" title="View Sandbox Security Audit">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px; color:#10b981;"></i>
+    <span>100% Client-Side Sandboxed Processing • Zero Cloud Uploads</span>
+    <button class="privacy-live-badge" onclick="window.Docuvate.Privacy.showAuditModal()" title="View Sandbox Security Audit">
       <span class="privacy-pulse-dot"></span>
       <span>Live Audit: 0 KB Leaked</span>
     </button>
@@ -88,23 +52,22 @@
       <span class="brand-badge">Doc</span>uvate
     </a>
 
-    <!-- Spotlight Command Search Trigger -->
+    <!-- Spotlight Search Trigger -->
     <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)" title="Press Ctrl+K or ⌘K">
       <i data-lucide="search" style="width: 14px; height: 14px;"></i>
-      <span>Search tools...</span>
+      <span>Search tools & studios...</span>
       <span class="cmd-kbd-shortcut">⌘K</span>
     </button>
 
     <div class="nav-links">
-      <a href="#pdf-studio" class="nav-link" id="navPdfStudio">Master PDF Studio</a>
-      <a href="#image-studio" class="nav-link" id="navImageStudio">Master Image Studio</a>
-      <a href="inkscribe.html" class="nav-link" id="navInkScribe">InkScribe Studio</a>
-      <a href="certificate-downloader.html" class="nav-link" id="navCertDownloader">Certificate Downloader</a>
-      <a href="terms.html" class="nav-link">Terms</a>
-      <a href="disclaimer.html" class="nav-link">Disclaimer</a>
-
+      <a href="index.html" class="nav-link active">All Studios</a>
+      <a href="merge-pdf.html" class="nav-link">PDF Tools</a>
+      <a href="image-resizer-kb.html" class="nav-link">Image Tools</a>
+      <a href="inkscribe.html" class="nav-link">InkScribe</a>
+      <a href="certificate-downloader.html" class="nav-link">Govt Portal</a>
+      
       <!-- Theme Switcher -->
-      <button class="btn-theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Theme (T)">
+      <button class="btn-theme-toggle" aria-label="Toggle Theme" title="Toggle Obsidian Dark / Light Mode (T)">
         <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
       </button>
 
@@ -115,182 +78,400 @@
     </div>
   </nav>
 
-  <!-- Main Hero & Studio Selection -->
-  <main>
-    <section class="hero-section">
-      <div class="hero-pill">
-        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
-        <span>Document Workstations & Citizen Utilities • Zero Server Uploads</span>
+  <!-- Main Showcase Catalog -->
+  <main class="catalog-wrapper">
+    <!-- Hero Section -->
+    <section class="catalog-hero">
+      <div class="hero-pill-badge">
+        <i data-lucide="shield-alert" style="width: 14px; height: 14px;"></i>
+        <span>Military-Grade Local In-Memory Sandbox • No Servers</span>
       </div>
-      <h1 class="hero-title">Universal Document & Visual Studios</h1>
-      <p class="hero-subtitle">Upload your document once and perform any operation in a persistent, all-in-one private workstation.</p>
+      <h1 class="hero-main-title">
+        Dedicated Document & Image Studios. <br>
+        <span class="gradient-text">Zero Cloud Uploads.</span>
+      </h1>
+      <p class="hero-subtext">
+        Every tool has its own dedicated full-featured studio. Process PDFs, optimize exam photos, simulate realistic digital handwriting, and attest documents directly inside your browser's RAM.
+      </p>
+
+      <div class="hero-stats-row">
+        <div class="hero-stat-item"><i data-lucide="check-circle-2"></i> 100% Private Client-Side</div>
+        <div class="hero-stat-item"><i data-lucide="check-circle-2"></i> WebCrypto SHA-256 Attested</div>
+        <div class="hero-stat-item"><i data-lucide="check-circle-2"></i> Strict Target KB Guarantees</div>
+        <div class="hero-stat-item"><i data-lucide="check-circle-2"></i> Offline PWA Ready</div>
+      </div>
     </section>
 
-    <!-- Two Flagship Studios Section -->
-    <section class="studios-container">
+    <!-- Interactive Filter Controls -->
+    <section class="catalog-controls">
+      <div class="catalog-tabs">
+        <button class="catalog-tab active" data-category="all">All Studios (16)</button>
+        <button class="catalog-tab" data-category="pdf">PDF Studios</button>
+        <button class="catalog-tab" data-category="image">Image Studios</button>
+        <button class="catalog-tab" data-category="handwriting">Handwriting</button>
+        <button class="catalog-tab" data-category="govt">Govt & Utilities</button>
+      </div>
+
+      <div class="catalog-search-box">
+        <i data-lucide="search" style="width: 14px; height: 14px; color:var(--text-muted);"></i>
+        <input type="text" id="catalogSearchInput" placeholder="Filter studios...">
+      </div>
+    </section>
+
+    <!-- Studio Catalog Grid -->
+    <section class="catalog-grid" id="catalogGrid">
       
-      <!-- Studio 1: Master PDF Studio -->
-      <div class="studio-flagship-card studio-pdf" id="cardPdfStudio">
-        <div class="studio-header-group">
-          <div class="studio-icon-large pdf-gradient-icon">
-            <i data-lucide="layers" style="width: 38px; height: 38px;"></i>
+      <!-- 1. Merge PDF Studio -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="layers" style="width: 24px; height: 24px;"></i>
           </div>
-          <div class="studio-badge-pill pdf-badge">Universal PDF Workstation</div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
         </div>
-
-        <h2 class="studio-card-title">Master PDF Studio</h2>
-        <p class="studio-card-desc">
-          Complete all-in-one PDF workstation. Organize, merge, split, compress to exact KB limits, sign, watermark, add page numbers, protect, convert, and OCR without re-uploading your files.
-        </p>
-
-        <!-- Feature Tags -->
-        <div class="studio-features-list">
-          <span class="feature-tag"><i data-lucide="check"></i> Merge & Organize Pages</span>
-          <span class="feature-tag"><i data-lucide="check"></i> 100% Target KB Compressor</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Draw Signature Stamp</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Watermark & Page Numbers</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Split, Extract & Crop</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Password Protect & Unlock</span>
-          <span class="feature-tag"><i data-lucide="check"></i> PDF to JPG & AI OCR</span>
+        <h3 class="tool-title">Merge PDF Studio</h3>
+        <p class="tool-desc">Combine multiple PDF documents into a single organized file with instant drag-and-drop reordering.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Multi-File</span>
+          <span class="tool-tag">Drag & Drop</span>
+          <span class="tool-tag">Zero Uploads</span>
         </div>
-
-        <button class="btn-studio-launch btn-pdf-launch" id="btnLaunchPdfStudio">
-          <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
-          <span>Launch Master PDF Studio</span>
-        </button>
-      </div>
-
-      <!-- Studio 2: Master Image Studio -->
-      <div class="studio-flagship-card studio-image" id="cardImageStudio">
-        <div class="studio-header-group">
-          <div class="studio-icon-large image-gradient-icon">
-            <i data-lucide="image" style="width: 38px; height: 38px;"></i>
-          </div>
-          <div class="studio-badge-pill image-badge">Universal Image Workstation</div>
-        </div>
-
-        <h2 class="studio-card-title">Master Image Studio</h2>
-        <p class="studio-card-desc">
-          Unified image editing and optimization suite. Compress to target KB, resize dimensions, crop, convert formats (JPG, PNG, WebP), rotate, flip, filter adjustments, memes, blur, and exam photo formatting.
-        </p>
-
-        <!-- Feature Tags -->
-        <div class="studio-features-list">
-          <span class="feature-tag"><i data-lucide="check"></i> Compress to Exact Target KB</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Resize & Crop Dimensions</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Convert (JPG, PNG, WebP)</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Rotate & Flip Transforms</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Photo Editor & Filters</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Exam & Passport Photo Resizer</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Watermark, Blur & Memes</span>
-        </div>
-
-        <button class="btn-studio-launch btn-image-launch" id="btnLaunchImageStudio">
-          <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
-          <span>Launch Master Image Studio</span>
-        </button>
-      </div>
-
-      <!-- Studio 3: Odisha e-District Certificate Downloader -->
-      <div class="studio-flagship-card studio-cert" id="cardCertDownloader" style="cursor: pointer;" onclick="window.location.href='certificate-downloader.html'">
-        <div class="studio-header-group">
-          <div class="studio-icon-large cert-gradient-icon">
-            <i data-lucide="award" style="width: 38px; height: 38px;"></i>
-          </div>
-          <div class="studio-badge-pill cert-badge">Independent Public Utility</div>
-        </div>
-
-        <h2 class="studio-card-title">Odisha e-District Certificate Downloader</h2>
-        <p class="studio-card-desc">
-          Fast client-side gateway for downloading issued Odisha e-District certificates (Caste, Residence, Income, Legal Heir) using your 8-character token ID via public routing. Direct, private, and 100% client-side.
-        </p>
-
-        <!-- Feature Tags -->
-        <div class="studio-features-list">
-          <span class="feature-tag"><i data-lucide="check"></i> Instant Token Verification</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Public Token Routing</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Direct Silent PDF Download</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Zero Data Stored or Logged</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Caste, Income, Residence</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Mobile & Desktop Optimized</span>
-        </div>
-
-        <a href="certificate-downloader.html" class="btn-studio-launch btn-cert-launch" id="btnLaunchCertDownloader" onclick="event.stopPropagation();">
-          <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
-          <span>Launch Certificate Downloader</span>
+        <a href="merge-pdf.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch Merge Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
         </a>
       </div>
 
-      <!-- Studio 4: InkScribe Handwriting Studio -->
-      <div class="studio-flagship-card studio-inkscribe" id="cardInkScribe" style="cursor: pointer;" onclick="window.location.href='inkscribe.html'">
-        <div class="studio-header-group">
-          <div class="studio-icon-large inkscribe-gradient-icon">
-            <i data-lucide="pen-tool" style="width: 38px; height: 38px;"></i>
+      <!-- 2. Split PDF Studio -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="scissors" style="width: 24px; height: 24px;"></i>
           </div>
-          <div class="studio-badge-pill inkscribe-badge">Creative Handwriting Studio</div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
         </div>
-
-        <h2 class="studio-card-title">InkScribe Handwriting Studio</h2>
-        <p class="studio-card-desc">
-          Transform digital text, notes, and imported PDF/DOCX assignments into natural, realistic human handwriting. Customize paper textures, authentic margins, ruling, ink colors, and export to print-ready PDF.
-        </p>
-
-        <!-- Feature Tags -->
-        <div class="studio-features-list">
-          <span class="feature-tag"><i data-lucide="check"></i> Text to Realistic Handwriting</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Ruled, Graph & Plain Paper</span>
-          <span class="feature-tag"><i data-lucide="check"></i> Custom Margins & Ruling</span>
-          <span class="feature-tag"><i data-lucide="check"></i> PDF & DOCX File Importer</span>
-          <span class="feature-tag"><i data-lucide="check"></i> AI Writer Assistant</span>
-          <span class="feature-tag"><i data-lucide="check"></i> High-Resolution PDF Export</span>
+        <h3 class="tool-title">Split & Extract PDF</h3>
+        <p class="tool-desc">Select specific pages, extract ranges (e.g. 1-5, 8), or split every page into separate individual documents.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Visual Page Grid</span>
+          <span class="tool-tag">Custom Ranges</span>
+          <span class="tool-tag">Batch Extract</span>
         </div>
+        <a href="split-pdf.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch Split Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
 
-        <a href="inkscribe.html" class="btn-studio-launch btn-inkscribe-launch" id="btnLaunchInkScribe" onclick="event.stopPropagation();">
-          <i data-lucide="sparkles" style="width: 20px; height: 20px;"></i>
+      <!-- 3. Compress PDF Studio (Target KB) -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="file-check-2" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
+        </div>
+        <h3 class="tool-title">Compress PDF (Target KB)</h3>
+        <p class="tool-desc">Compress PDFs to exact target file sizes (100KB, 200KB, 500KB) with iterative client-side quality optimization.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Target KB Ceiling</span>
+          <span class="tool-tag">Govt Presets</span>
+          <span class="tool-tag">Local Wasm</span>
+        </div>
+        <a href="compress-pdf.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch Compress Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 4. Sign & Stamp PDF Studio -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="stamp" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
+        </div>
+        <h3 class="tool-title">Sign & Attestation Stamp</h3>
+        <p class="tool-desc">Official stamps (APPROVED, CONFIDENTIAL, VERIFIED, DRAFT) and signature pad with custom placement and all-page support.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Official Stamps</span>
+          <span class="tool-tag">Ink Palette</span>
+          <span class="tool-tag">Draw Signature</span>
+        </div>
+        <a href="sign-pdf.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch Sign & Stamp</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 5. PDF to Image Converter -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="file-image" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
+        </div>
+        <h3 class="tool-title">PDF to Image Converter</h3>
+        <p class="tool-desc">Render PDF pages to high-resolution JPEG or PNG images at 150/300 DPI with 1-click batch ZIP download.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">300 DPI High-Res</span>
+          <span class="tool-tag">ZIP Archive</span>
+          <span class="tool-tag">PNG & JPG</span>
+        </div>
+        <a href="pdf-to-image.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch PDF to Image</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 6. Image to PDF Converter -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="file-plus" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
+        </div>
+        <h3 class="tool-title">Image to PDF Converter</h3>
+        <p class="tool-desc">Turn photos, scanned receipts, and JPG/PNG documents into a clean, formatted A4 PDF with custom margins.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Multi-Image</span>
+          <span class="tool-tag">A4 & Fit</span>
+          <span class="tool-tag">Page Margin</span>
+        </div>
+        <a href="image-to-pdf.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch Image to PDF</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 7. Organize & Rotate PDF -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="rotate-cw" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
+        </div>
+        <h3 class="tool-title">Organize & Rotate PDF</h3>
+        <p class="tool-desc">Visually reorder pages, rotate upside-down pages by 90/180/270 degrees, and delete unnecessary pages.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Page Rotation</span>
+          <span class="tool-tag">Delete Pages</span>
+          <span class="tool-tag">Visual Grid</span>
+        </div>
+        <a href="organize-pdf.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch Organize Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 8. Protect & Unlock PDF -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="lock" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
+        </div>
+        <h3 class="tool-title">Protect & Unlock PDF</h3>
+        <p class="tool-desc">Encrypt sensitive PDF documents with secure passwords or unlock password-protected files for editing.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Password Security</span>
+          <span class="tool-tag">AES Encryption</span>
+          <span class="tool-tag">Fast Unlock</span>
+        </div>
+        <a href="protect-pdf.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch Security Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 9. OCR Text Extractor -->
+      <div class="tool-card" data-category="pdf">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="scan-text" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-pdf">PDF Studio</span>
+        </div>
+        <h3 class="tool-title">OCR Text Extractor</h3>
+        <p class="tool-desc">Extract selectable and searchable text from scanned PDFs and photos using 100% client-side Tesseract.js OCR.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Local Tesseract</span>
+          <span class="tool-tag">Scanned Docs</span>
+          <span class="tool-tag">Export TXT</span>
+        </div>
+        <a href="ocr-pdf.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch OCR Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 10. Image Resizer in KB -->
+      <div class="tool-card" data-category="image">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-image">
+            <i data-lucide="image" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-image">Image Studio</span>
+        </div>
+        <h3 class="tool-title">Image Resizer in KB</h3>
+        <p class="tool-desc">Strict target KB resizer for online application forms. UPSC (50KB), SSC (20KB), IBPS, and custom limits.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">UPSC/SSC Presets</span>
+          <span class="tool-tag">Exact Ceiling</span>
+          <span class="tool-tag">HEIC Support</span>
+        </div>
+        <a href="image-resizer-kb.html" class="btn-open-tool btn-open-image">
+          <span>Launch Resizer Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 11. Crop, Rotate & Filter Image -->
+      <div class="tool-card" data-category="image">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-image">
+            <i data-lucide="crop" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-image">Image Studio</span>
+        </div>
+        <h3 class="tool-title">Crop, Rotate & Filter</h3>
+        <p class="tool-desc">Crop images to exact aspect ratios (1:1, 4:3, 16:9), rotate, flip, and apply brightness/contrast adjustments.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Aspect Ratios</span>
+          <span class="tool-tag">Flip & Rotate</span>
+          <span class="tool-tag">Visual Cropper</span>
+        </div>
+        <a href="crop-image.html" class="btn-open-tool btn-open-image">
+          <span>Launch Crop Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 12. Biometric Passport Photo -->
+      <div class="tool-card" data-category="image">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-image">
+            <i data-lucide="user-check" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-image">Image Studio</span>
+        </div>
+        <h3 class="tool-title">Biometric Passport Photo</h3>
+        <p class="tool-desc">Official biometric guide overlay (Crown, Eye Line 50-69%, Chin Boundary) for Passport, Visa, and Govt IDs.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Biometric Guides</span>
+          <span class="tool-tag">6x4 Print Sheet</span>
+          <span class="tool-tag">ICAO Standards</span>
+        </div>
+        <a href="passport-photo.html" class="btn-open-tool btn-open-image">
+          <span>Launch Passport Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 13. Convert Image Formats -->
+      <div class="tool-card" data-category="image">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-image">
+            <i data-lucide="refresh-cw" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-image">Image Studio</span>
+        </div>
+        <h3 class="tool-title">Convert Image Formats</h3>
+        <p class="tool-desc">Batch convert between JPG, PNG, WEBP, and Apple iPhone HEIC formats with quality control and instant preview.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Apple HEIC</span>
+          <span class="tool-tag">WebP / PNG</span>
+          <span class="tool-tag">Batch Export</span>
+        </div>
+        <a href="convert-image.html" class="btn-open-tool btn-open-image">
+          <span>Launch Format Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 14. InkScribe Digital Handwriting -->
+      <div class="tool-card" data-category="handwriting">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-ink">
+            <i data-lucide="pen-tool" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-ink">Flagship</span>
+        </div>
+        <h3 class="tool-title">InkScribe Handwriting</h3>
+        <p class="tool-desc">Convert digital text, notes, and DOCX/PDF into organic human handwriting with realistic drift, textures, and custom fonts.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Organic Drift</span>
+          <span class="tool-tag">Parchment & Legal</span>
+          <span class="tool-tag">Custom Font (.ttf)</span>
+        </div>
+        <a href="inkscribe.html" class="btn-open-tool btn-open-ink">
           <span>Launch InkScribe Studio</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 15. Odisha e-District Downloader -->
+      <div class="tool-card" data-category="govt">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-cert">
+            <i data-lucide="award" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-cert">Govt Portal</span>
+        </div>
+        <h3 class="tool-title">Odisha e-District Downloader</h3>
+        <p class="tool-desc">Independent public gateway to download issued Caste, Residence, Income, and Legal Heir certificates via 8-character token.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">1-Click Token</span>
+          <span class="tool-tag">Official Public API</span>
+          <span class="tool-tag">No Login Needed</span>
+        </div>
+        <a href="certificate-downloader.html" class="btn-open-tool btn-open-cert">
+          <span>Launch Govt Gateway</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+        </a>
+      </div>
+
+      <!-- 16. Compress PDF to 100 KB -->
+      <div class="tool-card" data-category="govt">
+        <div class="tool-card-top">
+          <div class="tool-icon-wrapper tool-icon-pdf">
+            <i data-lucide="file-down" style="width: 24px; height: 24px;"></i>
+          </div>
+          <span class="tool-card-badge badge-pdf">Quick Portal</span>
+        </div>
+        <h3 class="tool-title">Compress PDF to 100 KB</h3>
+        <p class="tool-desc">Strict ceiling binary compression for SSC, UPSC, and state PSC job portal document requirements.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Strict &lt;100KB</span>
+          <span class="tool-tag">Job Portals</span>
+          <span class="tool-tag">Fast Wasm</span>
+        </div>
+        <a href="compress-pdf-to-100kb.html" class="btn-open-tool btn-open-pdf">
+          <span>Launch 100KB Portal</span>
+          <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
         </a>
       </div>
 
     </section>
   </main>
 
-  <!-- Interactive Workspace Modal / Fullscreen Environment -->
-  <div class="workspace-overlay" id="workspaceOverlay">
-    <div class="workspace-modal">
-      <div class="workspace-header">
-        <div class="workspace-title-group">
-          <div id="workspaceStatusIndicator" style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
-          <h3 class="workspace-title" id="workspaceTitle">Master Studio</h3>
-        </div>
-        <button class="workspace-close-btn" id="workspaceCloseBtn" aria-label="Close Studio">
-          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
-        </button>
-      </div>
-      <div class="workspace-body" id="workspaceBody">
-        <!-- Dynamic Workspace Content -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Notification Container -->
-  <div class="toast-container" id="toastContainer"></div>
-
   <!-- Site Footer -->
   <footer class="site-footer">
-    <img src="assets/developer.png" alt="Raj Kishor Mahapatra" class="dev-avatar" />
+    <img src="assets/developer.png" alt="Raj Kishor Mahapatra" class="dev-avatar">
     <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
-    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem;">Free, Private, and Open Source Client-Side Workstations</p>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Free, Private, and Open Source Client-Side Workstations • Zero Cloud Uploads</p>
     <div class="footer-links">
-      <a href="inkscribe.html" class="footer-link">InkScribe Studio</a>
-      <a href="certificate-downloader.html" class="footer-link">Certificate Downloader</a>
       <a href="terms.html" class="footer-link">Terms & Conditions</a>
       <a href="disclaimer.html" class="footer-link">Disclaimer</a>
+      <a href="certificate-disclaimer.html" class="footer-link">Certificate Disclaimer</a>
+      <a href="FAQ.md" class="footer-link">FAQ</a>
     </div>
   </footer>
 
-  <!-- Application Logic -->
-  <script src="js/app.js"></script>
-  <!-- Support Widget -->
-  <script src="js/upi-widget.js" defer></script>
 </body>
 </html>

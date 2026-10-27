@@ -4,185 +4,162 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Compress PDF to 100KB Online Free - 100% Client-Side Private | Docuvate</title>
-  <meta name="description" content="Compress PDF to 100KB, 50KB, or 200KB online for free with 100% privacy. Zero server uploads. Perfect for government portal uploads, job applications, and university forms.">
-  <meta name="keywords" content="compress pdf to 100kb, reduce pdf size to 100kb, resize pdf target kb, offline pdf compressor, client side pdf compression, docuvate">
+  <title>Compress PDF to 100 KB Online (100% Strict Ceiling Guarantee) - Docuvate</title>
+  <meta name="description" content="Compress PDF to strictly under 100KB for UPSC, SSC, state PSC, and job recruitment portals. 100% client-side privacy, zero cloud uploads.">
+  <meta name="keywords" content="compress pdf to 100kb, reduce pdf size to 100kb, pdf compressor under 100kb, docuvate">
   <meta name="author" content="Raj Kishor Mahapatra">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/compress-pdf-to-100kb.html">
-  <meta property="og:title" content="Compress PDF to 100KB Online Free - 100% Private | Docuvate">
-  <meta property="og:description" content="Reduce PDF file size to exactly 100 KB directly in your browser. 100% secure, private, zero server uploads.">
-  <meta property="og:image" content="assets/developer.png">
-
-  <!-- Favicon & PWA Manifest -->
   <link rel="icon" type="image/x-icon" href="logo.png">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#e11d48">
 
-  <!-- CSS Stylesheet -->
+  <!-- Single Master Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Schema.org Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Docuvate 100KB PDF Compressor",
-    "operatingSystem": "All",
-    "applicationCategory": "UtilitiesApplication",
-    "description": "Compress PDF documents directly to 100KB with 100% client-side privacy.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
-  }
-  </script>
-
-  <!-- Privacy Sandbox Live Network Auditor & PWA Manager -->
-  <script src="js/privacy-monitor.js"></script>
-  <!-- Apple/Linear Obsidian Dark Theme & WebCrypto SHA-256 Engine -->
-  <script src="js/theme-crypto.js"></script>
-  <!-- Raycast/Spotlight Universal Command Palette (Ctrl+K) -->
-  <script src="js/command-palette.js" defer></script>
-
-  <!-- Lucide Icons -->
+  <!-- External Vendor Libraries -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- Single Master JS Engine -->
+  <script src="js/app.js" defer></script>
 </head>
-<body>
+<body data-page="compress-pdf">
 
   <!-- Top Security Banner -->
   <header class="privacy-banner">
-    <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
-    <span>100% Client-Side Sandboxed Processing • Your files never leave your computer</span>
-    <button class="privacy-live-badge" onclick="window.DocuvatePrivacy.showAuditModal()" title="View Sandbox Security Audit">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px; color:#10b981;"></i>
+    <span>100% Client-Side Sandboxed Processing • Zero Cloud Uploads</span>
+    <button class="privacy-live-badge" onclick="window.Docuvate.Privacy.showAuditModal()">
       <span class="privacy-pulse-dot"></span>
       <span>Live Audit: 0 KB Leaked</span>
     </button>
   </header>
 
-  <!-- Navigation Bar -->
+  <!-- Navbar -->
   <nav class="site-navbar">
     <a href="index.html" class="brand-logo">
       <span class="brand-badge">Doc</span>uvate
     </a>
 
-    <!-- Spotlight Command Search Trigger -->
-    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)" title="Press Ctrl+K or ⌘K">
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)">
       <i data-lucide="search" style="width: 14px; height: 14px;"></i>
       <span>Search tools...</span>
       <span class="cmd-kbd-shortcut">⌘K</span>
     </button>
 
     <div class="nav-links">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="index.html#pdf-studio" class="nav-link" style="color:var(--pdf-accent); font-weight:800;">Master PDF Studio</a>
-      <a href="index.html#image-studio" class="nav-link">Master Image Studio</a>
-      <a href="inkscribe.html" class="nav-link">InkScribe Studio</a>
-      <a href="certificate-downloader.html" class="nav-link">Certificate Downloader</a>
+      <a href="index.html" class="nav-link">All Studios</a>
+      <a href="merge-pdf.html" class="nav-link">Merge PDF</a>
+      <a href="split-pdf.html" class="nav-link">Split PDF</a>
+      <a href="compress-pdf.html" class="nav-link">Compress PDF</a>
+      <a href="compress-pdf-to-100kb.html" class="nav-link active" style="color:var(--pdf-accent);">100KB Portal</a>
       
-      <!-- Theme Switcher -->
-      <button class="btn-theme-toggle" aria-label="Toggle Dark/Light Mode" title="Toggle Theme (T)">
+      <button class="btn-theme-toggle" aria-label="Toggle Theme">
         <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
       </button>
 
-      <button class="btn-install-pwa" aria-label="Install Docuvate App">
+      <button class="btn-install-pwa">
         <i data-lucide="download" style="width: 13px; height: 13px;"></i>
         <span>Install App</span>
       </button>
     </div>
   </nav>
 
-  <!-- Dedicated Tool Hero Section -->
-  <main style="max-width: 960px; margin: 2rem auto; padding: 0 1.5rem; flex: 1;">
-    <section style="text-align: center; margin-bottom: 2rem;">
-      <div class="hero-pill" style="margin-bottom: 1rem;">
-        <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
-        <span>100% Strict Ceiling Guarantee • Target KB Compressor</span>
-      </div>
-      <h1 style="font-size: 2.25rem; font-weight: 900; margin-bottom: 0.75rem; color: #0f172a;">
-        Compress PDF to 100KB Online Free
-      </h1>
-      <p style="font-size: 1.05rem; color: var(--text-muted); max-width: 680px; margin: 0 auto;">
-        Reduce PDF documents to strictly under 100 KB (or custom target sizes) directly inside your web browser. Zero server uploads, zero quality loss.
-      </p>
-    </section>
-
-    <!-- Fast Dedicated Tool Card -->
-    <div class="studio-flagship-card" style="margin-bottom: 3rem; border: 2px solid #fecdd3; box-shadow: var(--shadow-lg);">
-      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-        <div>
-          <span style="font-size: 0.75rem; font-weight: 800; color: #e11d48; text-transform: uppercase;">Portal Preset Selector</span>
-          <h2 style="font-size: 1.35rem; margin-top: 0.15rem;">Select Target KB Limit</h2>
-        </div>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          <button class="preset-btn" data-kb="50" onclick="setDedicatedTarget(50)">50 KB</button>
-          <button class="preset-btn active" data-kb="100" onclick="setDedicatedTarget(100)">100 KB</button>
-          <button class="preset-btn" data-kb="200" onclick="setDedicatedTarget(200)">200 KB</button>
-          <button class="preset-btn" data-kb="500" onclick="setDedicatedTarget(500)">500 KB</button>
-        </div>
-      </div>
-
-      <!-- Dropzone Area -->
-      <div class="dropzone-visual-box" id="dedicatedDropzone" style="cursor: pointer; padding: 2.5rem 1.5rem;">
-        <i data-lucide="file-up" style="width: 48px; height: 48px; color: #e11d48; margin-bottom: 0.75rem;"></i>
-        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem;">Choose or Drop PDF Here</h3>
-        <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 1.25rem;">
-          Target Size: <strong id="selectedKbLabel" style="color: #e11d48;">100 KB</strong> • 100% Client-Side Sandboxed
-        </p>
-        <button class="btn-primary" style="background: var(--pdf-gradient); max-width: 240px; margin: 0 auto;">
-          <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
-          <span>Select PDF File</span>
-        </button>
-        <input type="file" id="dedicatedPdfInput" accept=".pdf" style="display: none;" />
-      </div>
-
-      <!-- Compression Progress -->
-      <div id="dedicatedProgress" style="display: none; margin-top: 1.5rem;">
-        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 800; color: #e11d48; margin-bottom: 0.5rem;">
-          <span id="dedicatedProgressMsg">Compressing pages in Web Worker...</span>
-          <span id="dedicatedProgressPct">0%</span>
-        </div>
-        <div class="progress-bar-container">
-          <div class="progress-bar-fill" id="dedicatedProgressFill" style="width: 0%;"></div>
-        </div>
-      </div>
-
-      <!-- Result Card -->
-      <div id="dedicatedResult" style="display: none; margin-top: 1.5rem;"></div>
+  <!-- Studio Header Subbar -->
+  <div class="studio-navbar-sub">
+    <div class="studio-breadcrumb">
+      <a href="index.html"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> All Studios</a>
+      <span>/</span>
+      <span>Compress PDF to 100 KB</span>
     </div>
 
-    <!-- SEO FAQ Section -->
-    <section style="background: white; border: 1px solid var(--border-light); border-radius: var(--radius-xl); padding: 2rem; margin-bottom: 2rem;">
-      <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.25rem;">Frequently Asked Questions</h2>
-      
-      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-        <div>
-          <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 0.35rem;">
-            How do I compress a PDF to strictly under 100KB?
-          </h3>
-          <p style="font-size: 0.9rem; color: #64748b; line-height: 1.6;">
-            Simply select the <strong>100 KB</strong> preset above, choose your PDF document, and our WebAssembly & Web Worker engine will automatically re-render and optimize each page to guarantee your final document stays strictly below 100 KB without exceeding the limit.
-          </p>
+    <div class="studio-title-badge">
+      <div class="tool-icon-wrapper tool-icon-pdf" style="width:32px; height:32px;">
+        <i data-lucide="file-down" style="width: 18px; height: 18px;"></i>
+      </div>
+      <h1>Compress PDF to Strictly Under 100 KB</h1>
+    </div>
+
+    <div class="studio-status-pills">
+      <div class="sha256-attest-badge" style="display:none;" title="Click to copy SHA-256 Hash">
+        <i data-lucide="shield-check" style="width:12px; height:12px;"></i> SHA-256 Ready
+      </div>
+    </div>
+  </div>
+
+  <!-- Studio Workbench -->
+  <main class="studio-workbench">
+    <!-- Left Options Panel -->
+    <aside class="studio-sidebar">
+      <div>
+        <div class="studio-section-title">
+          <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+          <span>Portal Preset</span>
         </div>
 
-        <div>
-          <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 0.35rem;">
-            Is it safe to upload confidential government documents?
-          </h3>
-          <p style="font-size: 0.9rem; color: #64748b; line-height: 1.6;">
-            Yes! Unlike other online compressors, Docuvate does <strong>not upload your files to any cloud server</strong>. All operations happen 100% inside your own browser using client-side JavaScript and WebAssembly sandboxing. You can even disconnect your internet connection and compress offline!
-          </p>
+        <div class="control-item">
+          <label>Target Ceiling</label>
+          <input type="number" id="targetKbInput" value="100" readonly style="opacity:0.85;">
         </div>
 
-        <div>
-          <h3 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin-bottom: 0.35rem;">
-            Can I compress other files or merge multiple PDFs?
-          </h3>
-          <p style="font-size: 0.9rem; color: #64748b; line-height: 1.6;">
-            Yes, visit our <a href="index.html#pdf-studio" style="color: #e11d48; font-weight: 700; text-decoration: underline;">Master PDF Studio</a> to merge, split, watermark, page-number, crop, and password-protect your PDFs in a single persistent workstation.
+        <div class="preset-pills-grid">
+          <button class="preset-pill active" data-kb="100">100 KB Strict</button>
+          <button class="preset-pill" data-kb="50">50 KB (High)</button>
+          <button class="preset-pill" data-kb="200">200 KB</button>
+        </div>
+      </div>
+
+      <div style="background:var(--bg-subtle); padding:1rem; border-radius:var(--radius-md); font-size:0.8rem; line-height:1.6; color:var(--text-muted);">
+        <strong style="color:var(--text-main); display:block; margin-bottom:0.25rem;">🏛️ Online Application Portal Compliance</strong>
+        Government recruitment portals (UPSC, SSC, OPSC, IBPS, State Police) reject files that exceed 100.00 KB. Our binary search engine guarantees the output never surpasses the limit.
+      </div>
+
+      <button id="btnExecuteCompress" class="btn-primary-action" style="width:100%; justify-content:center; background:var(--pdf-gradient);">
+        <i data-lucide="file-check-2" style="width: 18px; height: 18px;"></i>
+        <span>Compress to &lt;100KB</span>
+      </button>
+    </aside>
+
+    <!-- Right Workbench Stage -->
+    <section class="studio-stage">
+      <!-- Dropzone -->
+      <div class="dropzone-unified" id="compressDropzone">
+        <div class="dropzone-icon" style="color:var(--pdf-accent);">
+          <i data-lucide="file-down" style="width: 32px; height: 32px;"></i>
+        </div>
+        <h2 class="dropzone-title">Drop PDF to Compress to 100 KB</h2>
+        <p class="dropzone-subtitle">Click to select or drop a PDF document to reduce it strictly below 100 KB in client-side RAM.</p>
+        <div class="dropzone-formats">
+          <span class="format-pill">Strict &lt;100KB</span>
+          <span class="format-pill">Govt Forms</span>
+          <span class="format-pill">Zero Uploads</span>
+        </div>
+        <input type="file" id="compressFileInput" accept=".pdf" style="display:none;">
+      </div>
+
+      <!-- Active Stage -->
+      <div id="stageActiveContent" class="stage-active-container">
+        <div class="stage-top-meta">
+          <div class="file-meta-info">
+            <div class="file-meta-icon" style="background:var(--pdf-gradient);">
+              <i data-lucide="file" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div>
+              <div id="loadedFileName" class="file-meta-name">document.pdf</div>
+              <div id="loadedFileSize" class="file-meta-details">0 KB</div>
+            </div>
+          </div>
+          <button class="btn-secondary-action" onclick="document.getElementById('compressFileInput').click()" style="padding:0.4rem 0.8rem; font-size:0.75rem;">
+            Change Document
+          </button>
+        </div>
+
+        <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.25rem; padding:2rem; background:var(--bg-subtle); border-radius:var(--radius-md);">
+          <i data-lucide="check-circle-2" style="width: 48px; height: 48px; color:#10b981;"></i>
+          <h3 style="font-size:1.15rem; font-weight:800; color:var(--text-main);">Ready for 100 KB Compression</h3>
+          <p style="font-size:0.875rem; color:var(--text-muted); text-align:center; max-width:460px;">
+            Click <strong>"Compress to &lt;100KB"</strong> on the left sidebar to produce an application-ready PDF file.
           </p>
         </div>
       </div>
@@ -191,127 +168,9 @@
 
   <!-- Site Footer -->
   <footer class="site-footer">
-    <img src="assets/developer.png" alt="Raj Kishor Mahapatra" class="dev-avatar" />
     <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
-    <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem;">Free, Private, and Open Source Client-Side Workstations</p>
-    <div class="footer-links">
-      <a href="index.html" class="footer-link">Home</a>
-      <a href="image-resizer-kb.html" class="footer-link">Image Resizer in KB</a>
-      <a href="inkscribe.html" class="footer-link">InkScribe Studio</a>
-      <a href="certificate-downloader.html" class="footer-link">Certificate Downloader</a>
-    </div>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">100% Client-Side Private Document Studio</p>
   </footer>
 
-  <script>
-    let currentTargetKB = 100;
-
-    function setDedicatedTarget(kb) {
-      currentTargetKB = kb;
-      document.querySelectorAll('.preset-btn[data-kb]').forEach(btn => {
-        btn.classList.toggle('active', parseInt(btn.dataset.kb) === kb);
-      });
-      document.getElementById('selectedKbLabel').textContent = `${kb} KB`;
-    }
-
-    const dropzone = document.getElementById('dedicatedDropzone');
-    const input = document.getElementById('dedicatedPdfInput');
-    const progressArea = document.getElementById('dedicatedProgress');
-    const progressMsg = document.getElementById('dedicatedProgressMsg');
-    const progressPct = document.getElementById('dedicatedProgressPct');
-    const progressFill = document.getElementById('dedicatedProgressFill');
-    const resultArea = document.getElementById('dedicatedResult');
-
-    dropzone.addEventListener('click', () => input.click());
-    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
-    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
-    dropzone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropzone.classList.remove('dragover');
-      if (e.dataTransfer.files?.length > 0) processDedicatedPdf(e.dataTransfer.files[0]);
-    });
-    input.addEventListener('change', (e) => {
-      if (e.target.files?.length > 0) processDedicatedPdf(e.target.files[0]);
-    });
-
-    function processDedicatedPdf(file) {
-      if (!file || !file.name.toLowerCase().endsWith('.pdf')) {
-        alert('Please choose a valid PDF file.');
-        return;
-      }
-
-      progressArea.style.display = 'block';
-      resultArea.style.display = 'none';
-      progressFill.style.width = '5%';
-      progressPct.textContent = '5%';
-      progressMsg.textContent = 'Spawning Client-Side Web Worker...';
-
-      const worker = new Worker('js/compressor.worker.js');
-      worker.postMessage({
-        file,
-        targetKB: currentTargetKB,
-        strictCeiling: true
-      });
-
-      worker.onmessage = (e) => {
-        const data = e.data;
-        if (data.type === 'PROGRESS') {
-          progressFill.style.width = `${data.percent}%`;
-          progressPct.textContent = `${data.percent}%`;
-          progressMsg.textContent = data.message;
-        } else if (data.type === 'COMPLETE') {
-          worker.terminate();
-          progressArea.style.display = 'none';
-
-          const blob = new Blob([data.buffer], { type: 'application/pdf' });
-          const blobUrl = URL.createObjectURL(blob);
-          const outFileName = `compressed-${currentTargetKB}kb-${file.name}`;
-
-          resultArea.innerHTML = `
-            <div class="result-card" style="margin: 0;">
-              <div style="display:flex; align-items:center; justify-content:center; gap:0.5rem; color:#059669; font-weight:900; font-size:1.35rem;">
-                <i data-lucide="check-circle-2" style="width: 32px; height: 32px;"></i>
-                <span>Successfully Compressed!</span>
-              </div>
-              <div class="result-metrics">
-                <div>
-                  <span style="font-size:0.65rem; font-weight:800; color:#94a3b8; text-transform:uppercase;">Original</span>
-                  <p style="font-size:0.95rem; font-weight:800; color:#334155;">${data.originalSizeKB} KB</p>
-                </div>
-                <div>
-                  <span style="font-size:0.65rem; font-weight:800; color:#059669; text-transform:uppercase;">Reduction</span>
-                  <p style="font-size:0.95rem; font-weight:800; color:#059669;">-${data.reductionPercent}%</p>
-                </div>
-                <div>
-                  <span style="font-size:0.65rem; font-weight:800; color:#059669; text-transform:uppercase;">Output Size</span>
-                  <p style="font-size:1.15rem; font-weight:900; color:#059669;">${data.finalSizeKB} KB</p>
-                </div>
-              </div>
-              
-              <a href="${blobUrl}" download="${outFileName}" class="btn-primary btn-success" style="width:100%; justify-content:center;">
-                <i data-lucide="download" style="width: 18px; height: 18px;"></i>
-                <span>Download Compressed PDF (${data.finalSizeKB} KB)</span>
-              </a>
-            </div>
-          `;
-          resultArea.style.display = 'block';
-          if (window.lucide) window.lucide.createIcons();
-
-          // Auto-trigger download
-          const a = document.createElement('a');
-          a.href = blobUrl;
-          a.download = outFileName;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        } else if (data.type === 'ERROR') {
-          worker.terminate();
-          progressArea.style.display = 'none';
-          alert('Compression error: ' + (data.error || 'Failed to process document.'));
-        }
-      };
-    }
-
-    if (window.lucide) window.lucide.createIcons();
-  </script>
 </body>
 </html>

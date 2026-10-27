@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign & Stamp PDF Studio - Docuvate (100% Private Client-Side)</title>
+  <meta name="description" content="Add official attestation stamps and drawn digital signatures to PDF documents. 100% private client-side processing, zero cloud uploads.">
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e11d48">
+
+  <!-- Single Master Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- External Vendor Libraries -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+  <!-- Single Master JS Engine -->
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="sign-pdf">
+
+  <!-- Top Security Banner -->
+  <header class="privacy-banner">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px; color:#10b981;"></i>
+    <span>100% Client-Side Sandboxed Processing • Zero Cloud Uploads</span>
+    <button class="privacy-live-badge" onclick="window.Docuvate.Privacy.showAuditModal()">
+      <span class="privacy-pulse-dot"></span>
+      <span>Live Audit: 0 KB Leaked</span>
+    </button>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="site-navbar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-badge">Doc</span>uvate
+    </a>
+
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)">
+      <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+      <span>Search tools...</span>
+      <span class="cmd-kbd-shortcut">⌘K</span>
+    </button>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">All Studios</a>
+      <a href="merge-pdf.html" class="nav-link">Merge PDF</a>
+      <a href="split-pdf.html" class="nav-link">Split PDF</a>
+      <a href="compress-pdf.html" class="nav-link">Compress PDF</a>
+      <a href="sign-pdf.html" class="nav-link active" style="color:var(--pdf-accent);">Sign PDF</a>
+      
+      <button class="btn-theme-toggle" aria-label="Toggle Theme">
+        <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+      </button>
+
+      <button class="btn-install-pwa">
+        <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+        <span>Install App</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Studio Header Subbar -->
+  <div class="studio-navbar-sub">
+    <div class="studio-breadcrumb">
+      <a href="index.html"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> All Studios</a>
+      <span>/</span>
+      <span>Sign & Stamp PDF Studio</span>
+    </div>
+
+    <div class="studio-title-badge">
+      <div class="tool-icon-wrapper tool-icon-pdf" style="width:32px; height:32px;">
+        <i data-lucide="stamp" style="width: 18px; height: 18px;"></i>
+      </div>
+      <h1>Sign & Stamp PDF Studio</h1>
+    </div>
+
+    <div class="studio-status-pills">
+      <div class="sha256-attest-badge" style="display:none;" title="Click to copy SHA-256 Hash">
+        <i data-lucide="shield-check" style="width:12px; height:12px;"></i> SHA-256 Ready
+      </div>
+    </div>
+  </div>
+
+  <!-- Studio Workbench -->
+  <main class="studio-workbench">
+    <!-- Left Options Panel -->
+    <aside class="studio-sidebar">
+      <!-- Stamp Mode vs Draw Signature -->
+      <div>
+        <div class="studio-section-title">
+          <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+          <span>Attestation Type</span>
+        </div>
+
+        <div class="control-item">
+          <label>Mode</label>
+          <select id="signModeSelect">
+            <option value="stamp" selected>Official Status Stamp</option>
+            <option value="draw">Draw Custom Signature</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Stamp Presets Panel -->
+      <div id="stampPresetSection">
+        <div class="studio-section-title">
+          <i data-lucide="award" style="width: 14px; height: 14px;"></i>
+          <span>Official Stamp Presets</span>
+        </div>
+        <div class="stamp-selector-grid">
+          <div class="stamp-selector-item selected" data-stamp="APPROVED">APPROVED</div>
+          <div class="stamp-selector-item" data-stamp="CONFIDENTIAL">CONFIDENTIAL</div>
+          <div class="stamp-selector-item" data-stamp="VERIFIED">VERIFIED</div>
+          <div class="stamp-selector-item" data-stamp="DRAFT">DRAFT</div>
+          <div class="stamp-selector-item" data-stamp="ATTESTED">ATTESTED</div>
+        </div>
+
+        <div class="control-item" style="margin-top:1rem;">
+          <label>Stamp Ink Color</label>
+          <div class="ink-color-dots">
+            <div class="ink-dot selected" style="background:#1e40af;" data-ink="#1e40af" title="Official Blue"></div>
+            <div class="ink-dot" style="background:#dc2626;" data-ink="#dc2626" title="Crimson Red"></div>
+            <div class="ink-dot" style="background:#16a34a;" data-ink="#16a34a" title="Attested Green"></div>
+            <div class="ink-dot" style="background:#0f172a;" data-ink="#0f172a" title="Pitch Black"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signature Draw Section (Hidden by default) -->
+      <div id="signatureDrawSection" style="display:none;">
+        <div class="studio-section-title">
+          <i data-lucide="edit-3" style="width: 14px; height: 14px;"></i>
+          <span>Draw Your Signature</span>
+        </div>
+        <div style="border:1px solid var(--border-light); border-radius:var(--radius-md); background:#ffffff; overflow:hidden;">
+          <canvas id="signatureCanvas" width="300" height="120" style="display:block; width:100%; height:120px; cursor:crosshair;"></canvas>
+        </div>
+        <button id="btnClearSignature" class="btn-secondary-action" style="width:100%; justify-content:center; margin-top:0.5rem; font-size:0.75rem;">Clear Signature</button>
+      </div>
+
+      <!-- Placement & Target Controls -->
+      <div>
+        <div class="studio-section-title">
+          <i data-lucide="map-pin" style="width: 14px; height: 14px;"></i>
+          <span>Placement & Pages</span>
+        </div>
+
+        <div class="control-item">
+          <label>Stamp Location</label>
+          <select id="stampPosition">
+            <option value="bottom-right" selected>Bottom Right Corner</option>
+            <option value="bottom-left">Bottom Left Corner</option>
+            <option value="center">Centered on Page</option>
+          </select>
+        </div>
+
+        <div class="control-item">
+          <label style="cursor:pointer; display:flex; align-items:center; gap:0.5rem;">
+            <input type="checkbox" id="stampAllPages" style="accent-color:var(--pdf-accent);">
+            <span>Apply to All Pages</span>
+          </label>
+        </div>
+      </div>
+
+      <button id="btnExecuteSign" class="btn-primary-action" style="width:100%; justify-content:center; background:var(--pdf-gradient);">
+        <i data-lucide="stamp" style="width: 18px; height: 18px;"></i>
+        <span>Sign, Stamp & Download</span>
+      </button>
+    </aside>
+
+    <!-- Right Workbench Stage -->
+    <section class="studio-stage">
+      <!-- Dropzone -->
+      <div class="dropzone-unified" id="signDropzone">
+        <div class="dropzone-icon" style="color:var(--pdf-accent);">
+          <i data-lucide="stamp" style="width: 32px; height: 32px;"></i>
+        </div>
+        <h2 class="dropzone-title">Drop PDF to Sign or Stamp</h2>
+        <p class="dropzone-subtitle">Click to select or drop a PDF document to apply official attestation stamps and signatures.</p>
+        <div class="dropzone-formats">
+          <span class="format-pill">.PDF</span>
+          <span class="format-pill">Official Stamps</span>
+          <span class="format-pill">Draw Signature</span>
+        </div>
+        <input type="file" id="signFileInput" accept=".pdf" style="display:none;">
+      </div>
+
+      <!-- Active Stage -->
+      <div id="signActiveStage" class="stage-active-container">
+        <div class="stage-top-meta">
+          <div class="file-meta-info">
+            <div class="file-meta-icon" style="background:var(--pdf-gradient);">
+              <i data-lucide="file-check" style="width: 20px; height: 20px;"></i>
+            </div>
+            <div>
+              <div id="loadedSignName" class="file-meta-name">document.pdf</div>
+              <div id="loadedSignDetails" class="file-meta-details">0 KB</div>
+            </div>
+          </div>
+          <button class="btn-secondary-action" onclick="document.getElementById('signFileInput').click()" style="padding:0.4rem 0.8rem; font-size:0.75rem;">
+            Change Document
+          </button>
+        </div>
+
+        <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.25rem; padding:2rem; background:var(--bg-subtle); border-radius:var(--radius-md);">
+          <div id="stampLivePreview" style="padding:1rem 2rem; border:3px solid #1e40af; border-radius:8px; color:#1e40af; font-weight:900; font-size:1.5rem; letter-spacing:0.1em; text-align:center; transform:rotate(-3deg); background:rgba(255,255,255,0.8);">
+            APPROVED
+            <div style="font-size:0.7rem; font-weight:700; margin-top:4px;" id="stampPreviewDate"></div>
+          </div>
+          <p style="font-size:0.875rem; color:var(--text-muted); text-align:center; max-width:460px;">
+            Your stamp will be embedded into the PDF using vector graphics. Select your stamp or draw your signature on the left sidebar.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">100% Client-Side Private Document Studio</p>
+  </footer>
+
+</body>
+</html>

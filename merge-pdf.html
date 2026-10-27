@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merge PDF Studio - Docuvate (100% Private Client-Side)</title>
+  <meta name="description" content="Merge multiple PDF files into a single document instantly in your browser. 100% client-side privacy, zero cloud uploads.">
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e11d48">
+
+  <!-- Single Master Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- External Vendor Libraries -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+  <!-- Single Master JS Engine -->
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="merge-pdf">
+
+  <!-- Top Security Banner -->
+  <header class="privacy-banner">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px; color:#10b981;"></i>
+    <span>100% Client-Side Sandboxed Processing • Zero Cloud Uploads</span>
+    <button class="privacy-live-badge" onclick="window.Docuvate.Privacy.showAuditModal()">
+      <span class="privacy-pulse-dot"></span>
+      <span>Live Audit: 0 KB Leaked</span>
+    </button>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="site-navbar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-badge">Doc</span>uvate
+    </a>
+
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)">
+      <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+      <span>Search tools...</span>
+      <span class="cmd-kbd-shortcut">⌘K</span>
+    </button>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">All Studios</a>
+      <a href="merge-pdf.html" class="nav-link active" style="color:var(--pdf-accent);">Merge PDF</a>
+      <a href="split-pdf.html" class="nav-link">Split PDF</a>
+      <a href="compress-pdf.html" class="nav-link">Compress PDF</a>
+      <a href="sign-pdf.html" class="nav-link">Sign PDF</a>
+      
+      <button class="btn-theme-toggle" aria-label="Toggle Theme">
+        <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+      </button>
+
+      <button class="btn-install-pwa">
+        <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+        <span>Install App</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Studio Header Subbar -->
+  <div class="studio-navbar-sub">
+    <div class="studio-breadcrumb">
+      <a href="index.html"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> All Studios</a>
+      <span>/</span>
+      <span>Merge PDF Studio</span>
+    </div>
+
+    <div class="studio-title-badge">
+      <div class="tool-icon-wrapper tool-icon-pdf" style="width:32px; height:32px;">
+        <i data-lucide="layers" style="width: 18px; height: 18px;"></i>
+      </div>
+      <h1>Merge PDF Studio</h1>
+    </div>
+
+    <div class="studio-status-pills">
+      <div class="sha256-attest-badge" style="display:none;" title="Click to copy SHA-256 Hash">
+        <i data-lucide="shield-check" style="width:12px; height:12px;"></i> SHA-256 Ready
+      </div>
+    </div>
+  </div>
+
+  <!-- Studio Workbench -->
+  <main class="studio-workbench">
+    <!-- Left Options Panel -->
+    <aside class="studio-sidebar">
+      <div>
+        <div class="studio-section-title">
+          <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+          <span>Merge Settings</span>
+        </div>
+        <p style="font-size:0.825rem; color:var(--text-muted); line-height:1.5; margin-bottom:1rem;">
+          Drag and drop PDF files into the workbench. You can add as many PDFs as you need. They will be merged in the exact order shown on the right.
+        </p>
+
+        <div class="control-item">
+          <label>Output Document Name</label>
+          <input type="text" id="mergeOutputName" value="Merged-Document.pdf">
+        </div>
+      </div>
+
+      <div style="background:var(--bg-subtle); padding:1rem; border-radius:var(--radius-md); font-size:0.8rem; line-height:1.6; color:var(--text-muted);">
+        <strong style="color:var(--text-main); display:block; margin-bottom:0.25rem;">🔒 Private In-Memory Processing</strong>
+        PDF merging is computed via WebAssembly in your computer's RAM. No files are ever sent to any remote server or cloud service.
+      </div>
+
+      <button id="btnExecuteMerge" class="btn-primary-action" style="width:100%; justify-content:center; background:var(--pdf-gradient);">
+        <i data-lucide="layers" style="width: 18px; height: 18px;"></i>
+        <span>Merge & Download PDF</span>
+      </button>
+    </aside>
+
+    <!-- Right Workbench Stage -->
+    <section class="studio-stage">
+      <!-- Dropzone -->
+      <div class="dropzone-unified" id="mergeDropzone">
+        <div class="dropzone-icon" style="color:var(--pdf-accent);">
+          <i data-lucide="file-plus" style="width: 32px; height: 32px;"></i>
+        </div>
+        <h2 class="dropzone-title">Drop PDF Files Here</h2>
+        <p class="dropzone-subtitle">Click to browse or drop multiple PDF files from your device to merge into one.</p>
+        <div class="dropzone-formats">
+          <span class="format-pill">.PDF</span>
+          <span class="format-pill">Multi-File</span>
+          <span class="format-pill">Instant</span>
+        </div>
+        <input type="file" id="mergeFileInput" accept=".pdf" multiple style="display:none;">
+      </div>
+
+      <!-- File List Stage -->
+      <div style="margin-top:1.5rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+          <h3 style="font-size:0.95rem; font-weight:800; color:var(--text-main);">Documents to Combine</h3>
+          <button class="btn-secondary-action" onclick="document.getElementById('mergeFileInput').click()" style="padding:0.4rem 0.8rem; font-size:0.75rem;">
+            <i data-lucide="plus" style="width: 14px; height: 14px;"></i> Add More Files
+          </button>
+        </div>
+        <div id="mergeFileList"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">100% Client-Side Private Document Studio</p>
+  </footer>
+
+</body>
+</html>
