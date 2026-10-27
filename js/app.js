@@ -307,6 +307,9 @@
       } else if (e.key === 'Enter') {
         e.preventDefault();
         this.execute();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        this.close();
       }
     },
 
@@ -1744,6 +1747,30 @@
           item.parentElement.querySelectorAll('.seo-faq-item').forEach(el => el.classList.remove('active'));
           if (!wasActive) item.classList.add('active');
           if (window.lucide) window.lucide.createIcons();
+        }
+      }
+    });
+
+    // Global Viral Share Tool Handler
+    document.addEventListener('click', async (e) => {
+      const shareBtn = e.target.closest('.btn-share-tool');
+      if (shareBtn) {
+        const title = document.title || 'Docuvate - 100% Private Document & Visual Workstations';
+        const text = document.querySelector('meta[name="description"]')?.content || '100% Client-Side Private Document Studios with Zero Cloud Uploads.';
+        const url = window.location.href.split('#')[0];
+
+        if (navigator.share) {
+          try {
+            await navigator.share({ title, text, url });
+          } catch (err) {
+            // Dismissed
+          }
+        } else {
+          navigator.clipboard.writeText(url).then(() => {
+            UI.toast('Clean link copied to clipboard! Share with your friends.');
+          }).catch(() => {
+            UI.toast('Link: ' + url);
+          });
         }
       }
     });

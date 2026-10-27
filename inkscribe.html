@@ -17,7 +17,7 @@
   <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/inkscribe.html">
   <meta property="og:title" content="InkScribe Handwriting Studio - Docuvate">
   <meta property="og:description" content="Convert digital text into realistic human handwriting with customizable paper, ruling, and ink colors.">
-  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
+  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -25,7 +25,7 @@
   <meta name="twitter:creator" content="@itsrkmahapatra">
   <meta name="twitter:title" content="InkScribe Handwriting Studio - Docuvate">
   <meta name="twitter:description" content="Realistic human handwriting simulator with authentic ink flow, ruled margins, and local PDF export.">
-  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
+  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
   <!-- JSON-LD Multi-Schema: WebApplication, FAQPage, HowTo, BreadcrumbList -->
   <script type="application/ld+json">
   {
@@ -139,6 +139,9 @@
   <meta name="apple-mobile-web-app-title" content="InkScribe">
 
   <!-- All CSS in One Unified Master Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="css/style.css" as="style">
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Homemade+Apple&family=Indie+Flower&family=Marck+Script&family=Patrick+Hand&family=Sacramento&display=swap" rel="stylesheet">
 
@@ -201,7 +204,13 @@
       <div class="sidebar-header">
         <div class="header-top">
           <h2>✍️ InkScribe <span>STUDIO</span></h2>
-          <button id="theme-toggle" class="theme-btn" title="Toggle Dark/Light Mode">🌓</button>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button class="btn-share-tool" title="Share InkScribe Studio" style="padding: 0.35rem 0.6rem; font-size: 0.75rem;">
+              <i data-lucide="share-2" style="width:13px; height:13px;"></i>
+              <span>Share</span>
+            </button>
+            <button id="theme-toggle" class="theme-btn" title="Toggle Dark/Light Mode">🌓</button>
+          </div>
         </div>
         <p>Digital Handwriting Engine • Docuvate</p>
       </div>

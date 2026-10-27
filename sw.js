@@ -48,6 +48,7 @@ const STATIC_ASSETS = [
   './vendor/puter.js',
   './logo.png',
   './assets/developer.png',
+  './assets/og-banner.png',
   './manifest.json',
   './opensearch.xml',
   './sitemap.xml'

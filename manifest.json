@@ -25,15 +25,36 @@
     {
       "name": "Merge PDF Studio",
       "short_name": "Merge PDF",
-      "description": "Combine multiple PDF files into one",
+      "description": "Combine multiple PDF files into one seamlessly",
       "url": "./merge-pdf.html",
+      "icons": [{ "src": "logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Compress PDF to 100KB",
+      "short_name": "Compress 100KB",
+      "description": "Shrink PDF documents under 100KB or 200KB for exam portals",
+      "url": "./compress-pdf-to-100kb.html",
       "icons": [{ "src": "logo.png", "sizes": "96x96" }]
     },
     {
       "name": "Image Resizer in KB",
       "short_name": "Image Resizer",
-      "description": "Compress images strictly under target KB",
+      "description": "Compress images strictly under target KB for UPSC, SSC & forms",
       "url": "./image-resizer-kb.html",
+      "icons": [{ "src": "logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Sign & Stamp PDF",
+      "short_name": "Sign PDF",
+      "description": "Draw signature or add company stamp securely on PDF",
+      "url": "./sign-pdf.html",
+      "icons": [{ "src": "logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Passport Photo Maker",
+      "short_name": "Passport Photo",
+      "description": "Generate print-ready passport photo sheet with borders & dimensions",
+      "url": "./passport-photo.html",
       "icons": [{ "src": "logo.png", "sizes": "96x96" }]
     },
     {

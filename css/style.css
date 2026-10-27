@@ -2700,4 +2700,27 @@ body.light-mode {
   }
 }
 
+.btn-share-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-share-tool:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border);
+  color: var(--pdf-accent);
+  transform: translateY(-1px);
+}
+
+
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -15,7 +15,7 @@
   <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/image-resizer-kb.html">
   <meta property="og:title" content="Image Resizer to Exact KB Studio - Docuvate (100% Private)">
   <meta property="og:description" content="Resize and compress photos to exact target KB (20KB, 50KB, 100KB, 200KB) with instant live preview and zero cloud uploads.">
-  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
+  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -23,7 +23,7 @@
   <meta name="twitter:creator" content="@itsrkmahapatra">
   <meta name="twitter:title" content="Image Resizer to Exact KB Studio - Docuvate (100% Private)">
   <meta name="twitter:description" content="Resize and compress photos to exact target KB (20KB, 50KB, 100KB, 200KB) with instant live preview and zero cloud uploads.">
-  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
+  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
 
   <!-- JSON-LD Multi-Schema: WebApplication, FAQPage, HowTo, BreadcrumbList -->
   <script type="application/ld+json">
@@ -153,6 +153,9 @@
   <meta name="theme-color" content="#0284c7">
 
   <!-- Single Master Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="css/style.css" as="style">
   <link rel="stylesheet" href="css/style.css">
 
   <!-- External Vendor Libraries -->
@@ -220,6 +223,10 @@
     </div>
 
     <div class="studio-status-pills">
+      <button class="btn-share-tool" title="Share this private tool">
+        <i data-lucide="share-2" style="width:13px; height:13px;"></i>
+        <span>Share</span>
+      </button>
       <div class="sha256-attest-badge" style="display:none;" title="Click to copy SHA-256 Hash">
         <i data-lucide="shield-check" style="width:12px; height:12px;"></i> SHA-256 Ready
       </div>
@@ -354,6 +361,83 @@
         <h3 class="seo-step-title">Download Strictly Compressed Image</h3>
         <p class="seo-step-desc">Our binary search engine compresses the file strictly under the target ceiling without blur. Instant download ready for upload.</p>
       </div>
+    </div>
+
+    <!-- Official Exam Photo & Document Specifications Reference Hub -->
+    <div class="seo-comparison-wrap" style="margin-bottom:3.5rem;">
+      <div style="text-align:center; margin-bottom:1.5rem;">
+        <span class="seo-kicker-badge" style="background:rgba(2,132,199,0.08); color:var(--image-accent); border-color:rgba(2,132,199,0.25);">
+          <i data-lucide="book-open" style="width:13px; height:13px;"></i> Official Govt Portal Guidelines (2026-2027)
+        </span>
+        <h3 style="font-size:1.4rem; font-weight:900; color:var(--text-main); margin-top:0.4rem;">
+          Official Exam Photo, Signature & Document Specifications
+        </h3>
+        <p style="font-size:0.875rem; color:var(--text-muted);">
+          Exact dimension, pixel, and KB thresholds required by national and state recruitment boards
+        </p>
+      </div>
+      <table class="seo-comparison-table">
+        <thead>
+          <tr>
+            <th>Examination / Portal</th>
+            <th>Photograph Limits</th>
+            <th>Signature Limits</th>
+            <th>Document / Certificate Limit</th>
+            <th>1-Click Preset</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>UPSC Civil Services (IAS/IPS/IFS)</strong></td>
+            <td>20 KB – 50 KB (350×350 to 1000×1000 px)</td>
+            <td>10 KB – 20 KB (350×350 to 1000×1000 px)</td>
+            <td>Strictly &lt; 100 KB (PDF)</td>
+            <td><button class="exam-pill-btn" data-kb="50" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Apply 50KB</button></td>
+          </tr>
+          <tr>
+            <td><strong>SSC (CGL, CHSL, MTS, CPO, GD)</strong></td>
+            <td>20 KB – 50 KB (3.5cm × 4.5cm, JPEG)</td>
+            <td>10 KB – 20 KB (4.0cm × 2.0cm, JPEG)</td>
+            <td>Strictly &lt; 100 KB (PDF/JPG)</td>
+            <td><button class="exam-pill-btn" data-kb="20" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Apply 20KB</button></td>
+          </tr>
+          <tr>
+            <td><strong>IBPS & SBI Bank (PO / Clerk / SO)</strong></td>
+            <td>20 KB – 50 KB (200×230 px)</td>
+            <td>10 KB – 20 KB (140×60 px)</td>
+            <td>Thumb: 20-50KB • Declaration: 50-100KB</td>
+            <td><button class="exam-pill-btn" data-kb="50" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Apply 50KB</button></td>
+          </tr>
+          <tr>
+            <td><strong>NTA (NEET UG / JEE Main / CUET)</strong></td>
+            <td>10 KB – 200 KB (Postcard: 10-200 KB)</td>
+            <td>4 KB – 30 KB (JPG)</td>
+            <td>Category Certificate: 50 KB – 300 KB</td>
+            <td><button class="exam-pill-btn" data-kb="100" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Apply 100KB</button></td>
+          </tr>
+          <tr>
+            <td><strong>State PSCs (OPSC, BPSC, UPPSC, MPSC, TNPSC)</strong></td>
+            <td>20 KB – 50 KB (JPG/PNG)</td>
+            <td>10 KB – 20 KB (JPG/PNG)</td>
+            <td>Strictly &lt; 100 KB (PDF)</td>
+            <td><button class="exam-pill-btn" data-kb="50" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Apply 50KB</button></td>
+          </tr>
+          <tr>
+            <td><strong>Passport Seva Kendra (PSK) & Visa</strong></td>
+            <td>&lt; 50 KB (3.5cm × 4.5cm, White BG)</td>
+            <td>&lt; 50 KB (Clean ink)</td>
+            <td>Proof of DOB / Address: &lt; 100 KB</td>
+            <td><button class="exam-pill-btn" data-kb="50" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Apply 50KB</button></td>
+          </tr>
+          <tr>
+            <td><strong>PAN Card (NSDL / UTIITSL Portal)</strong></td>
+            <td>&lt; 50 KB (200 DPI, 3.5×2.5cm)</td>
+            <td>&lt; 50 KB (200 DPI, 2×4.5cm)</td>
+            <td>Aadhaar / Identity Proof: &lt; 300 KB</td>
+            <td><button class="exam-pill-btn" data-kb="50" style="padding:0.25rem 0.6rem; font-size:0.75rem;">Apply 50KB</button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- Competitor Comparison Table: Docuvate vs Pi7 vs iLoveIMG -->

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,7 +17,7 @@
   <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/certificate-downloader.html">
   <meta property="og:title" content="Odisha e-District Certificate Downloader - Docuvate">
   <meta property="og:description" content="Independent client-side utility to download issued Odisha e-District certificates with your 8-character token.">
-  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
+  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -25,7 +25,7 @@
   <meta name="twitter:creator" content="@itsrkmahapatra">
   <meta name="twitter:title" content="Odisha e-District Certificate Downloader - Docuvate">
   <meta name="twitter:description" content="Direct client-side gateway for official certificate PDF retrieval using application tokens.">
-  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/developer.png">
+  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
 
   <!-- JSON-LD Structured Data Schema -->
   <script type="application/ld+json">
@@ -66,6 +66,9 @@
   <meta name="apple-mobile-web-app-title" content="Docuvate">
 
   <!-- CSS Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="css/style.css" as="style">
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Single Master JS Engine -->
@@ -124,10 +127,14 @@
   <main class="cert-tool-wrapper">
 
     <!-- Breadcrumb / Back Link -->
-    <div style="margin-bottom: 1.5rem;">
+    <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
       <a href="index.html" style="font-size: 0.875rem; font-weight: 700; color: #64748b; display: inline-flex; align-items: center; gap: 0.35rem; transition: color 0.15s;">
         <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i> Back to Docuvate Home
       </a>
+      <button class="btn-share-tool" title="Share this utility">
+        <i data-lucide="share-2" style="width:13px; height:13px;"></i>
+        <span>Share</span>
+      </button>
     </div>
 
     <!-- Certificate Card -->
