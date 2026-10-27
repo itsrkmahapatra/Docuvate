@@ -1,4 +1,4 @@
-// Mock DOM for PDF.js inside Web Worker
+﻿// Mock DOM for PDF.js inside Web Worker
 if (typeof self.document === 'undefined') {
   self.window = self;
   self.document = {
@@ -15,10 +15,10 @@ if (typeof self.document === 'undefined') {
   self.HTMLCanvasElement = self.OffscreenCanvas;
 }
 
-importScripts('https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js');
-importScripts('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
+importScripts('vendor/pdf-lib.min.js');
+importScripts('vendor/pdf.min.js');
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
 pdfjsLib.GlobalWorkerOptions.disableWorker = true;
 
 self.onmessage = async function(e) {

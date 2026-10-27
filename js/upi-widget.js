@@ -1,4 +1,4 @@
-(function() {
+﻿(function() {
     // UPI Configuration
     const upiId = "Q546877063@ybl";
     const payeeName = "Raj Kishor Mahapatra";
@@ -262,7 +262,7 @@
         // Load QRCode Library if not already loaded
         if (typeof QRCode === 'undefined') {
             const script = document.createElement('script');
-            script.src = "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js";
+            script.src = "vendor/qrcode.min.js";
             document.head.appendChild(script);
         }
 

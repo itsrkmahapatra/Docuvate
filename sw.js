@@ -1,28 +1,54 @@
 /**
- * Docuvate Service Worker - Offline-First Engine
- * Caches app shell, styles, icons, and CDN-hosted WASM/JS libraries
+ * Docuvate Service Worker - 100% Offline-First Self-Contained Engine
+ * Pre-caches app shell, local styles, assets, and all local vendor packages
+ * Zero third-party dependencies.
  */
 
-const CACHE_NAME = 'docuvate-v2.1.0';
+const CACHE_NAME = 'docuvate-v3.0.0-offline';
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './merge-pdf.html',
+  './split-pdf.html',
+  './compress-pdf.html',
+  './compress-pdf-to-100kb.html',
+  './sign-pdf.html',
+  './pdf-to-image.html',
+  './image-to-pdf.html',
+  './organize-pdf.html',
+  './protect-pdf.html',
+  './ocr-pdf.html',
+  './image-resizer-kb.html',
+  './crop-image.html',
+  './passport-photo.html',
+  './convert-image.html',
   './inkscribe.html',
   './certificate-downloader.html',
+  './certificate-disclaimer.html',
   './terms.html',
   './disclaimer.html',
   './css/style.css',
-  './css/inkscribe.css',
   './js/app.js',
   './js/inkscribe.js',
   './js/upi-widget.js',
   './js/compressor.worker.js',
+  './vendor/lucide.min.js',
+  './vendor/pdf-lib.min.js',
+  './vendor/pdf.min.js',
+  './vendor/pdf.worker.min.js',
+  './vendor/jszip.min.js',
+  './vendor/heic2any.min.js',
+  './vendor/tesseract.min.js',
+  './vendor/html2canvas.min.js',
+  './vendor/jspdf.umd.min.js',
+  './vendor/mammoth.browser.min.js',
+  './vendor/qrcode.min.js',
+  './vendor/puter.js',
   './logo.png',
   './assets/developer.png',
   './manifest.json'
 ];
 
-// Install event - pre-cache core application shell
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -31,7 +57,6 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate event - clean up obsolete caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -46,57 +71,29 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - Cache-first with stale-while-revalidate for CDN libraries & local assets
 self.addEventListener('fetch', (event) => {
   const req = event.request;
-  
-  // Only handle GET requests
   if (req.method !== 'GET') return;
 
-  const url = new URL(req.url);
-
-  // Cache strategy:
-  // 1. Local assets or known CDN domains (cdnjs, unpkg, jsdelivr, Google Fonts)
-  const isCdn = url.hostname.includes('cdnjs.cloudflare.com') ||
-                url.hostname.includes('unpkg.com') ||
-                url.hostname.includes('cdn.jsdelivr.net') ||
-                url.hostname.includes('fonts.googleapis.com') ||
-                url.hostname.includes('fonts.gstatic.com');
-
-  if (url.origin === location.origin || isCdn) {
-    event.respondWith(
-      caches.match(req).then((cachedResponse) => {
-        if (cachedResponse) {
-          // Return cached response and optionally update cache in background
-          fetch(req).then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
-              caches.open(CACHE_NAME).then((cache) => {
-                cache.put(req, networkResponse);
-              });
-            }
-          }).catch(() => {
-            // Ignore background fetch errors in offline mode
-          });
-          return cachedResponse;
-        }
-
-        // Not in cache, fetch from network and cache
-        return fetch(req).then((networkResponse) => {
-          if (!networkResponse || networkResponse.status !== 200) {
-            return networkResponse;
-          }
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(req, responseToCache);
-          });
+  event.respondWith(
+    caches.match(req).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(req).then((networkResponse) => {
+        if (!networkResponse || networkResponse.status !== 200) {
           return networkResponse;
-        }).catch(() => {
-          // Offline fallback
-          if (req.headers.get('accept')?.includes('text/html')) {
-            return caches.match('./index.html');
-          }
+        }
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(req, responseToCache);
         });
-      })
-    );
-  }
+        return networkResponse;
+      }).catch(() => {
+        if (req.headers.get('accept')?.includes('text/html')) {
+          return caches.match('./index.html');
+        }
+      });
+    })
+  );
 });

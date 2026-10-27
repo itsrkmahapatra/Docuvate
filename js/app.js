@@ -9,6 +9,11 @@
 (function () {
   'use strict';
 
+  // Configure local PDF.js worker
+  if (typeof window !== 'undefined' && window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'vendor/pdf.worker.min.js';
+  }
+
   // ==========================================================================
   // 1. PRIVACY SANDBOX LIVE NETWORK AUDITOR & PWA MANAGER
   // ==========================================================================
