@@ -217,6 +217,11 @@
     { title: 'Odisha e-District Downloader', sub: '1-click certificate downloader with 8-char token', cat: 'Govt Services', icon: 'award', url: 'certificate-downloader.html' },
     { title: 'Live Privacy Audit', sub: 'Inspect local sandbox & zero-leak proof', cat: 'Security', icon: 'shield-check', action: () => PrivacyMonitor.showAuditModal() },
     { title: 'Toggle Theme (Dark / Light)', sub: 'Switch Obsidian Dark & Apple Light modes', cat: 'Preferences', icon: 'moon', action: () => Theme.toggle() },
+    { title: 'Watermark PDF Studio', sub: 'Add custom diagonal or horizontal text watermarks', cat: 'PDF Tools', icon: 'stamp', url: 'watermark-pdf.html' },
+    { title: 'Add Page Numbers to PDF', sub: 'Number PDF pages with custom position & format', cat: 'PDF Tools', icon: 'hash', url: 'page-numbers-pdf.html' },
+    { title: 'QR Code & UPI Studio', sub: 'Generate offline high-res QR codes & UPI payment links', cat: 'Govt Services', icon: 'qr-code', url: 'qr-code.html' },
+    { title: 'Grayscale / B&W PDF Converter', sub: 'Convert color PDFs to monochrome for print & xerox', cat: 'PDF Tools', icon: 'printer', url: 'grayscale-pdf.html' },
+    { title: 'PDF Metadata Sanitizer', sub: 'Inspect, edit, and 1-click purge tracking metadata', cat: 'Security', icon: 'shield-alert', url: 'pdf-metadata.html' },
     { title: 'Purge Session RAM', sub: 'Wipe all cached in-memory buffers', cat: 'Security', icon: 'trash-2', action: () => PrivacyMonitor.purgeSession() }
   ];
 
@@ -574,6 +579,155 @@
           p.setRotation(PDFLib.degrees((currentRotation + rotationsMap[idx]) % 360));
         }
       });
+      const pdfBytes = await doc.save();
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.8 Watermark PDF
+    async watermark(pdfBuffer, options = {}) {
+      if (!window.PDFLib) throw new Error('PDF-Lib is not loaded');
+      const {
+        text = 'CONFIDENTIAL',
+        fontSize = 48,
+        rotation = 45,
+        opacity = 0.28,
+        colorRgb = [0.85, 0.15, 0.15],
+        pageRange = 'all'
+      } = options;
+
+      const doc = await PDFLib.PDFDocument.load(pdfBuffer);
+      const font = await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      const pages = doc.getPages();
+
+      pages.forEach((page, idx) => {
+        const pageNum = idx + 1;
+        if (pageRange === 'first' && pageNum !== 1) return;
+        if (pageRange === 'odd' && pageNum % 2 === 0) return;
+        if (pageRange === 'even' && pageNum % 2 !== 0) return;
+
+        const { width, height } = page.getSize();
+        const textWidth = font.widthOfTextAtSize(text, fontSize);
+        const rad = (rotation * Math.PI) / 180;
+        const x = (width - textWidth * Math.cos(rad)) / 2;
+        const y = (height - textWidth * Math.sin(rad)) / 2;
+
+        page.drawText(text, {
+          x,
+          y,
+          size: fontSize,
+          font,
+          color: PDFLib.rgb(colorRgb[0], colorRgb[1], colorRgb[2]),
+          rotate: PDFLib.degrees(rotation),
+          opacity
+        });
+      });
+
+      const pdfBytes = await doc.save();
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.9 Add Page Numbers
+    async addPageNumbers(pdfBuffer, options = {}) {
+      if (!window.PDFLib) throw new Error('PDF-Lib is not loaded');
+      const {
+        format = 'Page {n} of {total}',
+        position = 'bottom-center',
+        fontSize = 11,
+        margin = 25,
+        startFrom = 1
+      } = options;
+
+      const doc = await PDFLib.PDFDocument.load(pdfBuffer);
+      const font = await doc.embedFont(PDFLib.StandardFonts.Helvetica);
+      const pages = doc.getPages();
+      const total = pages.length;
+
+      pages.forEach((page, idx) => {
+        const pageNum = idx + 1;
+        if (pageNum < startFrom) return;
+
+        const { width, height } = page.getSize();
+        const text = format.replace('{n}', pageNum).replace('{total}', total);
+        const textWidth = font.widthOfTextAtSize(text, fontSize);
+
+        let x = (width - textWidth) / 2;
+        let y = margin;
+
+        if (position === 'bottom-left') { x = margin; y = margin; }
+        else if (position === 'bottom-right') { x = width - textWidth - margin; y = margin; }
+        else if (position === 'top-center') { x = (width - textWidth) / 2; y = height - margin; }
+        else if (position === 'top-right') { x = width - textWidth - margin; y = height - margin; }
+        else if (position === 'top-left') { x = margin; y = height - margin; }
+
+        page.drawText(text, {
+          x,
+          y,
+          size: fontSize,
+          font,
+          color: PDFLib.rgb(0.3, 0.35, 0.4)
+        });
+      });
+
+      const pdfBytes = await doc.save();
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.10 Convert PDF to Grayscale
+    async toGrayscale(pdfBuffer, highContrast = false) {
+      if (!window.pdfjsLib || !window.PDFLib) throw new Error('PDF libraries not loaded');
+      const pdf = await pdfjsLib.getDocument({ data: pdfBuffer }).promise;
+      const newDoc = await PDFLib.PDFDocument.create();
+
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 1.5 });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const d = imgData.data;
+        for (let j = 0; j < d.length; j += 4) {
+          let gray = 0.299 * d[j] + 0.587 * d[j + 1] + 0.114 * d[j + 2];
+          if (highContrast) {
+            gray = gray < 185 ? Math.max(0, gray * 0.75) : Math.min(255, gray * 1.15);
+          }
+          d[j] = gray;
+          d[j + 1] = gray;
+          d[j + 2] = gray;
+        }
+        ctx.putImageData(imgData, 0, 0);
+
+        const jpegUrl = canvas.toDataURL('image/jpeg', 0.85);
+        const imgBytes = await (await fetch(jpegUrl)).arrayBuffer();
+        const embeddedImg = await newDoc.embedJpg(imgBytes);
+        const newPage = newDoc.addPage([viewport.width, viewport.height]);
+        newPage.drawImage(embeddedImg, { x: 0, y: 0, width: viewport.width, height: viewport.height });
+      }
+
+      const pdfBytes = await newDoc.save();
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.11 Sanitize & Edit PDF Metadata
+    async editMetadata(pdfBuffer, meta = {}) {
+      if (!window.PDFLib) throw new Error('PDF-Lib is not loaded');
+      const doc = await PDFLib.PDFDocument.load(pdfBuffer);
+      if (meta.purgeAll) {
+        doc.setTitle('');
+        doc.setAuthor('');
+        doc.setSubject('');
+        doc.setKeywords([]);
+        doc.setProducer('Docuvate Client Sandbox (100% Private)');
+        doc.setCreator('Docuvate');
+      } else {
+        if (typeof meta.title === 'string') doc.setTitle(meta.title);
+        if (typeof meta.author === 'string') doc.setAuthor(meta.author);
+        if (typeof meta.subject === 'string') doc.setSubject(meta.subject);
+        if (Array.isArray(meta.keywords)) doc.setKeywords(meta.keywords);
+      }
       const pdfBytes = await doc.save();
       return new Blob([pdfBytes], { type: 'application/pdf' });
     }
@@ -1731,6 +1885,365 @@
           } finally {
             btnSecurity.disabled = false;
             btnSecurity.innerHTML = `<i data-lucide="lock"></i> Apply & Download PDF`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.15 WATERMARK PDF STUDIO
+    if (pageId === 'watermark-pdf') {
+      const dropzone = document.getElementById('watermarkDropzone');
+      const fileInput = document.getElementById('watermarkFileInput');
+      const textInput = document.getElementById('watermarkTextInput');
+      const colorSelect = document.getElementById('watermarkColorSelect');
+      const sizeInput = document.getElementById('watermarkSizeInput');
+      const rotationSelect = document.getElementById('watermarkRotationSelect');
+      const pagesSelect = document.getElementById('watermarkPagesSelect');
+      const btnWatermark = document.getElementById('btnExecuteWatermark');
+      const livePreview = document.getElementById('watermarkLiveTextPreview');
+      let currentFile = null;
+
+      if (textInput && livePreview) {
+        textInput.addEventListener('input', () => {
+          livePreview.textContent = textInput.value || 'CONFIDENTIAL';
+        });
+      }
+
+      document.querySelectorAll('.watermark-preset-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          if (textInput) {
+            textInput.value = chip.dataset.text;
+            if (livePreview) livePreview.textContent = chip.dataset.text;
+          }
+        });
+      });
+
+      UI.bindDropzone(dropzone, fileInput, (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('watermarkActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedWatermarkName');
+        const detailsEl = document.getElementById('loadedWatermarkDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+      });
+
+      if (btnWatermark) {
+        btnWatermark.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          const text = textInput?.value.trim() || 'CONFIDENTIAL';
+          btnWatermark.disabled = true;
+          btnWatermark.innerHTML = <i data-lucide="loader" class="spin"></i> Applying watermark...;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const colorVal = colorSelect?.value || 'red';
+            let colorRgb = [0.85, 0.15, 0.15];
+            if (colorVal === 'grey') colorRgb = [0.4, 0.45, 0.5];
+            else if (colorVal === 'blue') colorRgb = [0.15, 0.4, 0.85];
+            else if (colorVal === 'black') colorRgb = [0.05, 0.05, 0.05];
+
+            const fontSize = parseInt(sizeInput?.value) || 48;
+            const rotation = parseInt(rotationSelect?.value) || 45;
+            const pageRange = pagesSelect?.value || 'all';
+
+            const outBlob = await PDF.watermark(buffer, {
+              text,
+              fontSize,
+              rotation,
+              opacity: 0.28,
+              colorRgb,
+              pageRange
+            });
+            UI.downloadBlob(outBlob, 'Watermarked-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Watermark error: ' + err.message);
+          } finally {
+            btnWatermark.disabled = false;
+            btnWatermark.innerHTML = <i data-lucide="stamp"></i> Apply Watermark & Download PDF;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.16 PAGE NUMBERS PDF STUDIO
+    if (pageId === 'page-numbers-pdf') {
+      const dropzone = document.getElementById('pageNumbersDropzone');
+      const fileInput = document.getElementById('pageNumbersFileInput');
+      const formatSelect = document.getElementById('pageNumberFormatSelect');
+      const positionSelect = document.getElementById('pageNumberPositionSelect');
+      const sizeInput = document.getElementById('pageNumberSizeInput');
+      const startInput = document.getElementById('pageNumberStartInput');
+      const btnPageNumbers = document.getElementById('btnExecutePageNumbers');
+      let currentFile = null;
+
+      UI.bindDropzone(dropzone, fileInput, (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('pageNumbersActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedPageNumbersName');
+        const detailsEl = document.getElementById('loadedPageNumbersDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+      });
+
+      if (btnPageNumbers) {
+        btnPageNumbers.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          btnPageNumbers.disabled = true;
+          btnPageNumbers.innerHTML = <i data-lucide="loader" class="spin"></i> Numbering pages...;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const format = formatSelect?.value || 'Page {n} of {total}';
+            const position = positionSelect?.value || 'bottom-center';
+            const fontSize = parseInt(sizeInput?.value) || 11;
+            const startFrom = parseInt(startInput?.value) || 1;
+
+            const outBlob = await PDF.addPageNumbers(buffer, {
+              format,
+              position,
+              fontSize,
+              margin: 25,
+              startFrom
+            });
+            UI.downloadBlob(outBlob, 'Numbered-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Numbering error: ' + err.message);
+          } finally {
+            btnPageNumbers.disabled = false;
+            btnPageNumbers.innerHTML = <i data-lucide="hash"></i> Add Page Numbers & Download PDF;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.17 OFFLINE QR CODE & UPI STUDIO
+    if (pageId === 'qr-code') {
+      const modeSelect = document.getElementById('qrModeSelect');
+      const urlInput = document.getElementById('qrUrlInput');
+      const upiVpa = document.getElementById('qrUpiVpa');
+      const upiName = document.getElementById('qrUpiName');
+      const upiAmount = document.getElementById('qrUpiAmount');
+      const upiNote = document.getElementById('qrUpiNote');
+      const textInput = document.getElementById('qrTextInput');
+      const wifiSsid = document.getElementById('qrWifiSsid');
+      const wifiPass = document.getElementById('qrWifiPass');
+      const wifiEnc = document.getElementById('qrWifiEnc');
+
+      const sizeSelect = document.getElementById('qrSizeSelect');
+      const colorDark = document.getElementById('qrColorDark');
+      const colorLight = document.getElementById('qrColorLight');
+      const qrContainer = document.getElementById('qrCodeContainer');
+      const btnDownloadPng = document.getElementById('btnDownloadQrPng');
+      let qrInstance = null;
+
+      function getPayloadString() {
+        const mode = modeSelect?.value || 'url';
+        if (mode === 'url') return urlInput?.value.trim() || 'https://itsrkmahapatra.github.io/Docuvate/';
+        if (mode === 'upi') {
+          const vpa = upiVpa?.value.trim() || 'merchant@upi';
+          const name = encodeURIComponent(upiName?.value.trim() || 'Payee');
+          const amt = upiAmount?.value.trim() || '';
+          const note = encodeURIComponent(upiNote?.value.trim() || 'Payment');
+          let s = upi://pay?pa= + vpa + &pn= + name + &tn= + note + &cu=INR;
+          if (amt) s += &am= + amt;
+          return s;
+        }
+        if (mode === 'wifi') {
+          const ssid = wifiSsid?.value.trim() || 'MyWiFi';
+          const pass = wifiPass?.value || '';
+          const enc = wifiEnc?.value || 'WPA';
+          return WIFI:T: + enc + ;S: + ssid + ;P: + pass + ;;;
+        }
+        return textInput?.value.trim() || 'Docuvate 100% Private Workstation';
+      }
+
+      function updateModeFields() {
+        const mode = modeSelect?.value || 'url';
+        document.querySelectorAll('.qr-field-group').forEach(el => el.style.display = 'none');
+        const activeGroup = document.getElementById('qrGroup_' + mode);
+        if (activeGroup) activeGroup.style.display = 'block';
+        renderQr();
+      }
+
+      function renderQr() {
+        if (!qrContainer || !window.QRCode) return;
+        const text = getPayloadString();
+        const size = parseInt(sizeSelect?.value) || 256;
+        const dark = colorDark?.value || '#000000';
+        const light = colorLight?.value || '#ffffff';
+
+        qrContainer.innerHTML = '';
+        qrInstance = new QRCode(qrContainer, {
+          text,
+          width: size,
+          height: size,
+          colorDark: dark,
+          colorLight: light,
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      }
+
+      if (modeSelect) modeSelect.addEventListener('change', updateModeFields);
+      [urlInput, upiVpa, upiName, upiAmount, upiNote, textInput, wifiSsid, wifiPass, wifiEnc, sizeSelect, colorDark, colorLight].forEach(el => {
+        if (el) el.addEventListener('input', renderQr);
+      });
+
+      if (btnDownloadPng) {
+        btnDownloadPng.addEventListener('click', () => {
+          const img = qrContainer?.querySelector('img') || qrContainer?.querySelector('canvas');
+          if (img) {
+            const a = document.createElement('a');
+            a.download = 'Docuvate-QR-Code.png';
+            a.href = img.src || img.toDataURL('image/png');
+            a.click();
+            UI.toast('Downloaded High-Res PNG QR Code');
+          }
+        });
+      }
+
+      setTimeout(renderQr, 100);
+    }
+
+    // 7.18 GRAYSCALE / B&W PDF STUDIO
+    if (pageId === 'grayscale-pdf') {
+      const dropzone = document.getElementById('grayscaleDropzone');
+      const fileInput = document.getElementById('grayscaleFileInput');
+      const contrastSelect = document.getElementById('grayscaleContrastSelect');
+      const btnGrayscale = document.getElementById('btnExecuteGrayscale');
+      let currentFile = null;
+
+      UI.bindDropzone(dropzone, fileInput, (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('grayscaleActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedGrayscaleName');
+        const detailsEl = document.getElementById('loadedGrayscaleDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+      });
+
+      if (btnGrayscale) {
+        btnGrayscale.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          btnGrayscale.disabled = true;
+          btnGrayscale.innerHTML = <i data-lucide="loader" class="spin"></i> Converting to Grayscale...;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const highContrast = contrastSelect?.value === 'high';
+            const outBlob = await PDF.toGrayscale(buffer, highContrast);
+            UI.downloadBlob(outBlob, 'Grayscale-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Grayscale conversion error: ' + err.message);
+          } finally {
+            btnGrayscale.disabled = false;
+            btnGrayscale.innerHTML = <i data-lucide="printer"></i> Convert to Grayscale & Download PDF;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.19 PDF METADATA SANITIZER STUDIO
+    if (pageId === 'pdf-metadata') {
+      const dropzone = document.getElementById('metadataDropzone');
+      const fileInput = document.getElementById('metadataFileInput');
+      const titleInput = document.getElementById('metaTitleInput');
+      const authorInput = document.getElementById('metaAuthorInput');
+      const subjectInput = document.getElementById('metaSubjectInput');
+      const keywordsInput = document.getElementById('metaKeywordsInput');
+      const btnPurgeAll = document.getElementById('btnPurgeAllMetadata');
+      const btnSaveMeta = document.getElementById('btnExecuteMetadata');
+      let currentFile = null;
+
+      UI.bindDropzone(dropzone, fileInput, async (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('metadataActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedMetadataName');
+        const detailsEl = document.getElementById('loadedMetadataDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+
+        try {
+          const buffer = await file.arrayBuffer();
+          const doc = await PDFLib.PDFDocument.load(buffer, { ignoreEncryption: true });
+          if (titleInput) titleInput.value = doc.getTitle() || '';
+          if (authorInput) authorInput.value = doc.getAuthor() || '';
+          if (subjectInput) subjectInput.value = doc.getSubject() || '';
+          if (keywordsInput) keywordsInput.value = (doc.getKeywords() || []).join(', ');
+        } catch (e) {
+          console.warn('[Docuvate Meta] Read note:', e);
+        }
+      });
+
+      if (btnPurgeAll) {
+        btnPurgeAll.addEventListener('click', () => {
+          if (titleInput) titleInput.value = '';
+          if (authorInput) authorInput.value = '';
+          if (subjectInput) subjectInput.value = '';
+          if (keywordsInput) keywordsInput.value = '';
+          UI.toast('All metadata fields cleared for 100% anonymous export');
+        });
+      }
+
+      if (btnSaveMeta) {
+        btnSaveMeta.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          btnSaveMeta.disabled = true;
+          btnSaveMeta.innerHTML = <i data-lucide="loader" class="spin"></i> Sanitizing & Saving...;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const title = titleInput?.value.trim() || '';
+            const author = authorInput?.value.trim() || '';
+            const subject = subjectInput?.value.trim() || '';
+            const rawKw = keywordsInput?.value.trim() || '';
+            const keywords = rawKw ? rawKw.split(',').map(s => s.trim()) : [];
+
+            const isAllEmpty = !title && !author && !subject && keywords.length === 0;
+            const outBlob = await PDF.editMetadata(buffer, {
+              purgeAll: isAllEmpty,
+              title,
+              author,
+              subject,
+              keywords
+            });
+            UI.downloadBlob(outBlob, 'Sanitized-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Metadata error: ' + err.message);
+          } finally {
+            btnSaveMeta.disabled = false;
+            btnSaveMeta.innerHTML = <i data-lucide="shield-check"></i> Save Sanitized PDF & Download;
             if (window.lucide) window.lucide.createIcons();
           }
         });

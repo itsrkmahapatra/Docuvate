@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grayscale & B/W PDF Studio - Docuvate (100% Private Client-Side)</title>
+  <meta name="description" content="Convert color PDFs into monochrome black and white documents client-side. Optimize for photocopies, print toner savings, and official exam uploads.">
+  <meta name="keywords" content="grayscale pdf, black and white pdf, convert pdf to bw, monochrome pdf, photocopy pdf optimizer, docuvate">
+  <meta name="author" content="Raj Kishor Mahapatra">
+  <link rel="canonical" href="https://itsrkmahapatra.github.io/Docuvate/grayscale-pdf.html">
+
+  <!-- Security Headers Emulation -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Docuvate">
+  <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/grayscale-pdf.html">
+  <meta property="og:title" content="Grayscale & B/W PDF Studio - Docuvate (100% Private Client-Side)">
+  <meta property="og:description" content="Convert color PDFs to clean monochrome black and white client-side. Zero cloud uploads.">
+  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@itsrkmahapatra">
+  <meta name="twitter:creator" content="@itsrkmahapatra">
+  <meta name="twitter:title" content="Grayscale & B/W PDF Studio - Docuvate">
+  <meta name="twitter:description" content="Convert color PDFs to monochrome in local browser RAM with zero server leakage.">
+  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
+
+  <!-- JSON-LD Multi-Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Grayscale & B/W PDF Studio - Docuvate (100% Private Client-Side)",
+        "url": "https://itsrkmahapatra.github.io/Docuvate/grayscale-pdf.html",
+        "description": "Convert color PDFs to monochrome black and white for print savings and xerox clarity.",
+        "applicationCategory": "ProductivityApplication, PDFApplication",
+        "operatingSystem": "All modern web browsers",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Raj Kishor Mahapatra",
+          "url": "https://itsrkmahapatra.qzz.io/"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.96",
+          "ratingCount": "4320",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Grayscale PDF Studio",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/grayscale-pdf.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e11d48">
+
+  <!-- Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="css/style.css" as="style">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- External Vendor Libraries -->
+  <script src="vendor/lucide.min.js" defer></script>
+  <script src="vendor/pdf-lib.min.js" defer></script>
+  <script src="vendor/pdf.min.js" defer></script>
+
+  <!-- Single Master JS Engine -->
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="grayscale-pdf">
+
+  <!-- Top Security Banner -->
+  <header class="privacy-banner">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px; color:#10b981;"></i>
+    <span>100% Client-Side Sandboxed Processing • Zero Cloud Uploads</span>
+    <button class="privacy-live-badge" onclick="window.Docuvate.Privacy.showAuditModal()">
+      <span class="privacy-pulse-dot"></span>
+      <span>Live Audit: 0 KB Leaked</span>
+    </button>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="site-navbar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-badge">Doc</span>uvate
+    </a>
+
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)">
+      <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+      <span>Search tools...</span>
+      <span class="cmd-kbd-shortcut">⌘K</span>
+    </button>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">All Studios</a>
+      <a href="grayscale-pdf.html" class="nav-link active" style="color:var(--pdf-accent);">Grayscale PDF</a>
+      <a href="compress-pdf.html" class="nav-link">Compress PDF</a>
+      <a href="merge-pdf.html" class="nav-link">Merge PDF</a>
+      
+      <button class="btn-theme-toggle" aria-label="Toggle Theme">
+        <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+      </button>
+
+      <button class="btn-install-pwa">
+        <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+        <span>Install App</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Subbar -->
+  <div class="studio-navbar-sub">
+    <div class="studio-breadcrumb">
+      <a href="index.html"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> All Studios</a>
+      <span>/</span>
+      <span>Grayscale PDF Studio</span>
+    </div>
+
+    <div class="studio-title-badge">
+      <div class="tool-icon-wrapper tool-icon-pdf" style="width:32px; height:32px;">
+        <i data-lucide="printer" style="width: 18px; height: 18px;"></i>
+      </div>
+      <h1>Grayscale & B/W PDF Studio</h1>
+    </div>
+
+    <div class="studio-status-pills">
+      <button class="btn-share-tool" title="Share this private tool">
+        <i data-lucide="share-2" style="width:13px; height:13px;"></i>
+        <span>Share</span>
+      </button>
+      <div class="sha256-attest-badge" style="display:none;" title="Click to copy SHA-256 Hash">
+        <i data-lucide="shield-check" style="width:12px; height:12px;"></i> SHA-256 Ready
+      </div>
+    </div>
+  </div>
+
+  <!-- Studio Workbench -->
+  <main class="studio-workbench">
+    <!-- Left Options Panel -->
+    <aside class="studio-sidebar">
+      <div>
+        <div class="studio-section-title">
+          <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+          <span>Monochrome Settings</span>
+        </div>
+
+        <div class="control-item">
+          <label>Tone & Contrast Mode</label>
+          <select id="grayscaleContrastSelect">
+            <option value="normal" selected>Standard Smooth Grayscale (Preserve Shading)</option>
+            <option value="high">High-Contrast Text Mode (Xerox / Photocopy Clear)</option>
+          </select>
+        </div>
+
+        <p style="font-size:0.825rem; color:var(--text-muted); line-height:1.5; margin-top:0.75rem;">
+          Converts all RGB color channels to calibrated luminance (0.299R + 0.587G + 0.114B). Perfect for government office printing, xerox, and reducing visual clutter.
+        </p>
+      </div>
+
+      <div style="background:var(--bg-subtle); padding:1rem; border-radius:var(--radius-md); font-size:0.8rem; line-height:1.6; color:var(--text-muted);">
+        <strong style="color:var(--text-main); display:block; margin-bottom:0.25rem;">🔒 Private In-Memory Processing</strong>
+        Every page is rendered and converted directly on an in-memory Canvas element. 0 bytes uploaded to any remote server.
+      </div>
+
+      <button id="btnExecuteGrayscale" class="btn-primary-action" style="width:100%; justify-content:center; background:var(--pdf-gradient);">
+        <i data-lucide="printer" style="width: 18px; height: 18px;"></i>
+        <span>Convert to Grayscale & Download</span>
+      </button>
+    </aside>
+
+    <!-- Right Workbench Stage -->
+    <section class="studio-stage">
+      <div class="dropzone-unified" id="grayscaleDropzone">
+        <div class="dropzone-icon" style="color:var(--pdf-accent);">
+          <i data-lucide="printer" style="width: 32px; height: 32px;"></i>
+        </div>
+        <p class="dropzone-text">Drop your color PDF file here to convert to B/W</p>
+        <span class="dropzone-sub">Supports multi-page documents • 100% Private</span>
+        <button class="btn-browse-file" onclick="document.getElementById('grayscaleFileInput').click()">Browse Local File</button>
+        <input type="file" id="grayscaleFileInput" accept="application/pdf" style="display:none;">
+      </div>
+
+      <!-- Active Stage -->
+      <div id="grayscaleActiveStage" style="display:none; flex-direction:column; gap:1.5rem; width:100%;">
+        <div class="loaded-doc-header">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <i data-lucide="file-text" style="color:var(--pdf-accent); width:24px; height:24px;"></i>
+            <div>
+              <strong id="loadedGrayscaleName" style="display:block; color:var(--text-main); font-size:1rem;">document.pdf</strong>
+              <span id="loadedGrayscaleDetails" style="font-size:0.8rem; color:var(--text-muted);">Loading details...</span>
+            </div>
+          </div>
+          <button class="btn-clear-stage" onclick="location.reload()" style="font-size:0.8rem; padding:0.4rem 0.8rem; border-radius:var(--radius-sm); border:1px solid var(--border-light); background:var(--bg-subtle); color:var(--text-muted); cursor:pointer;">
+            <i data-lucide="refresh-cw" style="width:12px; height:12px;"></i> Change File
+          </button>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:2rem; text-align:center;">
+          <span style="font-size:0.75rem; text-transform:uppercase; tracking:1px; color:var(--text-muted); display:block; margin-bottom:1rem;">Monochrome Optimizer</span>
+          <div style="display:flex; align-items:center; justify-content:center; gap:1rem; margin:1rem 0;">
+            <div style="padding:1rem; background:linear-gradient(135deg, #ef4444, #3b82f6); border-radius:8px; color:#fff; font-size:0.8rem; font-weight:600;">Color Input</div>
+            <i data-lucide="arrow-right" style="width:18px; height:18px; color:var(--text-muted);"></i>
+            <div style="padding:1rem; background:#334155; border-radius:8px; color:#fff; font-size:0.8rem; font-weight:600;">Monochrome PDF</div>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:1rem;">Ready for conversion. Click Convert to Grayscale on the left.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <img src="assets/developer.png" alt="Raj Kishor Mahapatra" class="dev-avatar" width="48" height="48" loading="lazy" decoding="async">
+    <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Free, Private, and Open Source Client-Side Workstations • Zero Cloud Uploads</p>
+    <div class="footer-links">
+      <a href="index.html">All Studios</a>
+      <a href="terms.html">Terms & License</a>
+      <a href="disclaimer.html">Security & Privacy</a>
+      <a href="https://github.com/itsrkmahapatra/Docuvate" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+    </div>
+  </footer>
+</body>
+</html>

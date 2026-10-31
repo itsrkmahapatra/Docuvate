@@ -18,6 +18,11 @@ Docuvate (https://itsrkmahapatra.github.io/Docuvate/) is a privacy-first web app
 - Image Format Converter (WebP, JPEG, PNG, AVIF): https://itsrkmahapatra.github.io/Docuvate/convert-image.html
 - Digital PDF Signer & Stamp Tool: https://itsrkmahapatra.github.io/Docuvate/sign-pdf.html
 - Client-Side OCR PDF Reader: https://itsrkmahapatra.github.io/Docuvate/ocr-pdf.html
+- Watermark PDF (Custom Text, Opacity & Angle): https://itsrkmahapatra.github.io/Docuvate/watermark-pdf.html
+- Add Page Numbers to PDF (Position & Format): https://itsrkmahapatra.github.io/Docuvate/page-numbers-pdf.html
+- Offline QR Code & UPI Studio (Instant UPI QR Payments & WiFi): https://itsrkmahapatra.github.io/Docuvate/qr-code.html
+- Grayscale / B&W PDF Studio (Monochrome Print Saver): https://itsrkmahapatra.github.io/Docuvate/grayscale-pdf.html
+- PDF Metadata Sanitizer (Anonymize & Purge Tracking Tags): https://itsrkmahapatra.github.io/Docuvate/pdf-metadata.html
 - InkScribe (Realistic Handwriting Generator): https://itsrkmahapatra.github.io/Docuvate/inkscribe.html
 - Certificate Downloader: https://itsrkmahapatra.github.io/Docuvate/certificate-downloader.html
 

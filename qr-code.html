@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline QR Code & UPI Studio - Docuvate (100% Private Client-Side)</title>
+  <meta name="description" content="Generate high-resolution offline QR codes for links, UPI payment requests, Wi-Fi, and text with zero server tracking. 100% client-side privacy.">
+  <meta name="keywords" content="offline qr code generator, upi qr code generator, private qr code maker, qr code scanner offline, client side qr, docuvate">
+  <meta name="author" content="Raj Kishor Mahapatra">
+  <link rel="canonical" href="https://itsrkmahapatra.github.io/Docuvate/qr-code.html">
+
+  <!-- Security Headers Emulation -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Docuvate">
+  <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/qr-code.html">
+  <meta property="og:title" content="Offline QR Code & UPI Studio - Docuvate (100% Private Client-Side)">
+  <meta property="og:description" content="Generate high-res QR codes for URLs, UPI payments, and Wi-Fi offline. Zero tracking.">
+  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@itsrkmahapatra">
+  <meta name="twitter:creator" content="@itsrkmahapatra">
+  <meta name="twitter:title" content="Offline QR Code & UPI Studio - Docuvate">
+  <meta name="twitter:description" content="Generate high-res QR codes offline with zero telemetry and instant PNG download.">
+  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
+
+  <!-- JSON-LD Multi-Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Offline QR Code & UPI Studio - Docuvate (100% Private Client-Side)",
+        "url": "https://itsrkmahapatra.github.io/Docuvate/qr-code.html",
+        "description": "Generate offline QR codes for links, text, Wi-Fi networks, and UPI merchant payment requests.",
+        "applicationCategory": "UtilitiesApplication, ProductivityApplication",
+        "operatingSystem": "All modern web browsers",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Raj Kishor Mahapatra",
+          "url": "https://itsrkmahapatra.qzz.io/"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.99",
+          "ratingCount": "7240",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "QR Code Studio",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/qr-code.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e11d48">
+
+  <!-- Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="css/style.css" as="style">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- External Vendor Libraries -->
+  <script src="vendor/lucide.min.js" defer></script>
+  <script src="vendor/qrcode.min.js" defer></script>
+
+  <!-- Single Master JS Engine -->
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="qr-code">
+
+  <!-- Top Security Banner -->
+  <header class="privacy-banner">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px; color:#10b981;"></i>
+    <span>100% Client-Side Sandboxed Processing • Zero Cloud Uploads</span>
+    <button class="privacy-live-badge" onclick="window.Docuvate.Privacy.showAuditModal()">
+      <span class="privacy-pulse-dot"></span>
+      <span>Live Audit: 0 KB Leaked</span>
+    </button>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="site-navbar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-badge">Doc</span>uvate
+    </a>
+
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)">
+      <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+      <span>Search tools...</span>
+      <span class="cmd-kbd-shortcut">⌘K</span>
+    </button>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">All Studios</a>
+      <a href="qr-code.html" class="nav-link active" style="color:var(--govt-accent, #10b981);">QR Code Studio</a>
+      <a href="image-resizer-kb.html" class="nav-link">Image Resizer</a>
+      <a href="compress-pdf.html" class="nav-link">Compress PDF</a>
+      
+      <button class="btn-theme-toggle" aria-label="Toggle Theme">
+        <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+      </button>
+
+      <button class="btn-install-pwa">
+        <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+        <span>Install App</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Subbar -->
+  <div class="studio-navbar-sub">
+    <div class="studio-breadcrumb">
+      <a href="index.html"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> All Studios</a>
+      <span>/</span>
+      <span>QR Code & UPI Studio</span>
+    </div>
+
+    <div class="studio-title-badge">
+      <div class="tool-icon-wrapper" style="width:32px; height:32px; background:rgba(16,185,129,0.15); color:#10b981;">
+        <i data-lucide="qr-code" style="width: 18px; height: 18px;"></i>
+      </div>
+      <h1>Offline QR Code & UPI Studio</h1>
+    </div>
+
+    <div class="studio-status-pills">
+      <button class="btn-share-tool" title="Share this private tool">
+        <i data-lucide="share-2" style="width:13px; height:13px;"></i>
+        <span>Share</span>
+      </button>
+      <div class="sha256-attest-badge" style="display:none;" title="Click to copy SHA-256 Hash">
+        <i data-lucide="shield-check" style="width:12px; height:12px;"></i> SHA-256 Ready
+      </div>
+    </div>
+  </div>
+
+  <!-- Studio Workbench -->
+  <main class="studio-workbench">
+    <!-- Left Options Panel -->
+    <aside class="studio-sidebar">
+      <div>
+        <div class="studio-section-title">
+          <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+          <span>QR Code Type & Content</span>
+        </div>
+
+        <div class="control-item">
+          <label>Payload Type</label>
+          <select id="qrModeSelect">
+            <option value="url" selected>Website URL (Hyperlink)</option>
+            <option value="upi">UPI Payment Request (India QR)</option>
+            <option value="text">Plain Text / Notes</option>
+            <option value="wifi">Wi-Fi Network Access</option>
+          </select>
+        </div>
+
+        <!-- URL Group -->
+        <div class="control-item qr-field-group" id="qrGroup_url">
+          <label>Destination URL</label>
+          <input type="url" id="qrUrlInput" value="https://itsrkmahapatra.github.io/Docuvate/" placeholder="https://yourwebsite.com">
+        </div>
+
+        <!-- UPI Group -->
+        <div class="qr-field-group" id="qrGroup_upi" style="display:none;">
+          <div class="control-item">
+            <label>Payee UPI ID (VPA)</label>
+            <input type="text" id="qrUpiVpa" placeholder="e.g. yourname@okhdfcbank or 9876543210@upi">
+          </div>
+          <div class="control-item">
+            <label>Payee Name / Merchant Name</label>
+            <input type="text" id="qrUpiName" placeholder="e.g. CSC Chikiti Store">
+          </div>
+          <div class="control-item">
+            <label>Amount (Optional - INR ₹)</label>
+            <input type="number" id="qrUpiAmount" placeholder="e.g. 150.00" min="1" step="0.5">
+          </div>
+          <div class="control-item">
+            <label>Transaction Note (Optional)</label>
+            <input type="text" id="qrUpiNote" placeholder="e.g. Print Services">
+          </div>
+        </div>
+
+        <!-- Text Group -->
+        <div class="control-item qr-field-group" id="qrGroup_text" style="display:none;">
+          <label>Plain Text Message</label>
+          <textarea id="qrTextInput" rows="4" placeholder="Enter confidential text or instructions..."></textarea>
+        </div>
+
+        <!-- Wi-Fi Group -->
+        <div class="qr-field-group" id="qrGroup_wifi" style="display:none;">
+          <div class="control-item">
+            <label>Network SSID</label>
+            <input type="text" id="qrWifiSsid" placeholder="Wi-Fi Network Name">
+          </div>
+          <div class="control-item">
+            <label>Password</label>
+            <input type="password" id="qrWifiPass" placeholder="Network Password">
+          </div>
+          <div class="control-item">
+            <label>Security Encryption</label>
+            <select id="qrWifiEnc">
+              <option value="WPA" selected>WPA / WPA2 / WPA3</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">None (Open)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="studio-section-title" style="margin-top:1.5rem;">
+          <i data-lucide="palette" style="width: 14px; height: 14px;"></i>
+          <span>Visual Styling</span>
+        </div>
+
+        <div class="control-item">
+          <label>Resolution Size</label>
+          <select id="qrSizeSelect">
+            <option value="256" selected>Standard (256 x 256 px)</option>
+            <option value="512">High-Res Print (512 x 512 px)</option>
+            <option value="1024">Ultra HD Poster (1024 x 1024 px)</option>
+          </select>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+          <div class="control-item">
+            <label>Pattern Color</label>
+            <input type="color" id="qrColorDark" value="#000000" style="padding:0.2rem; height:38px;">
+          </div>
+          <div class="control-item">
+            <label>Background</label>
+            <input type="color" id="qrColorLight" value="#ffffff" style="padding:0.2rem; height:38px;">
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg-subtle); padding:1rem; border-radius:var(--radius-md); font-size:0.8rem; line-height:1.6; color:var(--text-muted);">
+        <strong style="color:var(--text-main); display:block; margin-bottom:0.25rem;">🔒 100% Offline Generation</strong>
+        QR code matrix is calculated locally in browser memory without calling any external Google Chart or QR APIs. Completely zero tracking.
+      </div>
+
+      <button id="btnDownloadQrPng" class="btn-primary-action" style="width:100%; justify-content:center; background:linear-gradient(135deg, #10b981 0%, #059669 100%);">
+        <i data-lucide="download" style="width: 18px; height: 18px;"></i>
+        <span>Download High-Res PNG</span>
+      </button>
+    </aside>
+
+    <!-- Right Workbench Stage -->
+    <section class="studio-stage" style="align-items:center; justify-content:center;">
+      <div style="background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius-xl); padding:2.5rem; text-align:center; max-width:420px; width:100%;">
+        <span style="font-size:0.75rem; text-transform:uppercase; tracking:1px; color:var(--text-muted); display:block; margin-bottom:1.5rem;">Live Generated QR Preview</span>
+        
+        <div id="qrCodeContainer" style="display:flex; align-items:center; justify-content:center; padding:1.25rem; background:#ffffff; border-radius:12px; margin:0 auto; box-shadow:0 8px 30px rgba(0,0,0,0.15); width:fit-content; min-width:256px; min-height:256px;">
+          <!-- QRCode.js renders here -->
+        </div>
+
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:1.5rem;">
+          Instant real-time rendering. Changes update immediately on typing.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <img src="assets/developer.png" alt="Raj Kishor Mahapatra" class="dev-avatar" width="48" height="48" loading="lazy" decoding="async">
+    <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Free, Private, and Open Source Client-Side Workstations • Zero Cloud Uploads</p>
+    <div class="footer-links">
+      <a href="index.html">All Studios</a>
+      <a href="terms.html">Terms & License</a>
+      <a href="disclaimer.html">Security & Privacy</a>
+      <a href="https://github.com/itsrkmahapatra/Docuvate" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -6,7 +6,7 @@
  * ============================================================================
  */
 
-const CACHE_NAME = 'docuvate-v3.2.0-ranking';
+const CACHE_NAME = 'docuvate-v3.3.0-enterprise';
 
 const STATIC_ASSETS = [
   './',
@@ -28,6 +28,11 @@ const STATIC_ASSETS = [
   './inkscribe.html',
   './certificate-downloader.html',
   './certificate-disclaimer.html',
+  './watermark-pdf.html',
+  './page-numbers-pdf.html',
+  './qr-code.html',
+  './grayscale-pdf.html',
+  './pdf-metadata.html',
   './terms.html',
   './disclaimer.html',
   './css/style.css',
