@@ -6,11 +6,9 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  validate:
+    name: Validate Static Assets & Scripts
     runs-on: ubuntu-latest
-    env:
-      NEXT_DISABLE_TURBOPACK: 1
-      NEXT_TELEMETRY_DISABLED: 1
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -18,40 +16,29 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
-          cache: 'npm'
+          node-version: 22
 
-      - name: Install Dependencies
-        run: npm install --legacy-peer-deps --include=dev
-
-      - name: Disable Next.js Telemetry
-        run: npx next telemetry disable
-
-      - name: Diagnostics
+      - name: Check JavaScript Syntax
         run: |
-          node --version
-          npm --version
-          npx next --version
-          npx tsc --version
+          echo "Checking JavaScript syntax..."
+          node -c js/app.js
+          node -c js/inkscribe.js
+          node -c js/upi-widget.js
+          node -c sw.js
 
-      - name: Build Application
+      - name: Validate Manifest & Configuration
         run: |
-          set +e
-          npm run build > build.log 2>&1
-          BUILD_EXIT=$?
-          set -e
-          echo "=== FULL BUILD LOG ==="
-          cat build.log
-          echo "=== END BUILD LOG (exit $BUILD_EXIT) ==="
-          echo "### Build Log" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          cat build.log >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          exit $BUILD_EXIT
+          echo "Validating JSON configurations..."
+          node -e "JSON.parse(require('fs').readFileSync('manifest.json', 'utf8')); console.log('manifest.json is valid');"
+          node -e "JSON.parse(require('fs').readFileSync('package.json', 'utf8')); console.log('package.json is valid');"
 
-      - name: Upload Build Log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ci-build-log
-          path: build.log
+      - name: Verify Key Tool Pages Exist
+        run: |
+          echo "Verifying presence of core studio HTML files..."
+          for file in index.html compress-pdf.html merge-pdf.html split-pdf.html image-to-pdf.html pdf-to-image.html convert-image.html crop-image.html passport-photo.html protect-pdf.html sign-pdf.html ocr-pdf.html inkscribe.html; do
+            if [ ! -f "$file" ]; then
+              echo "Missing required file: $file"
+              exit 1
+            fi
+            echo "✓ $file exists"
+          done

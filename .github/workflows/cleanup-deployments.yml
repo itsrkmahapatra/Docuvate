@@ -2,9 +2,9 @@ name: Auto Prune Old Deployments
 
 on:
   push:
-    branches: [ main, gh-pages ]
+    branches: [ master, gh-pages ]
   workflow_run:
-    workflows: ["pages-build-deployment", "Deploy", "CI"]
+    workflows: ["Deploy static content to Pages", "CI", "pages-build-deployment"]
     types: [completed]
   workflow_dispatch:
 
