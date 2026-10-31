@@ -793,7 +793,7 @@
         const textContent = await page.getTextContent();
         const pageStr = textContent.items.map(item => item.str).join(' ');
         pagesText.push({ page: i, text: pageStr });
-        fullText += --- Page  ---\n\n\n;
+        fullText += `--- Page ${i} ---\n${pageStr}\n\n`;
       }
       return { fullText, pagesText, totalPages: pdf.numPages };
     },
