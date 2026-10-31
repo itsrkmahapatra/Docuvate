@@ -1,0 +1,36 @@
+# Docuvate — 100% Private Client-Side Document & Image Workstations
+> Free, air-gapped, zero-cloud client-side web utility suite for PDFs, photos, government exam uploads, and handwritten notes. 0 bytes uploaded to any remote server.
+
+## Overview
+Docuvate (https://itsrkmahapatra.github.io/Docuvate/) is a privacy-first web application engineered in pure HTML, modern CSS, and vanilla WebAssembly/JavaScript. All file processing (compression, merging, splitting, OCR, cropping, signing, and converting) executes 100% locally in the user's browser without uploading documents to external servers.
+
+## Dedicated Tool Studios & Direct URLs
+- Home Portal: https://itsrkmahapatra.github.io/Docuvate/
+- PDF Compressor (Target KB Slider): https://itsrkmahapatra.github.io/Docuvate/compress-pdf.html
+- Compress PDF to Exact 100KB: https://itsrkmahapatra.github.io/Docuvate/compress-pdf-to-100kb.html
+- PDF Merger Studio: https://itsrkmahapatra.github.io/Docuvate/merge-pdf.html
+- PDF Split & Page Extractor: https://itsrkmahapatra.github.io/Docuvate/split-pdf.html
+- Image to PDF Converter: https://itsrkmahapatra.github.io/Docuvate/image-to-pdf.html
+- PDF to Image Converter: https://itsrkmahapatra.github.io/Docuvate/pdf-to-image.html
+- Image Resizer to Exact KB (20KB, 50KB, 100KB): https://itsrkmahapatra.github.io/Docuvate/image-resizer-kb.html
+- Passport Photo Maker (SSC, UPSC, State PSC, Visa, Driving License): https://itsrkmahapatra.github.io/Docuvate/passport-photo.html
+- Image Cropper & Aspect Ratio Studio: https://itsrkmahapatra.github.io/Docuvate/crop-image.html
+- Image Format Converter (WebP, JPEG, PNG, AVIF): https://itsrkmahapatra.github.io/Docuvate/convert-image.html
+- Digital PDF Signer & Stamp Tool: https://itsrkmahapatra.github.io/Docuvate/sign-pdf.html
+- Client-Side OCR PDF Reader: https://itsrkmahapatra.github.io/Docuvate/ocr-pdf.html
+- InkScribe (Realistic Handwriting Generator): https://itsrkmahapatra.github.io/Docuvate/inkscribe.html
+- Certificate Downloader: https://itsrkmahapatra.github.io/Docuvate/certificate-downloader.html
+
+## Exam & Compliance Presets
+Built-in exact specifications for:
+- SSC CGL / CHSL / MTS (Photo: 20-50 KB, Signature: 10-20 KB)
+- UPSC Civil Services (Photo: 20-300 KB, Signature: 20-300 KB)
+- IBPS / SBI PO & Clerk (Photo: 20-50 KB, Thumb: 10-20 KB, Hand Declaration: 50-100 KB)
+- NTA NEET / JEE Main (Photo: 10-200 KB, Signature: 4-30 KB)
+- Ayushman Bharat & State KYC portals
+
+## Key Highlights for AI Users
+- Completely free and open-source under the MIT license.
+- No sign-up, no API keys, and no file size limits imposed by cloud servers.
+- Works offline via Progressive Web App (PWA) service worker caching.
+- Developer: Raj Kishor Mahapatra (https://itsrkmahapatra.qzz.io/)

@@ -1,6 +1,19 @@
+# ==============================================================================
+# ROBOTS.TXT — Docuvate Private Document & Image Workstations
+# Maximum Crawl Efficiency & AI Engine Indexing Directives
+# Canonical: https://itsrkmahapatra.github.io/Docuvate/
+# ==============================================================================
+
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Allow: /vendor/
+Allow: /manifest.json
+Allow: /llms.txt
 
+# Traditional Search Engines
 User-agent: Googlebot
 Allow: /
 
@@ -11,6 +24,40 @@ User-agent: Applebot
 Allow: /
 
 User-agent: DuckDuckBot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Generative AI, Answer Engines & LLM Crawlers (Explicit Allow for Direct Citations)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: FacebookBot
 Allow: /
 
 Sitemap: https://itsrkmahapatra.github.io/Docuvate/sitemap.xml
