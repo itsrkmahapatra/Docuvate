@@ -1940,7 +1940,7 @@
           if (!currentFile) return UI.toast('Please select a PDF file');
           const text = textInput?.value.trim() || 'CONFIDENTIAL';
           btnWatermark.disabled = true;
-          btnWatermark.innerHTML = <i data-lucide="loader" class="spin"></i> Applying watermark...;
+          btnWatermark.innerHTML = `<i data-lucide="loader" class="spin"></i> Applying watermark...`;
 
           try {
             const buffer = await currentFile.arrayBuffer();
@@ -1967,7 +1967,7 @@
             UI.toast('Watermark error: ' + err.message);
           } finally {
             btnWatermark.disabled = false;
-            btnWatermark.innerHTML = <i data-lucide="stamp"></i> Apply Watermark & Download PDF;
+            btnWatermark.innerHTML = `<i data-lucide="stamp"></i> Apply Watermark & Download PDF`;
             if (window.lucide) window.lucide.createIcons();
           }
         });
@@ -2005,7 +2005,7 @@
         btnPageNumbers.addEventListener('click', async () => {
           if (!currentFile) return UI.toast('Please select a PDF file');
           btnPageNumbers.disabled = true;
-          btnPageNumbers.innerHTML = <i data-lucide="loader" class="spin"></i> Numbering pages...;
+          btnPageNumbers.innerHTML = `<i data-lucide="loader" class="spin"></i> Numbering pages...`;
 
           try {
             const buffer = await currentFile.arrayBuffer();
@@ -2026,7 +2026,7 @@
             UI.toast('Numbering error: ' + err.message);
           } finally {
             btnPageNumbers.disabled = false;
-            btnPageNumbers.innerHTML = <i data-lucide="hash"></i> Add Page Numbers & Download PDF;
+            btnPageNumbers.innerHTML = `<i data-lucide="hash"></i> Add Page Numbers & Download PDF`;
             if (window.lucide) window.lucide.createIcons();
           }
         });
@@ -2061,15 +2061,15 @@
           const name = encodeURIComponent(upiName?.value.trim() || 'Payee');
           const amt = upiAmount?.value.trim() || '';
           const note = encodeURIComponent(upiNote?.value.trim() || 'Payment');
-          let s = upi://pay?pa= + vpa + &pn= + name + &tn= + note + &cu=INR;
-          if (amt) s += &am= + amt;
+          let s = `upi://pay?pa=${vpa}&pn=${name}&tn=${note}&cu=INR`;
+          if (amt) s += `&am=${amt}`;
           return s;
         }
         if (mode === 'wifi') {
           const ssid = wifiSsid?.value.trim() || 'MyWiFi';
           const pass = wifiPass?.value || '';
           const enc = wifiEnc?.value || 'WPA';
-          return WIFI:T: + enc + ;S: + ssid + ;P: + pass + ;;;
+          return `WIFI:T:${enc};S:${ssid};P:${pass};;`;
         }
         return textInput?.value.trim() || 'Docuvate 100% Private Workstation';
       }
@@ -2149,7 +2149,7 @@
         btnGrayscale.addEventListener('click', async () => {
           if (!currentFile) return UI.toast('Please select a PDF file');
           btnGrayscale.disabled = true;
-          btnGrayscale.innerHTML = <i data-lucide="loader" class="spin"></i> Converting to Grayscale...;
+          btnGrayscale.innerHTML = `<i data-lucide="loader" class="spin"></i> Converting to Grayscale...`;
 
           try {
             const buffer = await currentFile.arrayBuffer();
@@ -2160,7 +2160,7 @@
             UI.toast('Grayscale conversion error: ' + err.message);
           } finally {
             btnGrayscale.disabled = false;
-            btnGrayscale.innerHTML = <i data-lucide="printer"></i> Convert to Grayscale & Download PDF;
+            btnGrayscale.innerHTML = `<i data-lucide="printer"></i> Convert to Grayscale & Download PDF`;
             if (window.lucide) window.lucide.createIcons();
           }
         });
@@ -2220,7 +2220,7 @@
         btnSaveMeta.addEventListener('click', async () => {
           if (!currentFile) return UI.toast('Please select a PDF file');
           btnSaveMeta.disabled = true;
-          btnSaveMeta.innerHTML = <i data-lucide="loader" class="spin"></i> Sanitizing & Saving...;
+          btnSaveMeta.innerHTML = `<i data-lucide="loader" class="spin"></i> Sanitizing & Saving...`;
 
           try {
             const buffer = await currentFile.arrayBuffer();
@@ -2243,7 +2243,7 @@
             UI.toast('Metadata error: ' + err.message);
           } finally {
             btnSaveMeta.disabled = false;
-            btnSaveMeta.innerHTML = <i data-lucide="shield-check"></i> Save Sanitized PDF & Download;
+            btnSaveMeta.innerHTML = `<i data-lucide="shield-check"></i> Save Sanitized PDF & Download`;
             if (window.lucide) window.lucide.createIcons();
           }
         });
