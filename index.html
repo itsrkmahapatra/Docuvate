@@ -134,10 +134,15 @@
   <link rel="preload" href="css/style.css" as="style">
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- External Client-Side Vendor Libraries -->
-  <script src="vendor/lucide.min.js"></script>
-  <script src="vendor/pdf-lib.min.js"></script>
-  <script src="vendor/pdf.min.js"></script>
+  <!-- Security Headers Emulation -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- External Client-Side Vendor Libraries (Non-blocking Deferred Loading) -->
+  <script src="vendor/lucide.min.js" defer></script>
+  <script src="vendor/pdf-lib.min.js" defer></script>
+  <script src="vendor/pdf.min.js" defer></script>
 
   <!-- All JS in One Master Application Engine -->
   <script src="js/app.js" defer></script>
@@ -722,7 +727,7 @@
 
   <!-- Site Footer -->
   <footer class="site-footer">
-    <img src="assets/developer.png" alt="Raj Kishor Mahapatra" class="dev-avatar">
+    <img src="assets/developer.png" alt="Raj Kishor Mahapatra" class="dev-avatar" width="48" height="48" loading="lazy" decoding="async">
     <p><strong>Docuvate</strong> • Engineered by <strong>Raj Kishor Mahapatra</strong></p>
     <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Free, Private, and Open Source Client-Side Workstations • Zero Cloud Uploads</p>
     <div class="footer-links">
