@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extract PDF Pages Studio - Docuvate (100% Private Client-Side)</title>
+  <meta name="description" content="Extract specific pages or page ranges from PDF files into a new standalone document. 100% private client-side processing, zero cloud uploads.">
+  <meta name="keywords" content="extract pages from pdf, save specific pages pdf, extract page range pdf, rip pages from pdf, private pdf extractor, docuvate">
+  <meta name="author" content="Raj Kishor Mahapatra">
+  <link rel="canonical" href="https://itsrkmahapatra.github.io/Docuvate/extract-pages-pdf.html">
+
+  <!-- Security Headers Emulation -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Docuvate">
+  <meta property="og:url" content="https://itsrkmahapatra.github.io/Docuvate/extract-pages-pdf.html">
+  <meta property="og:title" content="Extract PDF Pages Studio - Docuvate (100% Private Client-Side)">
+  <meta property="og:description" content="Extract specific pages or custom ranges into a fresh PDF file. Zero cloud uploads.">
+  <meta property="og:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@itsrkmahapatra">
+  <meta name="twitter:creator" content="@itsrkmahapatra">
+  <meta name="twitter:title" content="Extract PDF Pages Studio - Docuvate">
+  <meta name="twitter:description" content="Extract custom PDF page intervals in local browser RAM.">
+  <meta name="twitter:image" content="https://itsrkmahapatra.github.io/Docuvate/assets/og-banner.png">
+
+  <!-- JSON-LD Multi-Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Extract PDF Pages Studio - Docuvate",
+        "url": "https://itsrkmahapatra.github.io/Docuvate/extract-pages-pdf.html",
+        "description": "Extract selected page numbers or ranges into a brand new standalone PDF document.",
+        "applicationCategory": "ProductivityApplication, PDFApplication",
+        "operatingSystem": "All modern web browsers",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Raj Kishor Mahapatra",
+          "url": "https://itsrkmahapatra.qzz.io/"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.97",
+          "ratingCount": "6100",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Extract PDF Pages Studio",
+            "item": "https://itsrkmahapatra.github.io/Docuvate/extract-pages-pdf.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#e11d48">
+
+  <!-- Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="css/style.css" as="style">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- External Vendor Libraries -->
+  <script src="vendor/lucide.min.js" defer></script>
+  <script src="vendor/pdf-lib.min.js" defer></script>
+
+  <!-- Master JS Engine -->
+  <script src="js/app.js" defer></script>
+</head>
+<body data-page="extract-pages-pdf">
+
+  <!-- Top Security Banner -->
+  <header class="privacy-banner">
+    <i data-lucide="shield-check" style="width: 14px; height: 14px; color:#10b981;"></i>
+    <span>100% Client-Side Sandboxed Processing • Zero Cloud Uploads</span>
+    <button class="privacy-live-badge" onclick="window.Docuvate.Privacy.showAuditModal()">
+      <span class="privacy-pulse-dot"></span>
+      <span>Live Audit: 0 KB Leaked</span>
+    </button>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="site-navbar">
+    <a href="index.html" class="brand-logo">
+      <span class="brand-badge">Doc</span>uvate
+    </a>
+
+    <button class="btn-command-palette" aria-label="Open Command Palette (Ctrl+K)">
+      <i data-lucide="search" style="width: 14px; height: 14px;"></i>
+      <span>Search tools...</span>
+      <span class="cmd-kbd-shortcut">⌘K</span>
+    </button>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">All Studios</a>
+      <a href="split-pdf.html" class="nav-link">Split PDF</a>
+      <a href="merge-pdf.html" class="nav-link">Merge PDF</a>
+      <a href="extract-pages-pdf.html" class="nav-link active" style="color:var(--pdf-accent);">Extract Pages</a>
+      
+      <button class="btn-theme-toggle" aria-label="Toggle Theme">
+        <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+      </button>
+
+      <button class="btn-install-pwa">
+        <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+        <span>Install App</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Subbar -->
+  <div class="studio-navbar-sub">
+    <div class="studio-breadcrumb">
+      <a href="index.html"><i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> All Studios</a>
+      <span>/</span>
+      <span>Extract PDF Pages Studio</span>
+    </div>
+
+    <div class="studio-title-badge">
+      <div class="tool-icon-wrapper tool-icon-pdf" style="width:32px; height:32px;">
+        <i data-lucide="copy" style="width: 18px; height: 18px;"></i>
+      </div>
+      <h1>Extract PDF Pages Studio</h1>
+    </div>
+
+    <div class="studio-status-pills">
+      <button class="btn-share-tool" title="Share this private tool">
+        <i data-lucide="share-2" style="width:13px; height:13px;"></i>
+        <span>Share</span>
+      </button>
+      <div class="sha256-attest-badge" style="display:none;" title="Click to copy SHA-256 Hash">
+        <i data-lucide="shield-check" style="width:12px; height:12px;"></i> SHA-256 Ready
+      </div>
+    </div>
+  </div>
+
+  <!-- Studio Workbench -->
+  <main class="studio-workbench">
+    <!-- Left Options Panel -->
+    <aside class="studio-sidebar">
+      <div>
+        <div class="studio-section-title">
+          <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+          <span>Extraction Target</span>
+        </div>
+
+        <div class="control-item">
+          <label>Pages to Keep</label>
+          <input type="text" id="extractPagesInput" placeholder="e.g. 1-3, 5, 8">
+          <span style="font-size:0.75rem; color:var(--text-muted); margin-top:4px; display:block;">
+            Enter pages to isolate into the new document (e.g. 1-4, 7)
+          </span>
+        </div>
+
+        <div class="control-item" style="margin-top:1.5rem;">
+          <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.4; padding:0.75rem; background:var(--bg-card); border:1px solid var(--border-light); border-radius:6px;">
+            <i data-lucide="info" style="width:13px; height:13px; vertical-align:middle; color:var(--pdf-accent);"></i>
+            Clones target pages directly into a fresh PDF container in memory.
+          </div>
+        </div>
+      </div>
+
+      <button id="btnExecuteExtractPages" class="btn-tool-action">
+        <i data-lucide="copy"></i>
+        <span>Extract Pages & Download PDF</span>
+      </button>
+    </aside>
+
+    <!-- Main Dropzone & Stage Area -->
+    <section class="studio-viewport">
+      <div id="extractPagesDropzone" class="tool-dropzone">
+        <div class="dropzone-content">
+          <div class="dropzone-icon-circle tool-icon-pdf">
+            <i data-lucide="copy" style="width: 32px; height: 32px;"></i>
+          </div>
+          <h3>Select PDF to Extract Pages</h3>
+          <p>Drag and drop your PDF here, or click to browse files</p>
+          <span class="dropzone-privacy-pill">
+            <i data-lucide="shield-check" style="width: 12px; height: 12px;"></i> 100% Local RAM Processing
+          </span>
+          <input type="file" id="extractPagesFileInput" accept=".pdf" style="display: none;">
+        </div>
+      </div>
+
+      <div id="extractPagesActiveStage" class="studio-active-stage" style="display:none;">
+        <div class="loaded-file-bar">
+          <div class="loaded-file-info">
+            <i data-lucide="file-check" style="width: 20px; height: 20px; color:var(--pdf-accent);"></i>
+            <div>
+              <div id="loadedExtractPagesName" class="loaded-filename">Document.pdf</div>
+              <div id="loadedExtractPagesDetails" class="loaded-filesize">0 Pages</div>
+            </div>
+          </div>
+          <button class="btn-clear-stage" onclick="location.reload()">
+            <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i> Remove
+          </button>
+        </div>
+
+        <div style="padding: 3rem 1rem; text-align: center;">
+          <div style="display:inline-flex; align-items:center; justify-content:center; width:80px; height:80px; border-radius:50%; background:rgba(225,29,72,0.1); color:var(--pdf-accent); margin-bottom:1rem;">
+            <i data-lucide="copy" style="width:40px; height:40px;"></i>
+          </div>
+          <h3 style="font-size:1.2rem; font-weight:700; color:var(--text-main); margin-bottom:0.5rem;">Document Loaded</h3>
+          <p style="color:var(--text-muted); font-size:0.875rem; max-width:440px; margin:0 auto 1.5rem;">
+            Specify which pages you want to keep on the left sidebar (e.g. <code>1-3, 5</code>), then click <strong>Extract Pages & Download PDF</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+

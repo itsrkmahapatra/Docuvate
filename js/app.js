@@ -222,6 +222,15 @@
     { title: 'QR Code & UPI Studio', sub: 'Generate offline high-res QR codes & UPI payment links', cat: 'Govt Services', icon: 'qr-code', url: 'qr-code.html' },
     { title: 'Grayscale / B&W PDF Converter', sub: 'Convert color PDFs to monochrome for print & xerox', cat: 'PDF Tools', icon: 'printer', url: 'grayscale-pdf.html' },
     { title: 'PDF Metadata Sanitizer', sub: 'Inspect, edit, and 1-click purge tracking metadata', cat: 'Security', icon: 'shield-alert', url: 'pdf-metadata.html' },
+    { title: 'Rotate PDF Pages', sub: 'Rotate all or specific pages 90Â°, 180Â°, 270Â°', cat: 'PDF Tools', icon: 'rotate-cw', url: 'rotate-pdf.html' },
+    { title: 'Extract Text from PDF', sub: 'Instant digital text extractor with TXT export', cat: 'PDF Tools', icon: 'file-text', url: 'extract-text-pdf.html' },
+    { title: 'Delete PDF Pages', sub: 'Remove unwanted pages or ranges permanently', cat: 'PDF Tools', icon: 'trash-2', url: 'delete-pages-pdf.html' },
+    { title: 'Extract PDF Pages', sub: 'Extract selected pages into a new standalone PDF', cat: 'PDF Tools', icon: 'copy', url: 'extract-pages-pdf.html' },
+    { title: 'Invert Colors / Dark Mode PDF', sub: 'High-contrast dark mode for night reading & OLED', cat: 'PDF Tools', icon: 'sun-medium', url: 'invert-pdf.html' },
+    { title: 'PDF & File to Base64 Studio', sub: 'Encode PDF to Base64 Data URI or decode to PDF', cat: 'Developer Tools', icon: 'code-2', url: 'base64-pdf.html' },
+    { title: 'Offline Barcode Studio', sub: 'Generate Code-128 & shipping barcodes offline', cat: 'Govt Services', icon: 'barcode', url: 'barcode-generator.html' },
+    { title: 'Repair & Rebuild PDF', sub: 'Rebuild broken cross-reference tables and corrupt xrefs', cat: 'PDF Tools', icon: 'wrench', url: 'repair-pdf.html' },
+    { title: 'Extract Images from PDF', sub: 'Extract all embedded graphics & photos into ZIP', cat: 'PDF Tools', icon: 'image-down', url: 'extract-images-pdf.html' },
     { title: 'Purge Session RAM', sub: 'Wipe all cached in-memory buffers', cat: 'Security', icon: 'trash-2', action: () => PrivacyMonitor.purgeSession() }
   ];
 
@@ -383,6 +392,30 @@
         t.style.opacity = '0';
         setTimeout(() => t.remove(), 250);
       }, duration);
+    },
+
+    parseRange(rangeStr, totalPages) {
+      const pages = new Set();
+      const parts = (rangeStr || '').split(/[\s,]+/);
+      for (const part of parts) {
+        if (!part) continue;
+        if (part.includes('-')) {
+          const [sStr, eStr] = part.split('-');
+          const s = parseInt(sStr, 10);
+          const e = parseInt(eStr, 10);
+          if (!isNaN(s) && !isNaN(e)) {
+            const min = Math.max(1, Math.min(s, e));
+            const max = Math.min(totalPages, Math.max(s, e));
+            for (let p = min; p <= max; p++) pages.add(p);
+          }
+        } else {
+          const p = parseInt(part, 10);
+          if (!isNaN(p) && p >= 1 && p <= totalPages) {
+            pages.add(p);
+          }
+        }
+      }
+      return Array.from(pages).sort((a, b) => a - b);
     },
 
     formatBytes(bytes, decimals = 1) {
@@ -730,6 +763,168 @@
       }
       const pdfBytes = await doc.save();
       return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.12 Rotate Pages
+    async rotatePages(pdfBuffer, angle = 90, pageRange = 'all') {
+      if (!window.PDFLib) throw new Error('PDF-Lib is not loaded');
+      const doc = await PDFLib.PDFDocument.load(pdfBuffer, { ignoreEncryption: true });
+      const pages = doc.getPages();
+      pages.forEach((page, idx) => {
+        const pageNum = idx + 1;
+        if (pageRange === 'odd' && pageNum % 2 === 0) return;
+        if (pageRange === 'even' && pageNum % 2 !== 0) return;
+        if (pageRange === 'first' && pageNum !== 1) return;
+        const currentAngle = page.getRotation().angle;
+        page.setRotation(PDFLib.degrees((currentAngle + angle) % 360));
+      });
+      const pdfBytes = await doc.save();
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.13 Extract Raw Text
+    async extractText(pdfBuffer) {
+      if (!window.pdfjsLib) throw new Error('PDF.js library is not loaded');
+      const pdf = await pdfjsLib.getDocument({ data: pdfBuffer }).promise;
+      let fullText = '';
+      const pagesText = [];
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageStr = textContent.items.map(item => item.str).join(' ');
+        pagesText.push({ page: i, text: pageStr });
+        fullText += --- Page  ---\n\n\n;
+      }
+      return { fullText, pagesText, totalPages: pdf.numPages };
+    },
+
+    // 5.14 Delete Specific Pages
+    async deletePages(pdfBuffer, pagesToRemove = []) {
+      if (!window.PDFLib) throw new Error('PDF-Lib is not loaded');
+      const doc = await PDFLib.PDFDocument.load(pdfBuffer, { ignoreEncryption: true });
+      const total = doc.getPageCount();
+      const toRemove = Array.from(new Set(pagesToRemove))
+        .map(n => parseInt(n, 10) - 1)
+        .filter(idx => idx >= 0 && idx < total)
+        .sort((a, b) => b - a);
+      if (toRemove.length >= total) {
+        throw new Error('Cannot delete all pages from the document');
+      }
+      for (const idx of toRemove) {
+        doc.removePage(idx);
+      }
+      const pdfBytes = await doc.save();
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.15 Extract Specific Pages
+    async extractPages(pdfBuffer, pagesToKeep = []) {
+      if (!window.PDFLib) throw new Error('PDF-Lib is not loaded');
+      const srcDoc = await PDFLib.PDFDocument.load(pdfBuffer, { ignoreEncryption: true });
+      const total = srcDoc.getPageCount();
+      const newDoc = await PDFLib.PDFDocument.create();
+      const validIndices = pagesToKeep
+        .map(n => parseInt(n, 10) - 1)
+        .filter(idx => idx >= 0 && idx < total);
+      if (validIndices.length === 0) throw new Error('No valid pages selected for extraction');
+      const copiedPages = await newDoc.copyPages(srcDoc, validIndices);
+      copiedPages.forEach(p => newDoc.addPage(p));
+      const pdfBytes = await newDoc.save();
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.16 Invert PDF Colors / Dark Mode
+    async invertColors(pdfBuffer) {
+      if (!window.pdfjsLib || !window.PDFLib) throw new Error('PDF libraries not loaded');
+      const pdf = await pdfjsLib.getDocument({ data: pdfBuffer }).promise;
+      const newDoc = await PDFLib.PDFDocument.create();
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: 1.5 });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const d = imgData.data;
+        for (let j = 0; j < d.length; j += 4) {
+          d[j] = 255 - d[j];
+          d[j + 1] = 255 - d[j + 1];
+          d[j + 2] = 255 - d[j + 2];
+        }
+        ctx.putImageData(imgData, 0, 0);
+        const jpegUrl = canvas.toDataURL('image/jpeg', 0.85);
+        const imgBytes = await (await fetch(jpegUrl)).arrayBuffer();
+        const embeddedImg = await newDoc.embedJpg(imgBytes);
+        const newPage = newDoc.addPage([viewport.width, viewport.height]);
+        newPage.drawImage(embeddedImg, { x: 0, y: 0, width: viewport.width, height: viewport.height });
+      }
+      const pdfBytes = await newDoc.save();
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.17 Repair & Linearize PDF
+    async repair(pdfBuffer) {
+      if (!window.PDFLib) throw new Error('PDF-Lib is not loaded');
+      const doc = await PDFLib.PDFDocument.load(pdfBuffer, {
+        ignoreEncryption: true,
+        updateMetadata: false
+      });
+      const pdfBytes = await doc.save({ useObjectStreams: false });
+      return new Blob([pdfBytes], { type: 'application/pdf' });
+    },
+
+    // 5.18 Extract Embedded Images
+    async extractImages(pdfBuffer) {
+      if (!window.pdfjsLib) throw new Error('PDF.js library is not loaded');
+      const pdf = await pdfjsLib.getDocument({ data: pdfBuffer }).promise;
+      const images = [];
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const ops = await page.getOperatorList();
+        for (let j = 0; j < ops.fnArray.length; j++) {
+          if (ops.fnArray[j] === pdfjsLib.OPS.paintImageXObject) {
+            const imgKey = ops.argsArray[j][0];
+            try {
+              const imgObj = await new Promise(resolve => page.objs.get(imgKey, resolve));
+              if (imgObj && imgObj.data) {
+                const canvas = document.createElement('canvas');
+                canvas.width = imgObj.width;
+                canvas.height = imgObj.height;
+                const ctx = canvas.getContext('2d');
+                let imgData;
+                if (imgObj.kind === 1) {
+                  imgData = ctx.createImageData(imgObj.width, imgObj.height);
+                  for (let k = 0, p = 0; k < imgObj.data.length; k++, p += 4) {
+                    const val = imgObj.data[k];
+                    imgData.data[p] = val;
+                    imgData.data[p + 1] = val;
+                    imgData.data[p + 2] = val;
+                    imgData.data[p + 3] = 255;
+                  }
+                } else if (imgObj.data.length === imgObj.width * imgObj.height * 3) {
+                  imgData = ctx.createImageData(imgObj.width, imgObj.height);
+                  for (let k = 0, p = 0; k < imgObj.data.length; k += 3, p += 4) {
+                    imgData.data[p] = imgObj.data[k];
+                    imgData.data[p + 1] = imgObj.data[k + 1];
+                    imgData.data[p + 2] = imgObj.data[k + 2];
+                    imgData.data[p + 3] = 255;
+                  }
+                } else {
+                  imgData = new ImageData(new Uint8ClampedArray(imgObj.data.buffer), imgObj.width, imgObj.height);
+                }
+                ctx.putImageData(imgData, 0, 0);
+                const dataUrl = canvas.toDataURL('image/png');
+                images.push({ page: i, index: images.length + 1, dataUrl, width: imgObj.width, height: imgObj.height });
+              }
+            } catch (e) {
+              console.warn('Image extraction note for key:', imgKey, e);
+            }
+          }
+        }
+      }
+      return images;
     }
   };
 
@@ -829,6 +1024,76 @@
   // ==========================================================================
   // 7. ROUTER & PAGE AUTO-MOUNT LOGIC
   // ==========================================================================
+  // Standalone Offline Barcode Engine (Code 128-B)
+  const BarcodeEngine = {
+    PATTERNS_128: [
+      '212222', '222122', '222221', '121223', '121322', '131222', '122213', '122312', '132212', '221213',
+      '221312', '231212', '112232', '122132', '122231', '113222', '123122', '123221', '223211', '221132',
+      '221231', '213212', '223112', '312131', '311222', '321122', '321221', '312212', '322112', '322211',
+      '212123', '212321', '232121', '111323', '131123', '131321', '112313', '132113', '132311', '211313',
+      '231113', '231311', '112133', '112331', '132131', '113123', '113321', '133121', '313121', '211331',
+      '231131', '213113', '213311', '213131', '311123', '311321', '331121', '312113', '312311', '332111',
+      '314111', '221411', '431111', '111224', '111422', '121124', '121421', '141122', '141221', '112214',
+      '112412', '122114', '122411', '142112', '142211', '241211', '221114', '413111', '241112', '134111',
+      '111242', '121142', '121241', '114212', '124112', '124211', '411212', '421112', '421211', '212141',
+      '214121', '412121', '111143', '111341', '131141', '114113', '114311', '411113', '411311', '113141',
+      '114131', '311141', '411131', '211412', '211214', '211232', '2331112'
+    ],
+
+    renderCode128(canvas, text, options = {}) {
+      const { barWidth = 2, barHeight = 70, showText = true } = options;
+      const cleanText = text.replace(/[^\x20-\x7E]/g, '');
+      if (!cleanText) return;
+
+      const codes = [104];
+      let checksum = 104;
+      for (let i = 0; i < cleanText.length; i++) {
+        const val = cleanText.charCodeAt(i) - 32;
+        codes.push(val);
+        checksum += val * (i + 1);
+      }
+      codes.push(checksum % 103);
+      codes.push(106);
+
+      let patternStr = '';
+      for (const code of codes) {
+        const pat = this.PATTERNS_128[code];
+        let isBar = true;
+        for (let ch of pat) {
+          const width = parseInt(ch, 10);
+          patternStr += (isBar ? '1' : '0').repeat(width);
+          isBar = !isBar;
+        }
+      }
+
+      const quietZone = 24;
+      const totalWidth = patternStr.length * barWidth + quietZone * 2;
+      const totalHeight = barHeight + (showText ? 24 : 10);
+
+      canvas.width = totalWidth;
+      canvas.height = totalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, totalWidth, totalHeight);
+
+      ctx.fillStyle = '#000000';
+      let x = quietZone;
+      for (let i = 0; i < patternStr.length; i++) {
+        if (patternStr[i] === '1') {
+          ctx.fillRect(x, 6, barWidth, barHeight);
+        }
+        x += barWidth;
+      }
+
+      if (showText) {
+        ctx.font = 'bold 13px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#111827';
+        ctx.fillText(cleanText, totalWidth / 2, barHeight + 20);
+      }
+    }
+  };
+
   function mountStudio() {
     const pageId = document.body.dataset.page || '';
 
@@ -2244,6 +2509,530 @@
           } finally {
             btnSaveMeta.disabled = false;
             btnSaveMeta.innerHTML = `<i data-lucide="shield-check"></i> Save Sanitized PDF & Download`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.20 ROTATE PDF STUDIO
+    if (pageId === 'rotate-pdf') {
+      const dropzone = document.getElementById('rotateDropzone');
+      const fileInput = document.getElementById('rotateFileInput');
+      const angleSelect = document.getElementById('rotateAngleSelect');
+      const pagesSelect = document.getElementById('rotatePagesSelect');
+      const btnRotate = document.getElementById('btnExecuteRotate');
+      let currentFile = null;
+
+      UI.bindDropzone(dropzone, fileInput, (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('rotateActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedRotateName');
+        const detailsEl = document.getElementById('loadedRotateDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+      });
+
+      if (btnRotate) {
+        btnRotate.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          btnRotate.disabled = true;
+          btnRotate.innerHTML = `<i data-lucide="loader" class="spin"></i> Rotating PDF...`;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const angle = parseInt(angleSelect?.value, 10) || 90;
+            const pageRange = pagesSelect?.value || 'all';
+            const outBlob = await PDF.rotatePages(buffer, angle, pageRange);
+            UI.downloadBlob(outBlob, 'Rotated-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Rotation error: ' + err.message);
+          } finally {
+            btnRotate.disabled = false;
+            btnRotate.innerHTML = `<i data-lucide="rotate-cw"></i> Rotate & Download PDF`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.21 EXTRACT TEXT PDF STUDIO
+    if (pageId === 'extract-text-pdf') {
+      const dropzone = document.getElementById('extractTextDropzone');
+      const fileInput = document.getElementById('extractTextFileInput');
+      const textArea = document.getElementById('extractedTextOutput');
+      const statsBadge = document.getElementById('textStatsBadge');
+      const btnCopy = document.getElementById('btnCopyExtractedText');
+      const btnDownloadTxt = document.getElementById('btnDownloadTextFile');
+      let currentFile = null;
+
+      UI.bindDropzone(dropzone, fileInput, async (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('extractTextActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedExtractTextName');
+        const detailsEl = document.getElementById('loadedExtractTextDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+
+        if (textArea) textArea.value = 'Extracting digital text from PDF...';
+
+        try {
+          const buffer = await file.arrayBuffer();
+          const { fullText, totalPages } = await PDF.extractText(buffer);
+          if (textArea) textArea.value = fullText.trim() || 'No readable text layer found in this PDF (it may be a scanned image). Use OCR Studio for scans.';
+          
+          const words = (fullText.match(/\b\w+\b/g) || []).length;
+          const chars = fullText.length;
+          if (statsBadge) statsBadge.textContent = `${totalPages} Pages â€¢ ${words.toLocaleString()} Words â€¢ ${chars.toLocaleString()} Characters`;
+        } catch (err) {
+          if (textArea) textArea.value = 'Extraction error: ' + err.message;
+        }
+      });
+
+      if (btnCopy) {
+        btnCopy.addEventListener('click', () => {
+          if (!textArea || !textArea.value) return UI.toast('No text to copy');
+          navigator.clipboard.writeText(textArea.value).then(() => {
+            UI.toast('Copied extracted text to clipboard!');
+          });
+        });
+      }
+
+      if (btnDownloadTxt) {
+        btnDownloadTxt.addEventListener('click', () => {
+          if (!textArea || !textArea.value) return UI.toast('No text to download');
+          const blob = new Blob([textArea.value], { type: 'text/plain;charset=utf-8' });
+          const fname = (currentFile?.name || 'Document').replace(/\.pdf$/i, '') + '-Extracted.txt';
+          UI.downloadBlob(blob, fname);
+        });
+      }
+    }
+
+    // 7.22 DELETE PDF PAGES STUDIO
+    if (pageId === 'delete-pages-pdf') {
+      const dropzone = document.getElementById('deletePagesDropzone');
+      const fileInput = document.getElementById('deletePagesFileInput');
+      const pagesInput = document.getElementById('deletePagesInput');
+      const btnDelete = document.getElementById('btnExecuteDeletePages');
+      let currentFile = null;
+      let totalPages = 1;
+
+      UI.bindDropzone(dropzone, fileInput, async (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('deletePagesActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedDeletePagesName');
+        const detailsEl = document.getElementById('loadedDeletePagesDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        UI.updateShaBadge(file);
+
+        try {
+          const buffer = await file.arrayBuffer();
+          const doc = await PDFLib.PDFDocument.load(buffer, { ignoreEncryption: true });
+          totalPages = doc.getPageCount();
+          if (detailsEl) detailsEl.textContent = `${totalPages} Total Pages â€¢ ${UI.formatBytes(file.size)}`;
+        } catch (e) {
+          console.warn('Delete page count note:', e);
+        }
+      });
+
+      if (btnDelete) {
+        btnDelete.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          const rawPages = pagesInput?.value.trim() || '';
+          if (!rawPages) return UI.toast('Enter page numbers to delete (e.g. 1, 3, 5-7)');
+
+          const toRemove = UI.parseRange(rawPages, totalPages);
+          if (toRemove.length === 0) return UI.toast('No valid page numbers found in document range (1 to ' + totalPages + ')');
+          if (toRemove.length >= totalPages) return UI.toast('Cannot delete all ' + totalPages + ' pages from the document');
+
+          btnDelete.disabled = true;
+          btnDelete.innerHTML = `<i data-lucide="loader" class="spin"></i> Removing pages...`;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const outBlob = await PDF.deletePages(buffer, toRemove);
+            UI.downloadBlob(outBlob, 'Cleaned-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Delete pages error: ' + err.message);
+          } finally {
+            btnDelete.disabled = false;
+            btnDelete.innerHTML = `<i data-lucide="trash-2"></i> Delete Pages & Download PDF`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.23 EXTRACT PDF PAGES STUDIO
+    if (pageId === 'extract-pages-pdf') {
+      const dropzone = document.getElementById('extractPagesDropzone');
+      const fileInput = document.getElementById('extractPagesFileInput');
+      const pagesInput = document.getElementById('extractPagesInput');
+      const btnExtract = document.getElementById('btnExecuteExtractPages');
+      let currentFile = null;
+      let totalPages = 1;
+
+      UI.bindDropzone(dropzone, fileInput, async (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('extractPagesActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedExtractPagesName');
+        const detailsEl = document.getElementById('loadedExtractPagesDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        UI.updateShaBadge(file);
+
+        try {
+          const buffer = await file.arrayBuffer();
+          const doc = await PDFLib.PDFDocument.load(buffer, { ignoreEncryption: true });
+          totalPages = doc.getPageCount();
+          if (detailsEl) detailsEl.textContent = `${totalPages} Total Pages â€¢ ${UI.formatBytes(file.size)}`;
+        } catch (e) {
+          console.warn('Extract page count note:', e);
+        }
+      });
+
+      if (btnExtract) {
+        btnExtract.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          const rawPages = pagesInput?.value.trim() || '';
+          if (!rawPages) return UI.toast('Enter page numbers to extract (e.g. 1-3, 5)');
+
+          const toKeep = UI.parseRange(rawPages, totalPages);
+          if (toKeep.length === 0) return UI.toast('No valid page numbers found in document range (1 to ' + totalPages + ')');
+
+          btnExtract.disabled = true;
+          btnExtract.innerHTML = `<i data-lucide="loader" class="spin"></i> Extracting pages...`;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const outBlob = await PDF.extractPages(buffer, toKeep);
+            UI.downloadBlob(outBlob, 'Extracted-Pages-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Extract error: ' + err.message);
+          } finally {
+            btnExtract.disabled = false;
+            btnExtract.innerHTML = `<i data-lucide="copy"></i> Extract Pages & Download PDF`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.24 INVERT / DARK MODE PDF STUDIO
+    if (pageId === 'invert-pdf') {
+      const dropzone = document.getElementById('invertDropzone');
+      const fileInput = document.getElementById('invertFileInput');
+      const btnInvert = document.getElementById('btnExecuteInvert');
+      let currentFile = null;
+
+      UI.bindDropzone(dropzone, fileInput, (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('invertActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedInvertName');
+        const detailsEl = document.getElementById('loadedInvertDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+      });
+
+      if (btnInvert) {
+        btnInvert.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          btnInvert.disabled = true;
+          btnInvert.innerHTML = `<i data-lucide="loader" class="spin"></i> Inverting Colors...`;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const outBlob = await PDF.invertColors(buffer);
+            UI.downloadBlob(outBlob, 'DarkMode-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Invert error: ' + err.message);
+          } finally {
+            btnInvert.disabled = false;
+            btnInvert.innerHTML = `<i data-lucide="sun-medium"></i> Invert Colors & Download Dark PDF`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.25 BASE64 PDF & FILE STUDIO
+    if (pageId === 'base64-pdf') {
+      const tabEncode = document.getElementById('tabBase64Encode');
+      const tabDecode = document.getElementById('tabBase64Decode');
+      const panelEncode = document.getElementById('panelBase64Encode');
+      const panelDecode = document.getElementById('panelBase64Decode');
+
+      const encodeDropzone = document.getElementById('base64EncodeDropzone');
+      const encodeFileInput = document.getElementById('base64EncodeFileInput');
+      const encodeOutput = document.getElementById('base64EncodeOutput');
+      const encodeFormatSelect = document.getElementById('base64FormatSelect');
+      const btnCopyBase64 = document.getElementById('btnCopyBase64');
+      let rawBase64 = '';
+      let currentFile = null;
+
+      const decodeInput = document.getElementById('base64DecodeInput');
+      const btnDownloadDecoded = document.getElementById('btnDownloadDecodedPdf');
+
+      if (tabEncode && tabDecode) {
+        tabEncode.addEventListener('click', () => {
+          tabEncode.classList.add('active');
+          tabDecode.classList.remove('active');
+          panelEncode.style.display = 'block';
+          panelDecode.style.display = 'none';
+        });
+        tabDecode.addEventListener('click', () => {
+          tabDecode.classList.add('active');
+          tabEncode.classList.remove('active');
+          panelDecode.style.display = 'block';
+          panelEncode.style.display = 'none';
+        });
+      }
+
+      function updateEncodeOutput() {
+        if (!rawBase64 || !encodeOutput) return;
+        const fmt = encodeFormatSelect?.value || 'datauri';
+        const mime = currentFile?.type || 'application/pdf';
+        if (fmt === 'raw') {
+          encodeOutput.value = rawBase64;
+        } else if (fmt === 'embed') {
+          encodeOutput.value = `<embed src="data:${mime};base64,${rawBase64}" type="${mime}" width="100%" height="600px" />`;
+        } else {
+          encodeOutput.value = `data:${mime};base64,${rawBase64}`;
+        }
+      }
+
+      if (encodeFormatSelect) encodeFormatSelect.addEventListener('change', updateEncodeOutput);
+
+      UI.bindDropzone(encodeDropzone, encodeFileInput, (files) => {
+        const file = files[0];
+        if (!file) return;
+        currentFile = file;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          const fullDataUrl = reader.result;
+          rawBase64 = fullDataUrl.split(',')[1] || '';
+          updateEncodeOutput();
+          UI.toast(`Encoded ${file.name} to Base64 (${UI.formatBytes(file.size)})`);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      if (btnCopyBase64) {
+        btnCopyBase64.addEventListener('click', () => {
+          if (!encodeOutput || !encodeOutput.value) return UI.toast('No Base64 to copy');
+          navigator.clipboard.writeText(encodeOutput.value).then(() => {
+            UI.toast('Copied Base64 string to clipboard!');
+          });
+        });
+      }
+
+      if (btnDownloadDecoded) {
+        btnDownloadDecoded.addEventListener('click', () => {
+          const raw = decodeInput?.value.trim() || '';
+          if (!raw) return UI.toast('Paste a Base64 string or Data URI');
+          try {
+            const b64 = raw.includes(',') ? raw.split(',')[1] : raw;
+            const byteCharacters = atob(b64.replace(/\s/g, ''));
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+              byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'application/pdf' });
+            UI.downloadBlob(blob, 'Decoded-Document.pdf');
+          } catch (err) {
+            UI.toast('Invalid Base64 string: ' + err.message);
+          }
+        });
+      }
+    }
+
+    // 7.26 OFFLINE BARCODE STUDIO
+    if (pageId === 'barcode-generator') {
+      const textInput = document.getElementById('barcodeTextInput');
+      const heightInput = document.getElementById('barcodeHeightInput');
+      const widthInput = document.getElementById('barcodeWidthInput');
+      const canvas = document.getElementById('barcodeCanvas');
+      const btnDownloadPng = document.getElementById('btnDownloadBarcodePng');
+
+      function drawBarcode() {
+        if (!canvas) return;
+        const text = textInput?.value.trim() || 'DOC-9842103';
+        const barHeight = parseInt(heightInput?.value, 10) || 75;
+        const barWidth = parseInt(widthInput?.value, 10) || 2;
+        BarcodeEngine.renderCode128(canvas, text, { barWidth, barHeight, showText: true });
+      }
+
+      if (textInput) textInput.addEventListener('input', drawBarcode);
+      if (heightInput) heightInput.addEventListener('input', drawBarcode);
+      if (widthInput) widthInput.addEventListener('input', drawBarcode);
+
+      if (btnDownloadPng) {
+        btnDownloadPng.addEventListener('click', () => {
+          if (!canvas) return;
+          const a = document.createElement('a');
+          a.download = 'Barcode-' + (textInput?.value.trim() || 'DOC') + '.png';
+          a.href = canvas.toDataURL('image/png');
+          a.click();
+          UI.toast('Downloaded High-Res Barcode PNG');
+        });
+      }
+
+      setTimeout(drawBarcode, 100);
+    }
+
+    // 7.27 REPAIR & REBUILD PDF STUDIO
+    if (pageId === 'repair-pdf') {
+      const dropzone = document.getElementById('repairDropzone');
+      const fileInput = document.getElementById('repairFileInput');
+      const btnRepair = document.getElementById('btnExecuteRepair');
+      let currentFile = null;
+
+      UI.bindDropzone(dropzone, fileInput, (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('repairActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedRepairName');
+        const detailsEl = document.getElementById('loadedRepairDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        if (detailsEl) detailsEl.textContent = UI.formatBytes(file.size);
+        UI.updateShaBadge(file);
+      });
+
+      if (btnRepair) {
+        btnRepair.addEventListener('click', async () => {
+          if (!currentFile) return UI.toast('Please select a PDF file');
+          btnRepair.disabled = true;
+          btnRepair.innerHTML = `<i data-lucide="loader" class="spin"></i> Repairing & Rebuilding PDF...`;
+
+          try {
+            const buffer = await currentFile.arrayBuffer();
+            const outBlob = await PDF.repair(buffer);
+            UI.downloadBlob(outBlob, 'Repaired-' + currentFile.name);
+          } catch (err) {
+            UI.toast('Repair error: ' + err.message);
+          } finally {
+            btnRepair.disabled = false;
+            btnRepair.innerHTML = `<i data-lucide="wrench"></i> Repair & Download Valid PDF`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      }
+    }
+
+    // 7.28 EXTRACT IMAGES FROM PDF STUDIO
+    if (pageId === 'extract-images-pdf') {
+      const dropzone = document.getElementById('extractImagesDropzone');
+      const fileInput = document.getElementById('extractImagesFileInput');
+      const gallery = document.getElementById('extractedImagesGallery');
+      const btnDownloadZip = document.getElementById('btnDownloadAllImagesZip');
+      let currentFile = null;
+      let extractedImagesList = [];
+
+      UI.bindDropzone(dropzone, fileInput, async (files) => {
+        const file = files[0];
+        if (!file || !file.name.toLowerCase().endsWith('.pdf')) return UI.toast('Select a valid PDF');
+        currentFile = file;
+
+        const stageActive = document.getElementById('extractImagesActiveStage');
+        if (stageActive) stageActive.style.display = 'flex';
+        if (dropzone) dropzone.style.display = 'none';
+
+        const nameEl = document.getElementById('loadedExtractImagesName');
+        const detailsEl = document.getElementById('loadedExtractImagesDetails');
+        if (nameEl) nameEl.textContent = file.name;
+        UI.updateShaBadge(file);
+
+        if (gallery) gallery.innerHTML = '<div style="padding:2rem; text-align:center; color:var(--text-muted);"><i data-lucide="loader" class="spin"></i> Scanning PDF for embedded graphics & photos...</div>';
+        if (window.lucide) window.lucide.createIcons();
+
+        try {
+          const buffer = await file.arrayBuffer();
+          extractedImagesList = await PDF.extractImages(buffer);
+          if (detailsEl) detailsEl.textContent = `${extractedImagesList.length} Images Found â€¢ ${UI.formatBytes(file.size)}`;
+
+          if (gallery) {
+            gallery.innerHTML = '';
+            if (extractedImagesList.length === 0) {
+              gallery.innerHTML = '<div style="padding:2rem; text-align:center; color:var(--text-muted);">No raster images embedded in this document.</div>';
+              if (btnDownloadZip) btnDownloadZip.style.display = 'none';
+            } else {
+              if (btnDownloadZip) btnDownloadZip.style.display = 'inline-flex';
+              extractedImagesList.forEach((img, idx) => {
+                const card = document.createElement('div');
+                card.className = 'extracted-image-card';
+                card.style.cssText = 'border:1px solid var(--border-light); border-radius:8px; padding:8px; background:var(--bg-card); display:flex; flex-direction:column; align-items:center; gap:6px;';
+                card.innerHTML = `
+                  <img src="${img.dataUrl}" style="max-width:100%; max-height:140px; object-fit:contain; border-radius:4px;" />
+                  <span style="font-size:11px; color:var(--text-muted);">Page ${img.page} â€¢ ${img.width}Ã—${img.height}</span>
+                  <a href="${img.dataUrl}" download="Image-${idx + 1}-p${img.page}.png" class="btn-tool-action" style="font-size:11px; padding:3px 8px; text-decoration:none;">Download PNG</a>
+                `;
+                gallery.appendChild(card);
+              });
+            }
+          }
+        } catch (err) {
+          if (gallery) gallery.innerHTML = '<div style="color:#ef4444; padding:1rem;">Error extracting images: ' + err.message + '</div>';
+        }
+      });
+
+      if (btnDownloadZip) {
+        btnDownloadZip.addEventListener('click', async () => {
+          if (extractedImagesList.length === 0 || !window.JSZip) return UI.toast('No images to package');
+          btnDownloadZip.disabled = true;
+          btnDownloadZip.innerHTML = `<i data-lucide="loader" class="spin"></i> Packaging ZIP...`;
+
+          try {
+            const zip = new JSZip();
+            extractedImagesList.forEach((img, idx) => {
+              const b64 = img.dataUrl.split(',')[1];
+              zip.file(`Image-${idx + 1}-page${img.page}.png`, b64, { base64: true });
+            });
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            UI.downloadBlob(zipBlob, (currentFile?.name || 'Document').replace(/\.pdf$/i, '') + '-Images.zip');
+          } catch (err) {
+            UI.toast('ZIP error: ' + err.message);
+          } finally {
+            btnDownloadZip.disabled = false;
+            btnDownloadZip.innerHTML = `<i data-lucide="archive"></i> Download All as ZIP`;
             if (window.lucide) window.lucide.createIcons();
           }
         });

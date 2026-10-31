@@ -35,7 +35,7 @@ jobs:
       - name: Verify Key Tool Pages Exist
         run: |
           echo "Verifying presence of core studio HTML files..."
-          for file in index.html compress-pdf.html merge-pdf.html split-pdf.html image-to-pdf.html pdf-to-image.html convert-image.html crop-image.html passport-photo.html protect-pdf.html sign-pdf.html ocr-pdf.html inkscribe.html watermark-pdf.html page-numbers-pdf.html qr-code.html grayscale-pdf.html pdf-metadata.html; do
+          for file in index.html compress-pdf.html merge-pdf.html split-pdf.html image-to-pdf.html pdf-to-image.html convert-image.html crop-image.html passport-photo.html protect-pdf.html sign-pdf.html ocr-pdf.html inkscribe.html watermark-pdf.html page-numbers-pdf.html qr-code.html grayscale-pdf.html pdf-metadata.html rotate-pdf.html extract-text-pdf.html delete-pages-pdf.html extract-pages-pdf.html invert-pdf.html base64-pdf.html barcode-generator.html repair-pdf.html extract-images-pdf.html; do
             if [ ! -f "$file" ]; then
               echo "Missing required file: $file"
               exit 1

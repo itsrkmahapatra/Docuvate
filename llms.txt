@@ -23,6 +23,15 @@ Docuvate (https://itsrkmahapatra.github.io/Docuvate/) is a privacy-first web app
 - Offline QR Code & UPI Studio (Instant UPI QR Payments & WiFi): https://itsrkmahapatra.github.io/Docuvate/qr-code.html
 - Grayscale / B&W PDF Studio (Monochrome Print Saver): https://itsrkmahapatra.github.io/Docuvate/grayscale-pdf.html
 - PDF Metadata Sanitizer (Anonymize & Purge Tracking Tags): https://itsrkmahapatra.github.io/Docuvate/pdf-metadata.html
+- Rotate PDF Pages Studio (Rotate 90° CW/CCW, 180° Permanently): https://itsrkmahapatra.github.io/Docuvate/rotate-pdf.html
+- Extract Text from PDF (Digital Text Extractor & .TXT Export): https://itsrkmahapatra.github.io/Docuvate/extract-text-pdf.html
+- Delete PDF Pages Studio (Purge Unwanted Pages & Ranges): https://itsrkmahapatra.github.io/Docuvate/delete-pages-pdf.html
+- Extract PDF Pages Studio (Isolate Pages into New Document): https://itsrkmahapatra.github.io/Docuvate/extract-pages-pdf.html
+- Invert PDF Colors / Dark Mode (High-Contrast Night Mode): https://itsrkmahapatra.github.io/Docuvate/invert-pdf.html
+- PDF & File to Base64 Studio (Encode/Decode Data URIs): https://itsrkmahapatra.github.io/Docuvate/base64-pdf.html
+- Offline Barcode Studio (Code-128 Shipping & Retail Barcodes): https://itsrkmahapatra.github.io/Docuvate/barcode-generator.html
+- Repair & Rebuild PDF (Fix Corrupted XRef & Structure): https://itsrkmahapatra.github.io/Docuvate/repair-pdf.html
+- Extract Images from PDF (Bulk Image XObject Ripper to ZIP): https://itsrkmahapatra.github.io/Docuvate/extract-images-pdf.html
 - InkScribe (Realistic Handwriting Generator): https://itsrkmahapatra.github.io/Docuvate/inkscribe.html
 - Certificate Downloader: https://itsrkmahapatra.github.io/Docuvate/certificate-downloader.html
 

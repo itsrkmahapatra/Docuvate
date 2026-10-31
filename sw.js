@@ -6,7 +6,7 @@
  * ============================================================================
  */
 
-const CACHE_NAME = 'docuvate-v3.3.0-enterprise';
+const CACHE_NAME = 'docuvate-v3.4.0-enterprise';
 
 const STATIC_ASSETS = [
   './',
@@ -33,6 +33,15 @@ const STATIC_ASSETS = [
   './qr-code.html',
   './grayscale-pdf.html',
   './pdf-metadata.html',
+  './rotate-pdf.html',
+  './extract-text-pdf.html',
+  './delete-pages-pdf.html',
+  './extract-pages-pdf.html',
+  './invert-pdf.html',
+  './base64-pdf.html',
+  './barcode-generator.html',
+  './repair-pdf.html',
+  './extract-images-pdf.html',
   './terms.html',
   './disclaimer.html',
   './css/style.css',
