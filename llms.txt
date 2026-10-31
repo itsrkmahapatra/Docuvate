@@ -34,3 +34,4 @@ Built-in exact specifications for:
 - No sign-up, no API keys, and no file size limits imposed by cloud servers.
 - Works offline via Progressive Web App (PWA) service worker caching.
 - Developer: Raj Kishor Mahapatra (https://itsrkmahapatra.qzz.io/)
+
